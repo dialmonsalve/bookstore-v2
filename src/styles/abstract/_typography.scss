@@ -1,0 +1,32 @@
+@use "../abstract/variables" as v;
+
+h1 {
+  color: v.$color-primary;
+  font-size: v.$font-size + 2rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+h2 {
+  color: v.$color-green-3;
+  font-size: v.$font-size + 1.7rem;
+}
+h3 {
+  color: v.$color-tertiary;
+  font-size: v.$font-size + 1.4rem;
+}
+h4 {
+  color: v.$color-black-4;
+  font-size: v.$font-size + 1.1rem;
+}
+h5 {
+  color: v.$color-blue-3;
+  font-size: v.$font-size + .8rem;
+}
+h6 {
+  color: v.$color-red-3;
+  font-size: v.$font-size + .5rem;
+}
+
+p {
+  font-size: v.$font-size ;
+}

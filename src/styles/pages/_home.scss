@@ -1,0 +1,39 @@
+@use '../abstract/variables' as v;
+.section {
+  display: grid;
+
+  gap: 2rem;
+  &__article {
+    
+    &--news {
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: repeat(3, 1fr);
+      height: 30rem;
+      width: 100%;
+
+      &-1 {
+        background-color: v.$color-gray-2;
+      }
+      &-2 {
+        background-color: v.$color-gray-3;
+      }
+      &-3 {
+        background-color: v.$color-gray-2;
+      }
+    }
+
+
+    &--schedule {
+      background-color: v.$color-gray-1;
+      height: 30rem;
+      width: 100%;
+    }
+
+    &--best-sellers {
+      background-color: v.$color-gray-1;
+      height: 30rem;
+      width: 100%;
+    }
+  }
+}

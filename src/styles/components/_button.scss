@@ -1,0 +1,76 @@
+@use '../abstract/variables' as v;
+@use '../abstract/mixins' as m;
+
+.btn {
+  border-radius: 2.5rem;
+  display: block;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0 auto;
+  outline: 1px solid v.$color-white;
+  text-transform: uppercase;
+
+  &--blue {
+    @include m.btn-color(v.$color-blue-3, v.$color-primary);
+  }
+
+  &--green {
+    @include m.btn-color(v.$color-green-3, v.$color-secondary-dark);
+  }
+
+  &--yellow {
+    @include m.btn-color(v.$color-yellow-2, v.$color-yellow-3);
+  }
+
+  &--red {
+    @include m.btn-color( v.$color-red-2, v.$color-red-3);
+  }
+
+  &--purple {
+    @include m.btn-color( v.$color-purple-2, v.$color-purple-3);
+  }
+
+  &--outline-blue {
+    @include m.btn-outline( v.$color-blue-3, v.$color-primary);
+  }
+
+  &--outline-green {
+    @include m.btn-outline( v.$color-green-3, v.$color-secondary-dark);
+  }
+
+  &--outline-yellow {
+    @include m.btn-outline( v.$color-yellow-2, v.$color-yellow-3);
+  }
+
+  &--outline-red {
+    @include m.btn-outline( v.$color-red-2, v.$color-red-3);
+  }
+
+  &--outline-purple {
+    @include m.btn-outline( v.$color-purple-2, v.$color-purple-3);
+  }
+
+  &--small {
+    font-size: v.$font-size - .4rem;
+    height: 10%;
+    padding: 0.7rem 0.5rem;
+    text-align: center;
+    width: 25%;
+  }
+
+  &--medium {
+    font-size: v.$font-size;
+    padding: 1.1rem;
+    text-align: center;
+    width: 40%;
+
+  }
+
+  &--large {
+    font-size: v.$font-size + .4rem;
+    padding: 1.3rem;
+    text-align: center;
+    width: 80%;
+  }
+
+}

@@ -1,0 +1,66 @@
+@use '../abstract/variables' as v;
+@use '../abstract/mixins' as m;
+
+.header {
+  align-items: center;
+  background: -moz-linear-gradient(left, #8aedf6 0%, #60a2f5 100%);
+  background: -webkit-linear-gradient(left, #8aedf6 0%, #60a2f5 100%);
+  background: linear-gradient(to right, #8aedf6 0%, #60a2f5 100%);
+  display: flex;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8aedf6', endColorstr='#60a2f5', GradientType=1);
+  justify-content: space-between;
+  padding: 0.5rem 3rem;
+
+  &__brand {
+    display: flex;
+    gap: 2rem;
+
+    &--navigation {
+      align-items: center;
+      display: flex;
+      gap: 1rem;
+
+      &-link {
+        font-size: v.$font-size;
+        @include m.link-nav();
+      }
+    }
+  }
+
+  &__login {
+    display: flex;
+    gap: 1.5rem;
+
+    &--cart {
+      position: relative;
+      right: 0;
+      top: 0;
+    }
+
+    &--number {
+      align-items: center;
+      background-color: v.$color-red-3;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      height: 20px;
+      justify-content: center;
+      left: 100%;
+      position: absolute;
+      top: 8%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+    }
+
+    &--nav {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+    }
+
+    &--nav-link {
+      font-size: v.$font-size - 0.4rem;
+      @include m.link-nav();
+    }
+  }
+}
