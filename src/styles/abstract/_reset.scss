@@ -44,4 +44,8 @@ body {
 	margin: 0 auto 10rem;	
 	padding: 0 5rem;
 	width: 95%;
+
+	@include m.responsive(phone) {
+		width: 100%;
+	}
 }

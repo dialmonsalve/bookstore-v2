@@ -55,6 +55,9 @@
   border-radius: 1rem;
   color: v.$color-primary;
   padding: 1rem 1.5rem;
+  @include responsive(phone){
+    padding: .5rem 1.5rem;
+  }
 
   &:link,
   &:visited {

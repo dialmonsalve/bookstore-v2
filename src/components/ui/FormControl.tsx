@@ -9,19 +9,16 @@ interface FormControlProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
   disabled?: boolean
-  placeholder?:string
-  labelWidth? : string
-  inputWidth? : string
+  placeholder?: string;
 }
 
-export const FormControl = ({ label, type, name, value,labelWidth,inputWidth, defaultValue,placeholder, onBlur, onChange, disabled = false }: FormControlProps) => {
-
+export const FormControl = ({ label, type, name, value, defaultValue, placeholder, onBlur, onChange, disabled = false }: FormControlProps) => {
+  
   return (
     <div className='form-control'>
-      <label style={{width:labelWidth}} className={`form-control--label`}>{label}</label>
+      <label className={`form-control__label`}>{label}</label>
       <input
-      style={{width:inputWidth}}
-        className={`form-control--input ${disabled ? 'input-disabled': ''}`}
+        className={`form-control__input ${disabled ? 'input-disabled' : ''}`}
         type={type}
         name={name}
         placeholder={placeholder}

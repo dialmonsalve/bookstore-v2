@@ -23,47 +23,61 @@
   }
 
   &--red {
-    @include m.btn-color( v.$color-red-2, v.$color-red-3);
+    @include m.btn-color(v.$color-red-2, v.$color-red-3);
   }
 
   &--purple {
-    @include m.btn-color( v.$color-purple-2, v.$color-purple-3);
+    @include m.btn-color(v.$color-purple-2, v.$color-purple-3);
   }
 
   &--outline-blue {
-    @include m.btn-outline( v.$color-blue-3, v.$color-primary);
+    @include m.btn-outline(v.$color-blue-3, v.$color-primary);
   }
 
   &--outline-green {
-    @include m.btn-outline( v.$color-green-3, v.$color-secondary-dark);
+    @include m.btn-outline(v.$color-green-3, v.$color-secondary-dark);
   }
 
   &--outline-yellow {
-    @include m.btn-outline( v.$color-yellow-2, v.$color-yellow-3);
+    @include m.btn-outline(v.$color-yellow-2, v.$color-yellow-3);
   }
 
   &--outline-red {
-    @include m.btn-outline( v.$color-red-2, v.$color-red-3);
+    @include m.btn-outline(v.$color-red-2, v.$color-red-3);
   }
 
   &--outline-purple {
-    @include m.btn-outline( v.$color-purple-2, v.$color-purple-3);
+    @include m.btn-outline(v.$color-purple-2, v.$color-purple-3);
+  }
+
+  &--small,
+  &--medium,
+  &--large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &--small {
     font-size: v.$font-size - .4rem;
     height: 10%;
     padding: 0.7rem 0.5rem;
-    text-align: center;
     width: 25%;
+
+    @include m.responsive(phone) {
+      padding: .6rem 0rem;
+    }
   }
 
   &--medium {
     font-size: v.$font-size;
     padding: 1.1rem;
-    text-align: center;
     width: 40%;
 
+    @include m.responsive(phone) {
+      font-size: v.$font-size - .6rem;
+      padding: 1.2rem 1rem;
+    }
   }
 
   &--large {
@@ -71,6 +85,19 @@
     padding: 1.3rem;
     text-align: center;
     width: 80%;
+
+    @include m.responsive(phone) {
+      padding: 1.2rem 0rem;
+    }
   }
 
+}
+
+.disabled {
+  background-color: v.$color-gray-2;
+
+  &:hover {
+    background-color: v.$color-gray-2;
+    cursor: not-allowed;
+  }
 }

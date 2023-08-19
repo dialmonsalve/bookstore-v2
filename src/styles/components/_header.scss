@@ -1,6 +1,7 @@
 @use '../abstract/variables' as v;
 @use '../abstract/mixins' as m;
 
+
 .header {
   align-items: center;
   background: -moz-linear-gradient(left, #8aedf6 0%, #60a2f5 100%);
@@ -11,18 +12,48 @@
   justify-content: space-between;
   padding: 0.5rem 3rem;
 
+  @include m.responsive(phone) {
+    flex-direction: column;
+    padding: 0.5rem 0rem;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
   &__brand {
     display: flex;
     gap: 2rem;
+
+    @include m.responsive(phone) {
+      align-self: flex-start;
+      justify-content: center;
+      width: 100%;
+    }
+
+    &--image {
+      display: block;
+      margin: 0 auto;
+
+      @include m.responsive(phone) {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
+
 
     &--navigation {
       align-items: center;
       display: flex;
       gap: 1rem;
 
+      @include m.responsive(phone) {
+        // flex-direction: column;        
+        gap: 0;
+      }
+
       &-link {
         font-size: v.$font-size;
         @include m.link-nav();
+
       }
     }
   }
@@ -30,11 +61,23 @@
   &__login {
     display: flex;
     gap: 1.5rem;
+    align-items: center;
+
+    @include m.responsive(phone) {
+      width: 100%;
+      justify-content: space-around;
+    }
+
 
     &--cart {
       position: relative;
       right: 0;
       top: 0;
+
+      @include m.responsive(phone) {
+        order: 2;
+        right: 4%;
+      }
     }
 
     &--number {
@@ -56,6 +99,10 @@
       display: flex;
       gap: .5rem;
       align-items: center;
+
+      @include m.responsive(phone) {
+        order: 1;
+      }
     }
 
     &--nav-link {

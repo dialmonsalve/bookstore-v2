@@ -24,10 +24,13 @@ export const Button = ({
   width,
   ...props
 }: ButtonProps) => {
+
+  const isDisabled = disabled ? 'disabled' : ''
+
   return (
     <button
       type={type}
-      className={`btn btn--${backgroundColor} btn--${size}`}
+      className={`btn btn--${backgroundColor} btn--${size} ${isDisabled}`}
       style={{ width }}
       disabled={disabled}
       {...props}

@@ -1,6 +1,7 @@
 @use '../abstract/variables' as v;
 @use '../abstract/mixins' as m;
 
+
 .form-control {
   display: flex;
   gap: 2rem;
@@ -8,24 +9,39 @@
   padding: .5rem;
   text-transform: uppercase;
 
-  &--label,
-  &--input {
-    color: v.$color-primary;
-    font-weight: 700;
+  @include m.responsive(phone){
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__label,
+  &__input {
+    color: v.$color-primary !important;
   }
   
-  &--label {    
+  &__label {    
     font-size: v.$font-size + 0.2rem;
     letter-spacing: .1rem;
     padding: 1rem 0;
-    width: 25%;
+    width: 30%;
+    font-weight:700;
+    @include m.responsive(phone){
+      width: 100%;
+      letter-spacing: 0;
+    }
+
   }
   
-  &--input {
+  &__input {
     border:none;
-    outline: 2px solid white;
+    outline: 2px solid rgb(149, 149, 149);
     transition: width .3s;
-    width: 68%;
+    width: 60%;
+    padding: 0.5rem 1rem;
+
+    @include m.responsive(phone){
+      width: 100%;
+    }
 
     &::placeholder {
       color: v.$color-gray-2;
@@ -38,11 +54,15 @@
       border-radius: 2.5rem;
       font-size: v.$font-size + 0.2rem;
       padding: 0.5rem 1rem;
+      border-bottom:3px solid rgb(233, 233, 233);
     }
 
     &:focus {
       outline: 2px solid v.$color-green-3;
-      width: 71%;
+      width: 66%;
+      @include m.responsive(phone){
+        width: 100%;
+      }
     }
   }
 }
@@ -52,7 +72,11 @@
   margin: 0rem auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
+
+  @include m.responsive(phone){
+    max-width:  30rem;
+  }
 }
 
 .text-area {
@@ -68,3 +92,52 @@
   }
 }
 
+.error-container {
+	position: relative;
+
+	&__message {
+		width: 100%;
+		display: flex;
+		color: red;
+		position: absolute;
+		top: 0;
+		right: 0;
+		justify-content: flex-end;
+		font-size: 1.2rem;
+		animation: vibrate .3s ease forwards;
+	}
+}
+
+@keyframes vibrate {
+	0% {
+		transform: translate(-10%, 0%);
+	}
+
+	15% {
+		transform: translate(-12px, 0%);
+	}
+
+	30% {
+		transform: translate(-10px, 0%);
+	}
+
+	45% {
+		transform: translate(-12px, 0%);
+	}
+
+	70% {
+		transform: translate(-10px, 0%);
+	}
+
+	75% {
+		transform: translate(-12px, 0%);
+	}
+
+	90% {
+		transform: translate(-10px, 0%);
+	}
+
+	100% {
+		transform: translate(-10%, 0%);
+	}
+}
