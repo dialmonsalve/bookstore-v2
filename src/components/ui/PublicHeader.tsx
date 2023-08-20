@@ -16,10 +16,10 @@ export const Header = () => {
 
         <ul className='header__brand--navigation' >
           <li className='header__brand--navigation-item' >
-            <Link className="header__brand--navigation-link" href='about'>About us</Link>
+            <Link className="header__brand--navigation-link" href='/about'>About us</Link>
           </li>
           <li className='header__brand--navigation-item' >
-            <Link className="header__brand--navigation-link" href='contact' >Contact us</Link>
+            <Link className="header__brand--navigation-link" href='/contact' >Contact us</Link>
           </li>
         </ul>
       </div>
@@ -40,10 +40,10 @@ export const Header = () => {
             status === 'not-authenticated' &&
             <>
               <li className='header__login--nav-item' >
-                <Link className="header__login--nav-link" href='create-account' >Create account</Link>
+                <Link className="header__login--nav-link" href='/auth/create-account' >Create account</Link>
               </li>
               <li className='header__login--nav-item' >
-                <Link className="header__login--nav-link" href='login'>Login</Link>
+                <Link className="header__login--nav-link" href='/auth/login'>Login</Link>
               </li>
             </>
           }
@@ -53,13 +53,13 @@ export const Header = () => {
             <>
               <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Welcome diego</span>
               <li className='header__login--nav-item' >
-                <Link className="header__login--nav-link" href='logout' >Logout</Link>
+                <Link className="header__login--nav-link" href='/auth/logout' >Logout</Link>
               </li>
             </>
           }
         </ul>
-        <Link href='configuration'>
-          <Image className='header__login--user' src="/user.svg" alt="" width={35} height={35} />
+        <Link href='/auth/configuration'>
+          <Image className='header__login--user' src="/user.svg" alt="user" width={35} height={35} />
         </Link>
       </div>
     </header>

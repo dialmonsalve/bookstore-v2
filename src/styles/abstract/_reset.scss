@@ -34,18 +34,42 @@ body {
 	box-sizing: border-box;
 	font-family: v.$font-family;
 	margin: 0;
-  height: 100vh;
+	height: 100vh;
+	overflow: auto;
 }
 
 .public-main {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	margin: 0 auto 10rem;	
+	margin: 0 auto 10rem;
 	padding: 0 5rem;
 	width: 95%;
 
 	@include m.responsive(phone) {
 		width: 100%;
+	}
+}
+
+.admin-login {
+	background: #65f4cd;
+	background: -moz-linear-gradient(left, #65f4cd 0%, #4799e9 100%);
+	background: -webkit-linear-gradient(left, #65f4cd 0%, #4799e9 100%);
+	background: linear-gradient(to right, #65f4cd 0%, #4799e9 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#65f4cd', endColorstr='#4799e9', GradientType=1);
+	height: 100vh;
+
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 4rem;
+}
+
+.private-container {
+	display: flex;
+	width: 100%;
+
+	&__right {
+		width: 80%;
 	}
 }

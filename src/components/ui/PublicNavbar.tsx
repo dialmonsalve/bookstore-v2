@@ -1,7 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
 
-
 export const Navbar = () => {
   return (
     <nav className="nav" >
@@ -19,13 +18,13 @@ export const Navbar = () => {
       <div className="nav__menu" >
         <ul className="nav__menu--container" >
           <li className="nav__menu--item" >
-            <Link className="nav__menu--link" href='books' >Books</Link>
+            <Link className="nav__menu--link" href='/store/books' >Books</Link>
           </li>
           <li>
-            <Link className="nav__menu--link" href='stationeries' >Stationery</Link>
+            <Link className="nav__menu--link" href='/store/stationeries' >Stationery</Link>
           </li>
           <li>
-            <Link className="nav__menu--link" href='toys' >Toys</Link>
+            <Link className="nav__menu--link" href='/store/toys' >Toys</Link>
           </li>
         </ul>
       </div>

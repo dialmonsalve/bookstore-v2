@@ -1,18 +1,18 @@
 import { FormEvent } from "react"
 import { PublicLayout } from "@/components/layouts"
-import { Button, FormControl, Form, ErrorMessage } from "@/components/ui"
+import { Button, FormControl, ErrorMessage } from "@/components/ui"
 import { useForm } from "@/hooks/useForm";
 import Link from "next/link";
 import { formValidator, newUser, newUserValidationSchema } from "@/helpers";
 
 function CreateAccount() {
 
-  const { 
-    formState, 
-    isFormSubmitted, 
-    isTouched, 
-    handleBlur, 
-    handleFieldChange, 
+  const {
+    formState,
+    isFormSubmitted,
+    isTouched,
+    handleBlur,
+    handleFieldChange,
     areFieldsValid,
     handleResetForm
   } = useForm(newUser)
@@ -27,6 +27,8 @@ function CreateAccount() {
     if (areFieldsValid(errors)) {
       console.log({ formState });
 
+      // TODO implement validation vs backend
+
       handleResetForm()
     }
   }
@@ -34,7 +36,7 @@ function CreateAccount() {
     <PublicLayout title={'contact us'} pageDescription={'Find your dreams books here'}>
       <h1 style={{ marginBottom: '6rem' }} >Create your account and fly</h1>
 
-      <Form onSubmit={handleSubmit} width="60rem" >
+      <form style={{ width: "60rem" }} className="form" onSubmit={handleSubmit} >
         <ErrorMessage
           fieldName={errors?.name}
           isFormSubmitted={isFormSubmitted}
@@ -129,7 +131,7 @@ function CreateAccount() {
             Login
           </Link>
         </div>
-      </Form>
+      </form>
 
     </PublicLayout>
   )

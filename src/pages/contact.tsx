@@ -1,5 +1,5 @@
 import { PublicLayout } from "@/components/layouts"
-import { Button, FormControl, Form, ErrorMessage } from "@/components/ui"
+import { Button, FormControl, ErrorMessage } from "@/components/ui"
 import { formValidator, newMessage, newMessageValidationSchema } from "@/helpers";
 import { useForm } from "@/hooks/useForm";
 
@@ -27,6 +27,8 @@ function Contact() {
     if (areFieldsValid(errors)) {
       console.log({ formState });
 
+      // TODO implement validation vs backend
+
       handleResetForm()
     }
   }
@@ -34,7 +36,7 @@ function Contact() {
     <PublicLayout title={'contact us'} pageDescription={'Find your dreams books here'}>
       <h1 style={{ marginBottom: '6rem' }}  >Tell us what you want</h1>
 
-      <Form onSubmit={handleSubmit} width="50rem" >
+      <form style={{ width: "50rem" }} className="form" >
         <ErrorMessage
           fieldName={errors?.name}
           isFormSubmitted={isFormSubmitted}
@@ -108,7 +110,7 @@ function Contact() {
         <Button type="submit" width='50%' backgroundColor="blue" disabled={!!errors} >
           send
         </Button>
-      </Form>
+      </form>
 
     </PublicLayout>
   )

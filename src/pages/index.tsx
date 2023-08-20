@@ -1,37 +1,62 @@
 import { PublicLayout } from '@/components/layouts'
-import Head from 'next/head'
+import { PrivateLayout } from '@/components/layouts/PrivateLayout';
 
 export default function Home() {
+
+  const isStaff = true;
   return (
 
-    <PublicLayout title={'home'} pageDescription={'Find your dreams books here'}>
-      <h1>Read and dream</h1>
+    !isStaff ?
+      <PublicLayout title={'home'} pageDescription={'Find your dreams books here'}>
+        <h1>Read and dream</h1>
 
-      <section className='section'>
+        <section className='section'>
 
-        <article className='section__article--news' >
-          <div className='section__article--news-1' >
+          <article className='section__article--news' >
+            <div className='section__article--news-1' >
 
-          </div>
-          <div className='section__article--news-2' >
+            </div>
+            <div className='section__article--news-2' >
 
-          </div>
-          <div className='section__article--news-3' >
+            </div>
+            <div className='section__article--news-3' >
 
-          </div>
-        </article >
+            </div>
+          </article >
 
-        <article className='section__article--schedule'>
+          <article className='section__article--schedule'>
 
-        </article >
+          </article >
 
-        <article className='section__article--best-sellers' >
+          <article className='section__article--best-sellers' >
 
-        </article>
+          </article>
 
-      </section>
+        </section>
 
-    </PublicLayout>
+      </PublicLayout>
+      : 
+      
+      <PrivateLayout title='Hola mundo' >
+        <section className='section'>
+
+          <article className='section__article--news' >
+            <div className='section__article--news-1' >
+
+            </div>
+            <div className='section__article--news-2' >
+
+            </div>
+            <div className='section__article--news-3' >
+
+            </div>
+          </article >
+
+          <article className='section__article--schedule'>
+
+          </article >
+        </section>
+      </PrivateLayout>
 
   )
 }
