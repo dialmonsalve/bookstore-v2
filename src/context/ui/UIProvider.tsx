@@ -19,7 +19,6 @@ export const UIProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
 
   const handleToggleSidebar = () => {
-
     
     dispatch({ type: '[UI] - handleToggleSidebar', payload: !state.toggleSidebar})
   }

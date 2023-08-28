@@ -101,3 +101,53 @@
     cursor: not-allowed;
   }
 }
+
+.ico-disabled {
+  filter: invert(22%) sepia(1) saturate(120%) hue-rotate(200deg) brightness(90%) contrast(119%);
+
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
+.btn-ico {
+  width: 4rem;
+  height: 5rem;
+  transition: all .3s;
+}
+
+.trash {
+  @include m.btn-ico('/icons/trash-normal.svg');
+
+  &:hover {
+    background-image: url('/icons/trash-full.svg');
+
+    @include m.responsive(phone) {
+      @include m.btn-ico('/icons/trash-normal.svg');
+    }
+  }
+}
+
+.plus {
+  @include m.btn-ico('/icons/plus.svg');
+
+  &:hover {
+    transform: rotate(90deg);
+
+    @include m.responsive(phone) {
+      transform: rotate(0deg);
+    }
+  }
+}
+
+.edit {
+  @include m.btn-ico('/icons/edit.svg');
+
+  &:hover {
+    transform: rotate(5deg);
+
+    @include m.responsive(phone) {
+      transform: rotate(0);
+    }
+  }
+}

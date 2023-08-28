@@ -4,7 +4,7 @@ import Link from "next/link"
 export const PrivateHeader = () => {
   return (
     <header className="private-header">
-      <Link href='/' >
+      <Link href='/admin' >
         <Image className='header__brand--image' src="/logo.svg" alt="" width={75} height={70} />
       </Link>
 

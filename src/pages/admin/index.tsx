@@ -1,49 +1,27 @@
-import React, { FormEvent } from 'react'
-import Login from '../auth/login'
-import { LoginForm } from '@/components/ui/LoginForm'
-import { useForm } from '@/hooks/useForm';
-import { formValidator, login, loginValidationSchema } from '@/helpers';
+import { PrivateLayout } from "@/components/layouts/PrivateLayout"
 
-function AdminPage() {
-
-  const {
-    formState,
-    isFormSubmitted,
-    isTouched,
-    handleFieldChange,
-    handleBlur,
-    areFieldsValid,
-    handleResetForm
-  } = useForm(login);
-
-  const { email, password } = formState;
-
-  const errors = formValidator().getErrors(formState, loginValidationSchema);
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (areFieldsValid(errors)) {
-      console.log({ email, password });
-
-      // TODO implement validation vs backend
-      
-      handleResetForm()
-    }
-  }
+function AdminPage () {
   return (
-    <main className='admin-login' >
-      <h1 style={{ color: 'white' }} >Login</h1>
-      <LoginForm
-        formState={formState}
-        errors={errors}
-        isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched}
-        onSubmit={handleSubmit}
-        handleFieldChange={handleFieldChange}
-        handleBlur={handleBlur}
-      />
-    </main>
+    <PrivateLayout title='Hola mundo' >
+    <section className='section'>
+
+      <article className='section__article--news' >
+        <div className='section__article--news-1' >
+
+        </div>
+        <div className='section__article--news-2' >
+
+        </div>
+        <div className='section__article--news-3' >
+
+        </div>
+      </article >
+
+      <article className='section__article--schedule'>
+
+      </article >
+    </section>
+  </PrivateLayout>
   )
 }
 

@@ -1,20 +1,19 @@
 import { PrivateLayout } from "@/components/layouts/PrivateLayout";
 import { Button } from "@/components/ui";
 
-function AdminBooks() {
+function AdminToys  () {
   return (
-    <PrivateLayout title="books" >
-
-      <Button
+    <PrivateLayout title="toys" >
+                  <Button
         buttonStyle="iconButton"
         ico="plus"
         bottom="10%"
         position="fixed"
         right="10%"
       />
-
+      
     </PrivateLayout>
   )
 }
 
-export default AdminBooks;
+export default AdminToys;
