@@ -1,8 +1,6 @@
-import { PrivateHeader } from "../ui/PrivateHeader"
-import { PrivateSidebar } from "../ui/PrivateSidebar"
-
 import { ReactNode } from "react";
 
+import { PrivateHeader, PrivateSidebar } from "./";
 
 interface Props {
   title: string;

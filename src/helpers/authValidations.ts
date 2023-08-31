@@ -8,11 +8,11 @@ export const login = {
 export const loginValidationSchema = {
   email: formValidator()
     .string()
-    .required('Field email is required')
+    .required('Campo email es requerido')
     .email(),
   password: formValidator()
     .string()
-    .required('Field password is required')
+    .required('Campo password es requerido')
 };
 
 export const newUser = {
@@ -27,24 +27,24 @@ export const newUser = {
 export const newUserValidationSchema = {
   name: formValidator()
     .string()
-    .required('Field name is required')
-    .min(3, 'Name must be at least 3 characters'),
+    .required('Campo nombre es requerido')
+    .min(3, 'El nombre debe tener al menos de 3 caracteres'),
   lastName: formValidator()
     .string(),
   email: formValidator()
     .string()
-    .required('Field email is required')
+    .required('Campo email es requerido')
     .email(),
   phone: formValidator()
     .isValidPhone(),
   password: formValidator()
     .string()
-    .required('Field password is required')
-    .min(8, 'Password must be at least 8 characters'),
+    .required('Campo password es requerido')
+    .min(8, 'El password debe tener al menos de 8 caracteres'),
   repitePassword: formValidator()
     .string()
-    .required('please repite your password')
-    .min(8, 'Password must be at least 8 characters')
+    .required('Por favor repite el password')
+    .min(8, 'El password debe tener al menos de 8 caracteres')
     .equalTo('password'),
 };
 
@@ -60,15 +60,15 @@ export const newMessage = {
 export const newMessageValidationSchema = {
   name: formValidator()
     .string()
-    .required('Field name is required')
-    .min(3, 'Name must be at least 3 characters'),
+    .required('Campo nombre es requerido')
+    .min(3, 'El nombre debe tener al menos de 3 caracteres'),
   email: formValidator()
     .string()
-    .required('Field email is required')
+    .required('Campo email es requerido')
     .email(),
   message: formValidator()
     .string()
-    .required('please enter your message')
-    .min(15, 'Message must be at least 15 characters'),
+    .required('Por favor ingresa tu mensaje')
+    .min(15, 'El mensaje debe tener al menos 15 caracteres'),
 };
 

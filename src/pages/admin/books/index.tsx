@@ -1,9 +1,9 @@
-import { PrivateLayout } from "@/components/layouts/PrivateLayout";
+import { PrivateLayout } from "@/components/layouts";
 import { Button } from "@/components/ui";
 
 function AdminBooks() {
   return (
-    <PrivateLayout title="books" >
+    <PrivateLayout title="libros" >
 
       <Button
         buttonStyle="iconButton"

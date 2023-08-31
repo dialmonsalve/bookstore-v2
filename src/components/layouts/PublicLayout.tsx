@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import Head from 'next/head';
 
-import { Navbar, Header, Footer } from '../ui';
+import { Navbar, Header, Footer } from './';
 
 interface Props {
   title: string;

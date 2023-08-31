@@ -1,5 +1,5 @@
-import Link from "next/link"
-import Image from "next/image"
+import Link from "next/link";
+import Image from "next/image";
 
 export const Navbar = () => {
   return (
@@ -7,7 +7,7 @@ export const Navbar = () => {
 
       <div className="nav__search" >
         <form action="">
-        <input type="text" className="nav__search--input" placeholder="search" />
+        <input type="text" className="nav__search--input" placeholder="búsqueda" />
         <button type="submit" >
           <Image className="nav__search--image"  src='/search.svg' width={18} height={18} alt="search" />
           </button>
@@ -18,13 +18,16 @@ export const Navbar = () => {
       <div className="nav__menu" >
         <ul className="nav__menu--container" >
           <li className="nav__menu--item" >
-            <Link className="nav__menu--link" href='/store/books' >Books</Link>
+            <Link className="nav__menu--link" href='/store/books' >Libros</Link>
           </li>
           <li>
-            <Link className="nav__menu--link" href='/store/stationeries' >Stationery</Link>
+            <Link className="nav__menu--link" href='/store/stationeries' >Papelería</Link>
           </li>
           <li>
-            <Link className="nav__menu--link" href='/store/toys' >Toys</Link>
+            <Link className="nav__menu--link" href='/store/toys' >Juguetes</Link>
+          </li>
+          <li>
+            <Link className="nav__menu--link" href='/store/fashion' >Fashion</Link>
           </li>
         </ul>
       </div>

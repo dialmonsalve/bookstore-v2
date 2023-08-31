@@ -9,11 +9,13 @@
   width: 100%;
   border: transparent;
 
+
   &__container {
     padding: 0 1.5rem;
     width: 25rem;
     background-color: v.$color-gray-2;
-    height: 100vh;
+    height: 95vh;
+    background-color: v.$color-white;
 
     @include m.responsive(phone) {
       width: 100%;
@@ -29,11 +31,6 @@
       align-items: center;
       transition: all .4s;
 
-      // &>img {
-      //   filter: invert(100%) sepia(1) saturate(1000%) hue-rotate(120deg);
-      // }
-
-
       &:hover {
         background-color: v.$color-secondary;
         color: v.$color-white;
@@ -44,7 +41,7 @@
       color: v.$color-primary;
       padding: 1rem 1.5rem;
       font-size: v.$font-size;
-      width: 92%;
+      // width: 92%;
 
       @include m.responsive(phone) {
         text-align: center;
@@ -71,6 +68,7 @@
     bottom: 0;
     background-color: v.$color-primary;
     height: 5%;
+    transform: translateY(100%);
 
     &>img {
       filter: invert(42%) sepia(93%) saturate(1200%) hue-rotate(2000deg) brightness(500%) contrast(119%);
@@ -88,9 +86,9 @@
 
 .openSidebar {
   transform: translateY(0);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
 }
 
 .closeSidebar {
-  transform: translateY(-95%);
+  transform: translateY(-100%);
 }

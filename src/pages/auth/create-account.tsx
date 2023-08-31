@@ -1,8 +1,11 @@
-import { FormEvent } from "react"
-import { PublicLayout } from "@/components/layouts"
-import { Button, FormControl, ErrorMessage } from "@/components/ui"
-import { useForm } from "@/hooks/useForm";
+import { FormEvent } from "react";
 import Link from "next/link";
+
+import { useForm } from "@/hooks";
+
+import { PublicLayout } from "@/components/layouts";
+import { Button, FormControl, ErrorMessage } from "@/components/ui";
+
 import { formValidator, newUser, newUserValidationSchema } from "@/helpers";
 
 function CreateAccount() {
@@ -33,94 +36,117 @@ function CreateAccount() {
     }
   }
   return (
-    <PublicLayout title={'contact us'} pageDescription={'Find your dreams books here'}>
-      <h1 style={{ marginBottom: '6rem' }} >Create your account and fly</h1>
+    <PublicLayout
+      title={'Create tu cuenta y comienza a volar'}
+      pageDescription={'Creación de cuenta en diaBbooks para comenzar a usar nuestros servicios'}
+    >
+      <h1 >Create tu cuenta y comienza a volar</h1>
 
       <form style={{ width: "60rem" }} className="form" onSubmit={handleSubmit} >
-        <ErrorMessage
-          fieldName={errors?.name}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.name}
-        />
-        <FormControl
-          label="name"
-          name="name"
-          type="text"
-          placeholder="Your name"
-          value={name}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        />
-        <ErrorMessage
-          fieldName={errors?.lastName}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.lastName}
-        />
-        <FormControl
-          label="last Name"
-          name="lastName"
-          type="text"
-          placeholder="Your last name"
-          value={lastName}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        />
-        <ErrorMessage
-          fieldName={errors?.email}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.email}
-        />
-        <FormControl
-          label="email"
-          name="email"
-          type="email"
-          placeholder="your email"
-          value={email}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        />
-        <ErrorMessage
-          fieldName={errors?.phone}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.phone}
-        />
-        <FormControl
-          label="phone"
-          name="phone"
-          type="phone"
-          placeholder="your phone"
-          value={phone}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        />
-        <ErrorMessage
-          fieldName={errors?.password}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.password}
-        />
-        <FormControl
-          label="password"
-          name="password"
-          type="password"
-          placeholder="your password"
-          value={password}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        />
-        <ErrorMessage
-          fieldName={errors?.repitePassword}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.repitePassword}
-        />
-        <FormControl
-          label="repite password"
-          name="repitePassword"
-          type="password"
-          placeholder="Repite your password"
-          value={repitePassword}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        />
+
+        <div>
+          <FormControl
+            label="nombre"
+            name="name"
+            type="text"
+            placeholder="Tu nombre"
+            value={name}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+          <ErrorMessage
+            fieldName={errors?.name}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.name}
+          />
+
+        </div>
+
+        <div>
+          <FormControl
+            label="apellido"
+            name="lastName"
+            type="text"
+            placeholder="Tu apellido"
+            value={lastName}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+          <ErrorMessage
+            fieldName={errors?.lastName}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.lastName}
+          />
+        </div>
+
+        <div>
+          <FormControl
+            label="email"
+            name="email"
+            type="email"
+            placeholder="Tu email"
+            value={email}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+          <ErrorMessage
+            fieldName={errors?.email}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.email}
+          />
+        </div>
+
+        <div>
+          <FormControl
+            label="Teléfono"
+            name="phone"
+            type="phone"
+            placeholder="tu Teléfono"
+            value={phone}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+          <ErrorMessage
+            fieldName={errors?.phone}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.phone}
+          />
+        </div>
+
+        <div>
+          <FormControl
+            label="password"
+            name="password"
+            type="password"
+            placeholder="Tu password"
+            value={password}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+
+          <ErrorMessage
+            fieldName={errors?.password}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.password}
+          />
+        </div>
+
+        <div>
+          <FormControl
+            label="repite password"
+            name="repitePassword"
+            type="password"
+            placeholder="Repite tu password"
+            value={repitePassword}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+          <ErrorMessage
+            fieldName={errors?.repitePassword}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.repitePassword}
+          />
+        </div>
 
         <div style={{ display: 'flex' }}>
           <Button type="submit" width='40%' backgroundColor="green" disabled={!!errors} >

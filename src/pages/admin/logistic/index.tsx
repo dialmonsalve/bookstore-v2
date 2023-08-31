@@ -1,8 +1,8 @@
-import { PrivateLayout } from "@/components/layouts/PrivateLayout"
+import { PrivateLayout } from "@/components/layouts"
 
 const AdminLogistic = () => {
   return (
-    <PrivateLayout title="logistic" >
+    <PrivateLayout title="logística" >
       
     </PrivateLayout>
   )

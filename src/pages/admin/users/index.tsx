@@ -1,9 +1,9 @@
-import { PrivateLayout } from "@/components/layouts/PrivateLayout";
+import { PrivateLayout } from "@/components/layouts";
 import { Button } from "@/components/ui";
 
 function AdminUser() {
   return (
-    <PrivateLayout title="Users" >
+    <PrivateLayout title="Usuarios" >
       <Button
         buttonStyle="iconButton"
         ico="plus"
@@ -11,7 +11,6 @@ function AdminUser() {
         position="fixed"
         right="10%"
       />
-
     </PrivateLayout>
   )
 }

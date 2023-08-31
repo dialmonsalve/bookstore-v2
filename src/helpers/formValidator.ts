@@ -33,7 +33,7 @@ export const formValidator = (): ValidatorReturn => {
   const validator: Validator = {
     rules: [],
     email(): typeof validator {
-      const defaultMessage = 'It must be a valid Email'
+      const defaultMessage = 'El campo debe ser un email válido'
       validator.rules.push({
         test: (value) => {
           const emailRegex = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -49,7 +49,7 @@ export const formValidator = (): ValidatorReturn => {
         test: (value, formState) => {
           return value && value === formState[field]
         },
-        message: `this field must be equal that to the ${field}`,
+        message: `Este campo debe ser igual al campo: ${field}`,
       })
       return validator;
 
@@ -80,7 +80,7 @@ export const formValidator = (): ValidatorReturn => {
           const phoneRegex = /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
           return phoneRegex.test(value);
         },
-        message: 'It must be a valid Number phone',
+        message: 'El número debe ser un teléfono válido',
       });
       return validator;
     },
@@ -116,7 +116,7 @@ export const formValidator = (): ValidatorReturn => {
       return validator;
     },
     string(): typeof validator {
-      const defaultMessage = 'Field must be a string';
+      const defaultMessage = 'El campo debe ser un string';
       validator.rules.push({
         test: (value) => typeof value === 'string',
         message: defaultMessage,
@@ -124,7 +124,7 @@ export const formValidator = (): ValidatorReturn => {
       return validator;
     },
     number(): typeof validator {
-      const defaultMessage = 'Field must be a number';
+      const defaultMessage = 'El campo debe ser un número';
       const numberRegex = /^\d+$/;
       validator.rules.push({
         test: (value) => numberRegex.test(value),

@@ -2,43 +2,59 @@ import Link from "next/link"
 import { Button, ErrorMessage, FormControl } from "."
 import { FormEvent } from "react";
 import { ErrorMessages, InitialForm, IsTouched, ReactChangeEvent, ReactFocusEvent } from "@/types";
-import { login } from "@/helpers";
+
 
 interface Props {
-  errors: ErrorMessages<InitialForm> | undefined
+  errors: ErrorMessages<InitialForm> | undefined;
   formState: InitialForm;
-  isFormSubmitted: boolean
+  isFormSubmitted: boolean;
   isTouched: IsTouched;
-  handleBlur: (e: ReactFocusEvent) => void
-  handleFieldChange: (e: ReactChangeEvent) => void
-  onSubmit: (e: FormEvent) => void
+  isStaff?: boolean
+  handleBlur: (e: ReactFocusEvent) => void;
+  handleFieldChange: (e: ReactChangeEvent) => void;
+  onSubmit: (e: FormEvent) => void;
+
 }
 
-export const LoginForm = ({ 
+export const LoginForm = ({
   errors,
-  formState, 
+  formState,
   isFormSubmitted,
   isTouched,
-  handleBlur, 
+  isStaff = false,
+  handleBlur,
   handleFieldChange,
-  onSubmit, 
+  onSubmit,
 }: Props) => {
 
   const { email, password } = formState;
 
   return (
-    <form style={{ width: "50rem" }} className="form" onSubmit={onSubmit}  >
+    <form className="form" onSubmit={onSubmit}  >
+      <div>
+      <FormControl
+        label="email"
+        name="email"
+        type="email"
+        placeholder="Tu email"
+        value={email}
+        onChange={handleFieldChange}
+        onBlur={handleBlur}
+      />
       <ErrorMessage
         fieldName={errors?.email}
         isFormSubmitted={isFormSubmitted}
         isTouched={isTouched?.email}
       />
+      </div>
+
+      <div>
       <FormControl
-        label="email"
-        name="email"
-        type="email"
-        placeholder="Your email"
-        value={email}
+        label="password"
+        name="password"
+        type="password"
+        placeholder="Tu password"
+        value={password}
         onChange={handleFieldChange}
         onBlur={handleBlur}
       />
@@ -47,24 +63,19 @@ export const LoginForm = ({
         isFormSubmitted={isFormSubmitted}
         isTouched={isTouched?.password}
       />
+      </div>
 
-      <FormControl
-        label="password"
-        name="password"
-        type="password"
-        placeholder="Your password"
-        value={password}
-        onChange={handleFieldChange}
-        onBlur={handleBlur}
-      />
-      <div style={{ display: 'flex' }}>
+      <div className="form__buttons">
         <Button type="submit" width='40%' backgroundColor="blue" disabled={!!errors}  >
           Login
         </Button>
+        {
+          !isStaff &&
+          <Link href='create-account' className="btn btn--green btn--medium" >
+            Create account
+          </Link>
+        }
 
-        <Link href='create-account' className="btn btn--green btn--medium" >
-          Create account
-        </Link>
       </div>
     </form>
   )

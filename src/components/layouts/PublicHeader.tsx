@@ -5,7 +5,7 @@ type Status = 'authenticated' | 'not-authenticated'
 
 export const Header = () => {
 
-  const status: Status = 'not-authenticated';
+  const status: Status = 'authenticated';
 
   return (
     <header className="header" >
@@ -16,10 +16,10 @@ export const Header = () => {
 
         <ul className='header__brand--navigation' >
           <li className='header__brand--navigation-item' >
-            <Link className="header__brand--navigation-link" href='/about'>About us</Link>
+            <Link className="header__brand--navigation-link" href='/about'>Nosotros</Link>
           </li>
           <li className='header__brand--navigation-item' >
-            <Link className="header__brand--navigation-link" href='/contact' >Contact us</Link>
+            <Link className="header__brand--navigation-link" href='/contact' >Contacto</Link>
           </li>
         </ul>
       </div>
@@ -40,7 +40,7 @@ export const Header = () => {
             status === 'not-authenticated' &&
             <>
               <li className='header__login--nav-item' >
-                <Link className="header__login--nav-link" href='/auth/create-account' >Create account</Link>
+                <Link className="header__login--nav-link" href='/auth/create-account' >Crear cuenta</Link>
               </li>
               <li className='header__login--nav-item' >
                 <Link className="header__login--nav-link" href='/auth/login'>Login</Link>
@@ -51,7 +51,7 @@ export const Header = () => {
           {
             status === 'authenticated' &&
             <>
-              <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Welcome diego</span>
+              <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido diego</span>
               <li className='header__login--nav-item' >
                 <Link className="header__login--nav-link" href='/auth/logout' >Logout</Link>
               </li>

@@ -1,8 +1,8 @@
-import { PrivateLayout } from "@/components/layouts/PrivateLayout"
+import { PrivateLayout } from "@/components/layouts"
 
 function AdminPage () {
   return (
-    <PrivateLayout title='Hola mundo' >
+    <PrivateLayout title='Home' >
     <section className='section'>
 
       <article className='section__article--news' >

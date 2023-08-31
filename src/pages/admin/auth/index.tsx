@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react'
 
-import { LoginForm } from '@/components/ui/LoginForm'
-import { useForm } from '@/hooks/useForm';
+import { LoginForm } from '@/components/ui'
+import { useForm } from '@/hooks';
 import { formValidator, login, loginValidationSchema } from '@/helpers';
 
 function PrivateLoginPage() {
@@ -42,6 +42,7 @@ function PrivateLoginPage() {
         onSubmit={handleSubmit}
         handleFieldChange={handleFieldChange}
         handleBlur={handleBlur}
+        isStaff
       />
     </main>
   )
