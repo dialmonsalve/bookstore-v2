@@ -3,7 +3,9 @@ import { PublicLayout } from '@/components/layouts'
 export default function Home() {
 
   return (
-      <PublicLayout title={'home'} pageDescription={'Find your dreams books here'}>
+      <PublicLayout 
+      title={'DIABOOKS | Encuentra los libros que necesites para soñar'} 
+      pageDescription={'Esta es la página de inicio de la librería DIABOOKS'}>
         <h1>Read and dream</h1>
 
         <section className='section'>

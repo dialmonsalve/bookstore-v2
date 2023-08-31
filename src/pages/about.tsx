@@ -2,8 +2,10 @@ import { PublicLayout } from "@/components/layouts"
 
 function About() {
   return (
-    <PublicLayout title={'about'} pageDescription={'Find your dreams books here'}>
-      <h1>learn more about us</h1>
+    <PublicLayout 
+    title={'DIABOOKS | Conoce más acerca de nuestra librería '} 
+    pageDescription={'Esta es la página de quienes somos para que nuestro público conozca más de como es ser una persona DiaBooks'}>
+      <h1>Aprende más acerca de nosotros</h1>
 
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum, ipsa. Quaerat, sapiente ut, cumque magnam earum alias tempora maxime eaque porro iste aliquid reprehenderit eos dolorum ratione facere perferendis dignissimos. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis porro dolorum impedit suscipit nisi provident amet. Vero nisi praesentium iusto ullam saepe, exercitationem aspernatur unde, officia dolores tempore dolorum doloremque.
           Vero quos aspernatur soluta tempore, ipsum velit cupiditate dolorem quam consectetur esse quibusdam reiciendis iure eos enim vitae et provident explicabo eaque harum quidem labore quo minus. Ab, nemo. Corporis!

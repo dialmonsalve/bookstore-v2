@@ -35,8 +35,10 @@ function Contact() {
     }
   }
   return (
-    <PublicLayout title={'contact us'} pageDescription={'Find your dreams books here'}>
-      <h1 style={{ marginBottom: '6rem' }}  >Tell us what you want</h1>
+    <PublicLayout
+      title={'DIABOOKS | Escríbenos y cuéntanos que piensas acerca de nosotros, o si necesitas ayuda en tu proceso'}
+      pageDescription={'Esta página le permite a nuestros usuarios contactarnos y que nos pregunten acerca de todas sus dudas'}>
+      <h1 >Cuéntanos, ¿Qué quieres saber?</h1>
 
       <form style={{ width: "50rem" }} className="form" >
         <ErrorMessage
@@ -101,8 +103,8 @@ function Contact() {
         />
         <textarea
           className="text-area"
-          placeholder="Enter text"
-          style={{ height: '10rem', marginTop:'1rem' }}
+          placeholder="Haz tus preguntas, o sugíerenos algo"
+          style={{ height: '10rem', marginTop: '1rem' }}
           name="message"
           value={message}
           onChange={handleFieldChange}

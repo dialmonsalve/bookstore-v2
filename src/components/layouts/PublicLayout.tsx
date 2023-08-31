@@ -14,7 +14,7 @@ export const PublicLayout = ({ title, children, pageDescription, imageUrl }: Pro
   return (
     <>
       <Head>
-        <title>DIABOOKS | {title}</title>
+        <title>{title}</title>
         <meta name='description' content={pageDescription} />
         <meta name='og:title' content={title} />
         <meta name='og:description' content={pageDescription} />
