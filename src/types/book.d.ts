@@ -1,79 +1,83 @@
 export interface IBook {
+  id?: string;
   author: Array<IAuthor | undefined>;
   category: Array<ICategory | undefined>;
-  createdAt: Date;
-  createdFor: IUser;
-  discount: number;
+  createdAt?: nstring;
+  createdFor?: IUser;
+  discount?: number;
   editorial: IEditorial;
   format: TypeFormat;
-  imageLinks: string;
-  isAvailable: boolean;
+  imageLinks?: string;
+  isAvailable?: boolean;
   isbn: string;
-  language: string;
+  language?: string;
   name: string;
-  pageCount: number;
+  pageCount?: number;
   price: number;
-  publishedDate: string;
-  ratings: string;
-  review: string;
+  publishedDate?: string;
+  ratings?: string;
+  review?: string;
   stock: number;
-  summary: string;
-  updatedAt: Date;
-  updatedFor: IUser;
+  summary?: string;
+  updatedAt?: string;
+  updatedFor?: IUser;
 }
 
 interface IAuthor {
-  biography: string
-  birth: string
-  createdAt: Date;
+  id?: string;
+  biography: ?string
+  birth?: string
+  createdAt?: string;
   createdFor: IUser;
-  isAvailable: boolean;
-  lastName: string
-  name: string
-  nationality: string
-  updatedAt: Date;
+  isAvailable?: boolean;
+  fullName: string
+  nationality?: string
+  updatedAt?: string;
   updatedFor: IUser;
-  web: string
+  web?: string
 }
 
 interface ICategory {
-  createdAt: Date;
+  id?: string;
+  createdAt?: string;
   createdFor: IUser;
-  isAvailable: boolean;
+  isAvailable?: boolean;
   name: string;
-  updatedAt: Date;
+  updatedAt?: string;
   updatedFor: IUser;
 }
 
 interface IEditorial {
-  address: string
-  country: string
-  createdAt: Date;
-  createdFor: IUser;
+  id?: string;
+  address?: string;
+  country?: string;
+  createdAt?: string;
+  createdFor?: IUser;
+  email?: string;
+  isAvailable?: boolean;
+  phone?: string;
+  updatedAt?: string;
+  updatedFor?: IUser;
+  web?: string;
   distributor: IDistributor
-  email: string
-  isAvailable: boolean;
-  name: string
-  nit: string
-  phone: string
-  updatedAt: Date;
-  updatedFor: IUser;
-  web: string
+  name: string;
+  nit: string;
 }
 
 interface IDistributor {
-  address: string
-  country: string
-  createdAt: Date;
-  createdFor: IUser;
-  email: string
-  isAvailable: boolean;
-  name: string
-  nit: string
-  phone: string
-  updatedAt: Date;
-  updatedFor: IUser;
-  web: string
+  id?: string;
+  address?: string;
+  country?: string;
+  createdAt?: string;
+  createdFor?: IUser;
+  email?: string;
+  isAvailable?: boolean;
+  phone?: string;
+  updatedAt?: string;
+  updatedFor?: IUser;
+  web: string;
+  name: string;
+  nit: string;
 }
 
 type TypeFormat =

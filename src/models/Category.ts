@@ -20,7 +20,6 @@ const CategorySchema = new Schema<ICategory>({
   },
   isAvailable: {
     type: Boolean,
-    require: true,
     default: true
   },
 

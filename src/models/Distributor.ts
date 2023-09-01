@@ -40,7 +40,6 @@ const DistributorSchema = new Schema<IDistributor>({
   },
   isAvailable: {
     type: Boolean,
-    require: true,
     default: true
   },
 

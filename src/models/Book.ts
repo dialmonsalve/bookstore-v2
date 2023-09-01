@@ -16,10 +16,11 @@ const BookSchema = new Schema<IBook>({
   price: {
     type: Number,
     required: true,
+    default:0
   },
   discount: {
     type: Number,
-    required: true,
+    default:0
   },
   stock: {
     type: Number,
@@ -28,12 +29,10 @@ const BookSchema = new Schema<IBook>({
   },
   summary: {
     type: String,
-    required: true,
     trim: true
   },
   publishedDate: {
     type: String,
-    required: true,
     trim: true
   },
   imageLinks: [
@@ -44,11 +43,9 @@ const BookSchema = new Schema<IBook>({
   ],
   pageCount: {
     type: Number,
-    required: true,
   },
   language: {
     type: String,
-    required: true,
     trim: true
   },
   review: {
@@ -61,10 +58,12 @@ const BookSchema = new Schema<IBook>({
   },
   format: {
     type: String,
+    required:true,
     enum: {
       values: ['eBook', 'audioBook', 'printedBook', 'PDF', 'EPUB', 'MOBI'],
       message: `{VALUE no es un tipo válido}`
-    }
+    },
+    default:'printedBook'
   },
   author: [{
     type: Schema.Types.ObjectId,
@@ -93,12 +92,12 @@ const BookSchema = new Schema<IBook>({
   },
   isAvailable: {
     type: Boolean,
-    require: true,
     default: true
   }, 
 
 }, {
-  timestamps: true
+  timestamps: true,
+
 })
 
 

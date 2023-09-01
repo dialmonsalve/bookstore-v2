@@ -6,12 +6,10 @@ const EditorialSchema = new Schema<IEditorial>({
   nit: {
     type: String,
     required: true,
-    trim: true
   },
   name: {
     type: String,
     required: true,
-    trim: true
   },
   address: {
     type: String,
@@ -26,7 +24,7 @@ const EditorialSchema = new Schema<IEditorial>({
     type: String,
   },
   email: {
-
+    type: String,
   }
 ,
 distributor: [{
@@ -46,7 +44,6 @@ distributor: [{
   },
   isAvailable: {
     type: Boolean,
-    require: true,
     default: true
   },
 

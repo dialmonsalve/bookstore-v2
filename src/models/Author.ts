@@ -3,13 +3,10 @@ import mongoose, { Model, Schema, model } from 'mongoose';
 
 const AuthorSchema = new Schema<IAuthor>({
 
-  name: {
+  fullName: {
     type: String,
     required: true,
     trim: true
-  },
-  lastName: {
-    type: String,
   },
   nationality: {
     type: String,
@@ -35,7 +32,6 @@ const AuthorSchema = new Schema<IAuthor>({
   },
   isAvailable: {
     type: Boolean,
-    require: true,
     default: true
   },
 }, {
