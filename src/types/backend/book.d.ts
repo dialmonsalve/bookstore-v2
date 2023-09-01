@@ -1,11 +1,11 @@
 export interface IBook {
-  id?: string;
-  author: Array<IAuthor | undefined>;
-  category: Array<ICategory | undefined>;
-  createdAt?: nstring;
-  createdFor?: IUser;
+  _id?: string;
+  author: string[];
+  category: string[];
+  createdAt?: string;
+  createdFor?: string;
   discount?: number;
-  editorial: IEditorial;
+  editorial: string | undefined;
   format: TypeFormat;
   imageLinks?: string;
   isAvailable?: boolean;
@@ -20,61 +20,63 @@ export interface IBook {
   stock: number;
   summary?: string;
   updatedAt?: string;
-  updatedFor?: IUser;
+  updatedFor?: string;
+  slug: string;
+  tags?: string[]
 }
 
 interface IAuthor {
-  id?: string;
+  _id?: string;
   biography: ?string
   birth?: string
   createdAt?: string;
-  createdFor: IUser;
+  createdFor?: string;
   isAvailable?: boolean;
   fullName: string
   nationality?: string
   updatedAt?: string;
-  updatedFor: IUser;
+  updatedFor?: string;
   web?: string
 }
 
 interface ICategory {
-  id?: string;
+  _id?: string;
   createdAt?: string;
-  createdFor: IUser;
+  createdFor?: string;
   isAvailable?: boolean;
   name: string;
   updatedAt?: string;
-  updatedFor: IUser;
+  updatedFor?: string;
 }
 
 interface IEditorial {
-  id?: string;
+  _id?: string;
   address?: string;
   country?: string;
   createdAt?: string;
-  createdFor?: IUser;
+  createdFor?: string;
   email?: string;
   isAvailable?: boolean;
   phone?: string;
   updatedAt?: string;
-  updatedFor?: IUser;
+  updatedFor?: string;
   web?: string;
-  distributor: IDistributor
+  distributor: string
   name: string;
   nit: string;
 }
 
 interface IDistributor {
-  id?: string;
+  _id?: string;
   address?: string;
   country?: string;
   createdAt?: string;
-  createdFor?: IUser;
+  createdFor?: string;
   email?: string;
   isAvailable?: boolean;
   phone?: string;
   updatedAt?: string;
-  updatedFor?: IUser;
+  updatedFor?: string;
   web: string;
   name: string;
   nit: string;

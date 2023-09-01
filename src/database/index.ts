@@ -1,3 +1,3 @@
 export * as db from './db';
 
-export * as seedDataBase from './initialData'
+export * as seedDataBase from './seed-data'

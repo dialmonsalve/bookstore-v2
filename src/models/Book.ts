@@ -1,4 +1,4 @@
-import { IBook } from '@/types/book';
+import { IBook } from '@/types/backend/book';
 import mongoose, { Model, Schema, model } from 'mongoose';
 
 const BookSchema = new Schema<IBook>({
@@ -75,7 +75,7 @@ const BookSchema = new Schema<IBook>({
     required: true,
     ref: 'Category'
   }],
-  editorial: {
+  editorial:{
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Editorial'
@@ -83,17 +83,25 @@ const BookSchema = new Schema<IBook>({
   createdFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   updatedFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   isAvailable: {
     type: Boolean,
     default: true
   }, 
+  slug:{
+    type:String,
+    required:true,
+    unique:true
+  },
+  tags:[{
+    type:String,
+  }]
 
 }, {
   timestamps: true,

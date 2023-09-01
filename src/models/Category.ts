@@ -1,4 +1,4 @@
-import { ICategory } from '@/types/book';
+import { ICategory } from '@/types/backend/book';
 import mongoose, { Model, Schema, model } from 'mongoose';
 
 const CategorySchema = new Schema<ICategory>({
@@ -11,12 +11,12 @@ const CategorySchema = new Schema<ICategory>({
   createdFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   updatedFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   isAvailable: {
     type: Boolean,

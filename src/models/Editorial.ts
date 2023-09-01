@@ -1,4 +1,4 @@
-import { IEditorial } from '@/types/book';
+import { IEditorial } from '@/types/backend/book';
 import mongoose, { Model, Schema, model } from 'mongoose';
 
 const EditorialSchema = new Schema<IEditorial>({
@@ -35,12 +35,12 @@ distributor: [{
   createdFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   updatedFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   isAvailable: {
     type: Boolean,

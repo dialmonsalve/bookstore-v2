@@ -28,6 +28,14 @@ const ClientSchema = new Schema<IClient>({
     type: String,
     required: true,
   },
+  isAccountValidated:{
+    type:Boolean,
+    default:false
+  },
+  deleted:{
+    type: Boolean,
+    default: false,
+  }
 }, {
   timestamps: true
 })

@@ -1,26 +1,26 @@
-export interface IClient {
-  id?: string;
-  name: string;
-  lastName: string;
-  email: string;
-  password?: string;
-  phone: string;
+interface IUser {
+  _id?: string;
   createdAt?: number;
-  updatedAt?: number;
+  deleted?: boolean;
   isAvailable?: boolean;
+  lastName: string;
+  name: string;
+  password: string;
+  updatedAt?: number;
 }
 
-export interface IUser {
-  id?: string;
-  name: string;
-  lastName: string;
+export interface IClient extends IUser {
+  isAccountValidated?: boolean
+  phone: string;
   email: string;
-  password?: string;
-  phone?: string;
-  createdAt?: number;
-  updatedAt?: number;
-  isAvailable?: boolean;
+}
+
+export interface IStaff extends IUser {
   role: TypeRole[];
+  phone?: string;
+  isNew?: boolean;
+  username: string;
+  email?: string;
 }
 
 type TypeRole = 'admin' | 'logistica' | 'vendedor' | 'compras';

@@ -1,4 +1,4 @@
-import { IDistributor } from '@/types/book';
+import { IDistributor } from '@/types/backend/book';
 import mongoose, { Model, Schema, model } from 'mongoose';
 
 const DistributorSchema = new Schema<IDistributor>({
@@ -31,12 +31,12 @@ const DistributorSchema = new Schema<IDistributor>({
   createdFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   updatedFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   isAvailable: {
     type: Boolean,

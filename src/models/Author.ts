@@ -1,4 +1,4 @@
-import { IAuthor } from '@/types/book';
+import { IAuthor } from '@/types/backend/book';
 import mongoose, { Model, Schema, model } from 'mongoose';
 
 const AuthorSchema = new Schema<IAuthor>({
@@ -23,12 +23,12 @@ const AuthorSchema = new Schema<IAuthor>({
   createdFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   updatedFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User'
+    ref: 'Staff'
   },
   isAvailable: {
     type: Boolean,
