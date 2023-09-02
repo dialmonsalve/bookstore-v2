@@ -30,7 +30,7 @@ export const LoginForm = ({
   const { email, password } = formState;
 
   return (
-    <form className="form" onSubmit={onSubmit}  >
+    <form className="form" onSubmit={onSubmit} noValidate >
       <div>
       <FormControl
         label="email"

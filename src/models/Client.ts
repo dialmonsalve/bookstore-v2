@@ -9,7 +9,6 @@ const ClientSchema = new Schema<IClient>({
   },
   lastName: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -19,20 +18,22 @@ const ClientSchema = new Schema<IClient>({
   password: {
     type: String,
     required: true,
-  }, 
+  },
+  phone: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
   isAvailable: {
     type: Boolean,
     default: true
   },
-  phone: {
-    type: String,
-    required: true,
+  isAccountValidated: {
+    type: Boolean,
+    default: false
   },
-  isAccountValidated:{
-    type:Boolean,
-    default:false
-  },
-  deleted:{
+  deleted: {
     type: Boolean,
     default: false,
   }

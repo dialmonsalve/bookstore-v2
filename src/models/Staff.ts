@@ -45,7 +45,7 @@ const StaffSchema = new Schema<IStaff>({
     type: Boolean,
     default: false,
   },
-  isNew: {
+  isNewStaff: {
     type: Boolean,
     default: true,
   }

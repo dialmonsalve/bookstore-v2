@@ -3,22 +3,22 @@ interface IUser {
   createdAt?: number;
   deleted?: boolean;
   isAvailable?: boolean;
-  lastName: string;
+  lastName?: string;
   name: string;
   password: string;
   updatedAt?: number;
+  phone?: string;
+  image?:string
 }
 
 export interface IClient extends IUser {
   isAccountValidated?: boolean
-  phone: string;
   email: string;
 }
 
 export interface IStaff extends IUser {
   role: TypeRole[];
-  phone?: string;
-  isNew?: boolean;
+  isNewStaff?: boolean;
   username: string;
   email?: string;
 }

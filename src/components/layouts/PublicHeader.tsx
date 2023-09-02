@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from "next/link";
+import { SignInButton } from '../ui/SignInButton';
 
 type Status = 'authenticated' | 'not-authenticated'
 
@@ -23,6 +24,7 @@ export const Header = () => {
           </li>
         </ul>
       </div>
+      <SignInButton />
 
 
       <div className='header__login' >

@@ -1,32 +1,43 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { useForm } from "@/hooks/useForm";
 
 import { PublicLayout } from "@/components/layouts"
-import { LoginForm } from "@/components/ui";
+import { Button, LoginForm } from "@/components/ui";
 
 import { login, loginValidationSchema, formValidator } from "@/helpers";
+import { signIn, getProviders } from "next-auth/react";
 
 function Login() {
 
   const { formState, isTouched, isFormSubmitted, handleFieldChange, handleBlur, areFieldsValid } = useForm(login);
+  const [providers, setProviders] = useState<any>({});
+
+  useEffect(() => {
+    getProviders().then(prov => {
+      setProviders(prov)
+    })
+  }, [])
+
 
   const { email, password } = formState;
 
   const errors = formValidator().getErrors(formState, loginValidationSchema);
 
-  console.log(formState);
-
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    console.log({ email, password });
+
+
     if (areFieldsValid(errors)) {
-      console.log({ email, password });
 
       // TODO implement validation vs backend
+      // await signIn('credentials', {email, password})
     }
+
   }
+
   return (
     <PublicLayout
       title={'Ingresa y comienza a encontrar los libros que necesitas'}
@@ -42,6 +53,20 @@ function Login() {
         isTouched={isTouched}
         handleFieldChange={handleFieldChange}
         handleBlur={handleBlur} />
+
+      {
+        Object.values(providers).map((provider: any) => {
+          if (provider.id === 'credentials') return (<div key='credentials' ></div>);
+
+          return (
+            <Button
+              key={provider.id}
+              onClick={() => signIn(provider.id)}
+            >{provider.name}
+            </Button>
+          )
+        })
+      }
     </PublicLayout>
   )
 }
