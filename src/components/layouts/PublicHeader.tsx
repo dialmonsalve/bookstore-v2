@@ -1,18 +1,32 @@
 import Image from 'next/image';
 import Link from "next/link";
-import { SignInButton } from '../ui/SignInButton';
 
-type Status = 'authenticated' | 'not-authenticated'
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
 
 export const Header = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
 
-  const status: Status = 'authenticated';
+  const isSessionOn = session && session?.user;
+  const existImage = session?.user?.image?.length! > 0;
+  const image = isSessionOn && existImage ? session.user?.image : '/user.svg'
+
+  const navigateTo = (url: string) => {
+    router.push(url);
+  }
 
   return (
     <header className="header" >
       <div className='header__brand' >
         <Link href='/' >
-          <Image className='header__brand--image' src="/logo.svg" alt="" width={75} height={70} />
+          <Image
+            priority
+            className='header__brand--image'
+            src="/logo.svg"
+            alt=""
+            width={75}
+            height={70} />
         </Link>
 
         <ul className='header__brand--navigation' >
@@ -24,8 +38,6 @@ export const Header = () => {
           </li>
         </ul>
       </div>
-      <SignInButton />
-
 
       <div className='header__login' >
 
@@ -39,30 +51,45 @@ export const Header = () => {
         <ul className='header__login--nav' >
 
           {
-            status === 'not-authenticated' &&
-            <>
-              <li className='header__login--nav-item' >
-                <Link className="header__login--nav-link" href='/auth/create-account' >Crear cuenta</Link>
-              </li>
-              <li className='header__login--nav-item' >
-                <Link className="header__login--nav-link" href='/auth/login'>Login</Link>
-              </li>
-            </>
+            !isSessionOn
+              ?
+              <>
+                <li className='header__login--nav-item' >
+                  <button 
+                  className="header__login--nav-link" 
+                  onClick={() => navigateTo(`/auth/create-account?p=${router.asPath}`)}
+                  >Crear cuenta
+                  </button>
+                </li>
+                <li className='header__login--nav-item' >
+                  <button
+                    className="header__login--nav-link"
+                    onClick={() => navigateTo(`/auth/login?p=${router.asPath}`)}
+                  >Login</button>
+                </li>
+              </>
+              :
+              <>
+                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {session?.user.name}</span>
+                <li className='header__login--nav-item' >
+                  <button
+                    className="header__login--nav-link"
+                    onClick={() => signOut()}
+                  >Logout</button>
+                </li>
+              </>
           }
 
-          {
-            status === 'authenticated' &&
-            <>
-              <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido diego</span>
-              <li className='header__login--nav-item' >
-                <Link className="header__login--nav-link" href='/auth/logout' >Logout</Link>
-              </li>
-            </>
-          }
         </ul>
-        <Link href='/auth/configuration'>
-          <Image className='header__login--user' src="/user.svg" alt="user" width={35} height={35} />
-        </Link>
+        {
+          isSessionOn ?
+            <Link href='/auth/configuration'>
+              <Image className='header__login--user' src={`${image!}`} alt="user" width={35} height={35} />
+            </Link>
+            : <div >
+              <Image className='header__login--user' src='/user.svg' alt="user" width={35} height={35} />
+            </div>
+        }
       </div>
     </header>
   )

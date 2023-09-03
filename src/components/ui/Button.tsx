@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 type Color =
   | 'blue' | 'red' | 'green' | 'purple' | 'yellow'
@@ -7,7 +7,7 @@ type Color =
 interface ButtonProps {
   buttonStyle?: 'normal' | 'iconButton'
   backgroundColor?: Color;
-  children?: string;
+  children?: string | ReactNode;
   ico?: string;
   margin?: string
   size?: 'small' | 'medium' | 'large';

@@ -43,7 +43,7 @@
   }
 
   &--outline-red {
-    @include m.btn-outline(v.$color-red-2, v.$color-red-3);
+    @include m.btn-outline(v.$color-red-1, v.$color-red-2);
   }
 
   &--outline-purple {
@@ -75,8 +75,9 @@
     width: 40%;
 
     @include m.responsive(phone) {
-      font-size: v.$font-size - .6rem;
+      font-size: v.$font-size ;
       padding: 1.2rem 1rem;
+      text-align: center;
     }
   }
 

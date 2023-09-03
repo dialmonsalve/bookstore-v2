@@ -6,7 +6,6 @@ import { Staff } from '@/models';
 import { IStaff, TypeRole } from '@/types';
 import { isValidEmail, jwt } from '@/helpers';
 
-
 type Data =
   | { message: string }
   | {
@@ -38,7 +37,8 @@ const registerStaff = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
     lastName = '',
     phone = '',
     role = '',
-    username
+    username,
+    image=''
   } = req.body as IStaff
 
 
@@ -71,7 +71,7 @@ const registerStaff = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
   const newStaff = new Staff({
     email: email.toLowerCase(),
     password: bcrypt.hashSync(password),
-    role, name, lastName, phone, username
+    role, name, lastName, phone, username, image
   })
 
 

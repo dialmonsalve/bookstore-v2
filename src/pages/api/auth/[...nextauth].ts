@@ -1,8 +1,8 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
-import { oAuthDbClient } from "@/database/dbClients";
-
+import { checkUserEmailPassword, oAuthDbClient } from "@/database/dbClients";
 
 declare module 'next-auth' {
   interface Session {
@@ -18,6 +18,10 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''
     }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID || '',
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET || ''
+    }),
     // adicionar mas providers
     Credentials({
       name: 'Login personalizado',
@@ -25,10 +29,8 @@ export default NextAuth({
         email: { label: "Correo", type: "email", placeholder: "correo@correo.com" },
         password: { label: "Contraseña", type: "password", placeholder: "Contraseña" },
       },
-      async authorize(credentials) {
-
-
-        return null;
+      async authorize(credentials): Promise<any> {
+        return await checkUserEmailPassword(credentials!.email, credentials!.password)
       }
     })
   ],
@@ -50,7 +52,9 @@ export default NextAuth({
         switch (account.type) {
 
           case 'oauth':
-            await oAuthDbClient(user.email || '', user.name || '');
+            console.log(user);
+
+            await oAuthDbClient(user.email || '', user.name || '', user.image || '');
             break;
 
           case 'credentials':
@@ -65,10 +69,18 @@ export default NextAuth({
       return token;
     },
     async session({ session, token, user }) {
-      if (token.accessToken && token.user) {
-        session.accessToken = token.accessToken as string;
+
+      session.accessToken = token.accessToken as string;
+      if (token.user) {
         session.user = token.user as any;
+      } else {
+        session.user = {
+          name: token.name,
+          email: token.email,
+          image: token.picture,
+        }
       }
+
       return session;
     }
   }

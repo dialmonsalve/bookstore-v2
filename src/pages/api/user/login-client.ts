@@ -13,7 +13,7 @@ type Data =
     client: {
       email: string;
       name: string;
-      lastName: string;
+      lastName?: string;
       phone?: string;
     }
   }

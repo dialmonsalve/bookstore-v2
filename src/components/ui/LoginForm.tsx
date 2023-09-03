@@ -72,7 +72,7 @@ export const LoginForm = ({
         {
           !isStaff &&
           <Link href='create-account' className="btn btn--green btn--medium" >
-            Create account
+            Crea cuenta
           </Link>
         }
 

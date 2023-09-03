@@ -12,7 +12,12 @@ type Data =
   | {
     token: string;
     client: {
-      newClient: IClient
+      email:string;
+      image:string;
+      lastName:string;
+      name:string;
+      phone:string
+      _id?:string
     }
   }
 
@@ -36,7 +41,8 @@ const registerClient = async (req: NextApiRequest, res: NextApiResponse<Data>) =
     password = '',
     name = '',
     lastName = '',
-    phone = ''
+    phone = '',
+    image=''
   } = req.body as IClient
 
 
@@ -63,13 +69,13 @@ const registerClient = async (req: NextApiRequest, res: NextApiResponse<Data>) =
   await db.disconnect();
 
   if (client) {
-    return res.status(400).json({ message: 'Email ya existe' });
+    return res.status(400).json({ message: 'Este email ya existe' });
   }
 
   const newClient = new Client({
     email: email.toLowerCase(),
     password: bcrypt.hashSync(password),
-    name, lastName, phone
+    name, lastName, phone, image
   })
 
 
@@ -90,7 +96,7 @@ const registerClient = async (req: NextApiRequest, res: NextApiResponse<Data>) =
   return res.status(200).json({
     token,
     client: {
-      newClient
+      _id, email, image, lastName, name, phone
     }
 
   })

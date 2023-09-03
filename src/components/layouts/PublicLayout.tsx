@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 
 import { Navbar, Header, Footer } from './';
-import { Providers } from '../ui/Providers';
+
 
 interface Props {
   title: string;
@@ -13,7 +13,7 @@ interface Props {
 
 export const PublicLayout = ({ title, children, pageDescription, imageUrl }: Props) => {
   return (
-    <Providers>
+    <>
       <Head>
         <title>{title}</title>
         <meta name='description' content={pageDescription} />
@@ -34,6 +34,6 @@ export const PublicLayout = ({ title, children, pageDescription, imageUrl }: Pro
       </main>
 
       <Footer />
-    </Providers>
+    </>
   )
 }
