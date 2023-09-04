@@ -37,7 +37,7 @@ Abrir mongo compass [http://localhost:8081](http://localhost:8081)
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Abrir [http://localhost:3000](http://localhost:3000).
 
 #### TECNOLOGÍAS:
 
@@ -46,7 +46,6 @@ Open [http://localhost:3000](http://localhost:3000).
 - Next 13
 - Mongo db
 - Tanstack-query
-- Typescript
 - Saas
 - Axios
 - Recharts
