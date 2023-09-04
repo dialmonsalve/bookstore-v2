@@ -7,6 +7,9 @@ El proyecto tiene modo de autenticación con next-auth, su estado es manejado co
 
 Esta app está enfocada en autenticaciones tanto con proveedores como Gmail y Facebook como autenticación personalizada. En el futuro se implementará sharp para lograr un mejor performance, ya que al estar creada con Next permite tener un mejor rendimiento para el SEO. El diseño está creado con Saas
 
+
+![bookstore](./public/bookstore.png)
+
 ### Tecnologías que debes tener en tu pc:
 
 - Nodejs

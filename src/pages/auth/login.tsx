@@ -48,7 +48,7 @@ function Login() {
       title={'Ingresa y comienza a encontrar los libros que necesitas'}
       pageDescription={'Página para hacer login en diabooks. Permite a nuestros usuarios hacer sus compras e inscribirse a nuestros boletines'}>
 
-      <h1 >Enter and the magic begins</h1>
+      <h1 >Entra para que la magia comience</h1>
 
       <ApiMessageError
       showError={showError}
