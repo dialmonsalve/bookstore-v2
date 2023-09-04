@@ -7,7 +7,10 @@ declare module 'next-auth' {
       email?: string | null;
       image?: string | null;
       lastName?: string | null;
+      phone?: string | null;
+      
     };
-
+    accessToken?: string;
   }
 }
+

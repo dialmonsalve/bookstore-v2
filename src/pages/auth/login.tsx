@@ -1,24 +1,26 @@
 import { FormEvent, useEffect, useState } from "react";
 
 import { GetServerSideProps } from 'next';
-import { signIn, getProviders, getSession, useSession } from "next-auth/react";
+import { getProviders, getSession } from "next-auth/react";
 import Image from "next/image";
 
 import { useForm } from "@/hooks/useForm";
 
 import { PublicLayout } from "@/components/layouts"
-import { Button, LoginForm } from "@/components/ui";
+import { ApiMessageError, Button, LoginForm } from "@/components/ui";
 
 import { login, loginValidationSchema, formValidator } from "@/helpers";
-import { useRegisterUser } from "@/hooks/useRegisterUser";
+import { useLogin, useOAuthClient } from "@/hooks";
+import { } from "@/components/ui/ApiMessageError";
+
 
 function Login() {
 
   const { formState, isTouched, isFormSubmitted, handleFieldChange, handleBlur, areFieldsValid, handleResetForm } = useForm(login);
-  const { handleLoginCLient } = useRegisterUser();
+  const { loginClient, isLoading, errorApiMessage, showError, setShowError } = useLogin();
+  const { loginProvider } = useOAuthClient()
+
   const [providers, setProviders] = useState<any>({});
-  const [showError, setShowError] = useState(false);
-  const [errorApiMessage, setErrorApiMessage] = useState('');
 
   useEffect(() => {
     getProviders().then(prov => {
@@ -30,21 +32,14 @@ function Login() {
 
   const errors = formValidator().getErrors(formState, loginValidationSchema);
 
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setShowError(false);
 
     if (areFieldsValid(errors)) {
-      const { hasError, message } = await handleLoginCLient(email, password);
-      if (hasError) {
-        setShowError(true);
-        setErrorApiMessage(message!)
-        setTimeout(() => setShowError(false), 3000);
-        handleResetForm();
-        return;
-      }
-      await signIn('credentials', { email, password });
-      handleResetForm();
+      handleResetForm()
+      loginClient({ email, password });
     }
   }
 
@@ -54,7 +49,12 @@ function Login() {
       pageDescription={'Página para hacer login en diabooks. Permite a nuestros usuarios hacer sus compras e inscribirse a nuestros boletines'}>
 
       <h1 >Enter and the magic begins</h1>
-      {showError && <div style={{ margin: '0 auto', fontSize: '1.6rem', backgroundColor: 'red', color: 'white', padding: '1rem 2rem', borderRadius: '1.5rem', textAlign: 'center' }} >{errorApiMessage}</div>}
+
+      <ApiMessageError
+      showError={showError}
+      errorApiMessage={errorApiMessage}
+      />
+
       <LoginForm
         formState={formState}
         errors={errors}
@@ -72,7 +72,7 @@ function Login() {
             <Button
               backgroundColor={provider.name === 'Google' ? 'outline-red' : 'outline-blue'}
               key={provider.id}
-              onClick={() => signIn(provider.id)}
+              onClick={() => loginProvider(provider.id)}
               width="30rem"
             > <Image
                 priority

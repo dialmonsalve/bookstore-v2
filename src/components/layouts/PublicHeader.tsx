@@ -1,19 +1,27 @@
 import Image from 'next/image';
 import Link from "next/link";
-
-import { signOut, useSession } from "next-auth/react";
 import { useRouter } from 'next/router';
 
+import { useLogOut, useUser } from '@/hooks';
+
+import { Spinner } from '../ui/Spinner';
+
 export const Header = () => {
-  const { data: session } = useSession();
+
+  const { client, status } = useUser();
   const router = useRouter();
 
-  const isSessionOn = session && session?.user;
-  const existImage = session?.user?.image?.length! > 0;
-  const image = isSessionOn && existImage ? session.user?.image : '/user.svg'
+  const { logOut } = useLogOut();
+
+  const existImage = client?.image?.length! > 0;
+  const image = existImage ? client?.image : '/user.svg'
 
   const navigateTo = (url: string) => {
     router.push(url);
+  }
+
+  if (status === 'loading') {
+    return (<Spinner />)
   }
 
   return (
@@ -51,13 +59,13 @@ export const Header = () => {
         <ul className='header__login--nav' >
 
           {
-            !isSessionOn
+            status === 'unauthenticated'
               ?
               <>
                 <li className='header__login--nav-item' >
-                  <button 
-                  className="header__login--nav-link" 
-                  onClick={() => navigateTo(`/auth/create-account?p=${router.asPath}`)}
+                  <button
+                    className="header__login--nav-link"
+                    onClick={() => navigateTo(`/auth/create-account?p=${router.asPath}`)}
                   >Crear cuenta
                   </button>
                 </li>
@@ -70,11 +78,11 @@ export const Header = () => {
               </>
               :
               <>
-                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {session?.user.name}</span>
+                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {client?.name}</span>
                 <li className='header__login--nav-item' >
                   <button
                     className="header__login--nav-link"
-                    onClick={() => signOut()}
+                    onClick={() => logOut()}
                   >Logout</button>
                 </li>
               </>
@@ -82,7 +90,7 @@ export const Header = () => {
 
         </ul>
         {
-          isSessionOn ?
+          status === 'authenticated' ?
             <Link href='/auth/configuration'>
               <Image className='header__login--user' src={`${image!}`} alt="user" width={35} height={35} />
             </Link>

@@ -4,7 +4,7 @@ interface IUser {
   deleted?: boolean;
   isAvailable?: boolean;
   lastName?: string;
-  name: string;
+  name?: string;
   password: string;
   updatedAt?: number;
   phone?: string;
@@ -17,7 +17,7 @@ export interface IClient extends IUser {
 }
 
 export interface IStaff extends IUser {
-  role: TypeRole[];
+  role?: TypeRole[];
   isNewStaff?: boolean;
   username: string;
   email?: string;

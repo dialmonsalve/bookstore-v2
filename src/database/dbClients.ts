@@ -1,17 +1,16 @@
-import { Client } from "@/models";
+import { Client, Staff } from "@/models";
 import { db } from "."
-import { IClient } from "@/types";
+import { IClient, IStaff } from "@/types";
 import bcrypt from 'bcryptjs'
 
-
-export const checkUserEmailPassword = async (email: string, password: string) => {
+export const checkClientEmailPassword = async (validateField: string, password: string) => {
 
   try {
-    if (!email || !password) {
+    if (!validateField || !password) {
       throw new Error('Correo electrónico y contraseña son obligatorios');
     }
 
-    const client = await Client.findOne({ email });
+    const client = await Client.findOne({ email:validateField });
     if (!client) {
       return null;
     }
@@ -23,7 +22,7 @@ export const checkUserEmailPassword = async (email: string, password: string) =>
 
     return {
       _id,
-      email: email.toLowerCase(),
+      email: validateField.toLowerCase(),
       name, image, lastName, phone
     }
   } catch (error: any) {
@@ -58,4 +57,34 @@ export const oAuthDbClient = async (oAuthEmail: string, oAuthName: string, oAuth
   const { _id, name, lastName, email, phone, image } = newClient as IClient;
 
   return { _id, name, lastName, email, phone, image };
+}
+
+
+
+
+export const checkStaffEmailPassword = async (username: string, password: string) => {
+
+  try {
+    if (!username || !password) {
+      throw new Error('Username y contraseña son obligatorios');
+    }
+
+    const staff = await Staff.findOne({ username });
+    if (!staff) {
+      return null;
+    }
+
+    if (!bcrypt.compareSync(password, staff.password)) {
+      return null
+    }
+    const { name, image, lastName, phone, _id, email, role  } = staff as IStaff;
+
+    return {
+      _id,
+      email: email?.toLowerCase(),
+      name, image, lastName, phone, username, role
+    }
+  } catch (error: any) {
+    console.error('Error en autenticación:', error.message);
+  }
 }

@@ -27,24 +27,24 @@ export const LoginForm = ({
   onSubmit,
 }: Props) => {
 
-  const { email, password } = formState;
+  const { email, password, username } = formState;
 
   return (
     <form className="form" onSubmit={onSubmit} noValidate >
       <div>
       <FormControl
-        label="email"
-        name="email"
+        label={email ? 'email' : 'username'}
+        name="username"
         type="email"
         placeholder="Tu email"
-        value={email}
+        value={username}
         onChange={handleFieldChange}
         onBlur={handleBlur}
       />
       <ErrorMessage
-        fieldName={errors?.email}
+        fieldName={errors?.username}
         isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched?.email}
+        isTouched={isTouched?.username}
       />
       </div>
 

@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -11,7 +12,7 @@ export const PrivateHeader = () => {
       <div className="private-header__user" >
         <span >Bienvenido diego</span>
         <li className='private-header__user--item' >
-          <Link className="private-header__user--link" href='/auth/logout' >Logout</Link>
+          <button className="private-header__user--link" onClick={()=>signOut()} >Logout</button>
         </li>
         <Link href='/auth/configuration'>
           <Image className='private-header__user--user' src="/user.svg" alt="user" width={35} height={35} />

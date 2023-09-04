@@ -2,17 +2,11 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
-import { checkUserEmailPassword, oAuthDbClient } from "@/database/dbClients";
+import { checkClientEmailPassword, oAuthDbClient, checkStaffEmailPassword } from "@/database/dbClients";
 
-declare module 'next-auth' {
-  interface Session {
-    accessToken?: string;
-  }
-}
 
 
 export default NextAuth({
-
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -28,9 +22,15 @@ export default NextAuth({
       credentials: {
         email: { label: "Correo", type: "email", placeholder: "correo@correo.com" },
         password: { label: "Contraseña", type: "password", placeholder: "Contraseña" },
+        username: { label: "username", type: "text", placeholder: "Username" },
       },
       async authorize(credentials): Promise<any> {
-        return await checkUserEmailPassword(credentials!.email, credentials!.password)
+
+        if(credentials!.email){
+          return await checkClientEmailPassword(credentials!.email, credentials!.password)
+        }else{
+          return await checkStaffEmailPassword(credentials!.username, credentials!.password)
+        }
       }
     })
   ],
@@ -72,7 +72,7 @@ export default NextAuth({
 
       session.accessToken = token.accessToken as string;
       if (token.user) {
-        session.user = token.user as any;
+        session.user = token.user ;
       } else {
         session.user = {
           name: token.name,

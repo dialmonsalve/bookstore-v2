@@ -1,6 +1,12 @@
 import { PrivateLayout } from "@/components/layouts"
+import { useUser } from "@/hooks"
 
 function AdminPage () {
+
+  const {session} = useUser()
+
+  console.log(session);
+  
   return (
     <PrivateLayout title='Home' >
     <section className='section'>

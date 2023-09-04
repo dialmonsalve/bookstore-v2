@@ -18,7 +18,6 @@ type Data =
     }
   }
 
-
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
   switch (req.method) {
@@ -46,7 +45,7 @@ const loginClient = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (!bcrypt.compareSync(password, client.password)) {
     return res.status(401).json({ message: 'Correo o contraseña no válidos' })
   }
-  const {  name, lastName, phone, _id } = client as IClient;
+  const { name, lastName, phone, _id } = client as IClient;
 
   // TODO Hacer validación de cuenta
 
@@ -55,7 +54,7 @@ const loginClient = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   return res.status(200).json({
     token,
     client: {
-      email,  name, lastName, phone
+      email, name, lastName, phone
     }
 
   })

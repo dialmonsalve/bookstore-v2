@@ -1,38 +1,42 @@
 import { PublicLayout } from '@/components/layouts'
+import { useUser } from '@/hooks'
+
 
 export default function Home() {
 
+const {client}= useUser()
+
   return (
-      <PublicLayout 
-      title={'DIABOOKS | Encuentra los libros que necesites para soñar'} 
+    <PublicLayout
+      title={'DIABOOKS | Encuentra los libros que necesites para soñar'}
       pageDescription={'Esta es la página de inicio de la librería DIABOOKS'}>
-        <h1>Read and dream</h1>
+      <h1>Read and dream</h1>
+      <h2>{client?.name}</h2>
+      <section className='section'>
 
-        <section className='section'>
+        <article className='section__article--news' >
+          <div className='section__article--news-1' >
 
-          <article className='section__article--news' >
-            <div className='section__article--news-1' >
+          </div>
+          <div className='section__article--news-2' >
 
-            </div>
-            <div className='section__article--news-2' >
+          </div>
+          <div className='section__article--news-3' >
 
-            </div>
-            <div className='section__article--news-3' >
+          </div>
+        </article >
 
-            </div>
-          </article >
+        <article className='section__article--schedule'>
 
-          <article className='section__article--schedule'>
+        </article >
 
-          </article >
+        <article className='section__article--best-sellers' >
 
-          <article className='section__article--best-sellers' >
+        </article>
 
-          </article>
+      </section>
 
-        </section>
-
-      </PublicLayout>    
+    </PublicLayout>
 
   )
 }

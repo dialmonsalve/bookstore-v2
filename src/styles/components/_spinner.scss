@@ -1,0 +1,54 @@
+@use '../abstract/variables' as v;
+@use '../abstract/mixins' as m;
+
+.container-spinner {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+  
+
+  &__half-spinner {
+    background-image: url('/half-rounded.svg');
+    background-repeat: no-repeat;
+    padding: 2.5rem;
+    background-size: 100%;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    animation: left-right .8s linear infinite 0.5s;
+    width: 10rem;
+    height: 10rem;
+
+    @include m.responsive(phone){
+      top: 40%;
+    }
+  }
+
+  &__loading {
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    font-size: v.$font-size + .5rem;
+
+    @include m.responsive(phone){
+      top: 55%;
+    }
+  }
+}
+
+@keyframes left-right {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(100deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}

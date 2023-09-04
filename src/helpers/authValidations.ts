@@ -2,14 +2,14 @@ import { formValidator } from './formValidator';
 
 export const login = {
   email: '',
-  password: ''
+  password: '',
+  username:''
 }
 
 export const loginValidationSchema = {
-  email: formValidator()
+  username: formValidator()
     .string()
-    .required('Campo email es requerido')
-    .email(),
+    .required('Campo username es requerido'),
   password: formValidator()
     .string()
     .required('Campo password es requerido')

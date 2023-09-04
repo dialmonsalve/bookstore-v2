@@ -6,9 +6,7 @@ export interface Props {
   children: ReactNode;
 }
 
-
-
-export const Providers = ({ children }: Props) => {
+export const SessionAuthProvider = ({ children }: Props) => {
 
 
   return (
@@ -17,3 +15,4 @@ export const Providers = ({ children }: Props) => {
     </SessionProvider>
   )
 }
+
