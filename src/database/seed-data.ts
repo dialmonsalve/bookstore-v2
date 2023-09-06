@@ -11,7 +11,8 @@ export const user: IStaff[] = [
     password: bcrypt.hashSync('12345678'),
     role: ['admin'],
     phone: '4567899595',
-    username: 'dialmonsalve'
+    username: 'dialmonsalve',
+    image:''
   },
   {
     email: 'correo2@correo.com',
@@ -20,7 +21,8 @@ export const user: IStaff[] = [
     password: bcrypt.hashSync('12345678'),
     role: ['logistica', 'vendedor'],
     phone: '1234567890',
-    username: 'pepetoro'
+    username: 'pepetoro',
+    image:''
   },
   {
     email: 'correo3@correo.com',
@@ -29,6 +31,7 @@ export const user: IStaff[] = [
     password: bcrypt.hashSync('12345678'),
     role: ['compras', 'logistica'],
     phone: '1234567890',
-    username:'lolalo'
+    username:'lolalo',
+    image:''
   },
 ]

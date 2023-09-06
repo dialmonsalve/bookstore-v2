@@ -2,7 +2,6 @@ import mongoose, { Model, Schema, model } from 'mongoose';
 import { IStaff } from "../types";
 import { Book } from '.';
 
-
 const StaffSchema = new Schema<IStaff>({
 
   name: {
@@ -15,6 +14,7 @@ const StaffSchema = new Schema<IStaff>({
   },
   email: {
     type: String,
+    unique: false
   },
   password: {
     type: String,
@@ -48,6 +48,9 @@ const StaffSchema = new Schema<IStaff>({
   isNewStaff: {
     type: Boolean,
     default: true,
+  },
+  image: {
+    type: String,
   }
 }, {
   timestamps: true

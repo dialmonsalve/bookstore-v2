@@ -9,7 +9,7 @@ import mongoose, { mongo } from "mongoose";
 
 */
 
-const mongoConnection = {
+export const mongoConnection = {
   isConnected: 0
 }
 

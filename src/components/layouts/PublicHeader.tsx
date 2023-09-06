@@ -2,19 +2,26 @@ import Image from 'next/image';
 import Link from "next/link";
 import { useRouter } from 'next/router';
 
-import { useLogOut, useUser } from '@/hooks';
+import { useLoginProviderOrLogout, useUser } from '@/hooks/auth';
 
 import { Spinner } from '../ui/Spinner';
+import { useSession } from 'next-auth/react';
 
 export const Header = () => {
 
-  const { client, status } = useUser();
+  const {user} = useUser()
+
+
+  
+
+  const { data: client, status } = useSession()
+
   const router = useRouter();
 
-  const { logOut } = useLogOut();
+  const { logOut } = useLoginProviderOrLogout();
 
-  const existImage = client?.image?.length! > 0;
-  const image = existImage ? client?.image : '/user.svg'
+  const existImage = client?.user?.image?.length! > 0;
+  const image = existImage ? client?.user?.image : '/user.svg'
 
   const navigateTo = (url: string) => {
     router.push(url);
@@ -78,11 +85,11 @@ export const Header = () => {
               </>
               :
               <>
-                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {client?.name}</span>
+                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {client?.user?.name}</span>
                 <li className='header__login--nav-item' >
                   <button
                     className="header__login--nav-link"
-                    onClick={() => logOut()}
+                    onClick={() => logOut.mutate()}
                   >Logout</button>
                 </li>
               </>

@@ -1,16 +1,24 @@
-import { FormEvent, useState } from "react";
-import Link from "next/link";
+import { FormEvent } from "react";
 
-import { useForm, useRegisterUser } from "@/hooks";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
+
+import { useForm,  } from "@/hooks";
 
 import { PublicLayout } from "@/components/layouts";
-import { Button, FormControl, ErrorMessage, ApiMessageError } from "@/components/ui";
+import { Spinner , RegisterForm} from "@/components/ui";
 
-import { formValidator, newUser, newUserValidationSchema } from "@/helpers";
-import { getSession } from "next-auth/react";
-import { GetServerSideProps } from "next";
-import { Spinner } from "@/components/ui/Spinner";
+import { formValidator,  newUserValidationSchema } from "@/helpers";
+import { useLoginOrRegistry } from "@/hooks/auth";
 
+export const newClient = {
+  name: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  password: '',
+  repitePassword: ''
+};
 
 function CreateAccount() {
 
@@ -22,30 +30,26 @@ function CreateAccount() {
     handleFieldChange,
     areFieldsValid,
     handleResetForm
-  } = useForm(newUser)
+  } = useForm(newClient)
 
-  const { registerClient, isLoading, errorApiMessage, showError, setShowError } = useRegisterUser();
+  const { registerUser,  errorApiMessage, showError, setShowError,  } = useLoginOrRegistry("email");
 
-  const { email, lastName, name, password, phone, repitePassword } = formState;
-
-  const errors = formValidator().getErrors(formState, newUserValidationSchema);
-
-  console.log(isLoading);
   
+  const errors = formValidator().getErrors(formState, newUserValidationSchema);
 
   const handleRegisterClient = async (e: FormEvent) => {
     e.preventDefault();
     setShowError(false);
 
     if (areFieldsValid(errors)) {
-      registerClient({ email, password, name })
+      const { repitePassword, ...restFormState } = formState
+      registerUser.mutate({ repitePassword, ...restFormState })
     }
   }
 
-  if(isLoading){
+  if (registerUser.isLoading) {
     return <Spinner />
   }
-
 
   return (
     <PublicLayout
@@ -54,126 +58,18 @@ function CreateAccount() {
     >
       <h1 >Crea tu cuenta y comienza a volar</h1>
 
-      <ApiMessageError
-      showError={showError}
-      errorApiMessage={errorApiMessage}
+      <RegisterForm
+        isStaff={false}
+        formState={formState}
+        errorApiMessage={errorApiMessage}
+        errors={errors}
+        isFormSubmitted={isFormSubmitted}
+        isTouched={isTouched}
+        showError={showError}
+        handleBlur={handleBlur}
+        handleFieldChange={handleFieldChange}
+        onSubmit={handleRegisterClient}
       />
-      <form style={{ width: "60rem" }} className="form" onSubmit={handleRegisterClient} >
-
-        <div>
-          <FormControl
-            label="nombre"
-            name="name"
-            type="text"
-            placeholder="Tu nombre"
-            value={name}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
-          <ErrorMessage
-            fieldName={errors?.name}
-            isFormSubmitted={isFormSubmitted}
-            isTouched={isTouched?.name}
-          />
-
-        </div>
-
-        <div>
-          <FormControl
-            label="apellido"
-            name="lastName"
-            type="text"
-            placeholder="Tu apellido"
-            value={lastName}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
-          <ErrorMessage
-            fieldName={errors?.lastName}
-            isFormSubmitted={isFormSubmitted}
-            isTouched={isTouched?.lastName}
-          />
-        </div>
-
-        <div>
-          <FormControl
-            label="email"
-            name="email"
-            type="email"
-            placeholder="Tu email"
-            value={email}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
-          <ErrorMessage
-            fieldName={errors?.email}
-            isFormSubmitted={isFormSubmitted}
-            isTouched={isTouched?.email}
-          />
-        </div>
-
-        <div>
-          <FormControl
-            label="Teléfono"
-            name="phone"
-            type="phone"
-            placeholder="tu Teléfono"
-            value={phone}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
-          <ErrorMessage
-            fieldName={errors?.phone}
-            isFormSubmitted={isFormSubmitted}
-            isTouched={isTouched?.phone}
-          />
-        </div>
-
-        <div>
-          <FormControl
-            label="password"
-            name="password"
-            type="password"
-            placeholder="Tu password"
-            value={password}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
-
-          <ErrorMessage
-            fieldName={errors?.password}
-            isFormSubmitted={isFormSubmitted}
-            isTouched={isTouched?.password}
-          />
-        </div>
-
-        <div>
-          <FormControl
-            label="repite password"
-            name="repitePassword"
-            type="password"
-            placeholder="Repite tu password"
-            value={repitePassword}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
-          <ErrorMessage
-            fieldName={errors?.repitePassword}
-            isFormSubmitted={isFormSubmitted}
-            isTouched={isTouched?.repitePassword}
-          />
-        </div>
-
-        <div style={{ display: 'flex' }}>
-          <Button type="submit" width='40%' backgroundColor="green" disabled={!!errors} >
-            Crea Cuenta
-          </Button>
-
-          <Link href='login' className="btn btn--blue btn--medium" >
-            Login
-          </Link>
-        </div>
-      </form>
 
     </PublicLayout>
   )

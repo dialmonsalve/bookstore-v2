@@ -8,7 +8,7 @@ interface IUser {
   password: string;
   updatedAt?: number;
   phone?: string;
-  image?:string
+  image?: string
 }
 
 export interface IClient extends IUser {
@@ -24,3 +24,14 @@ export interface IStaff extends IUser {
 }
 
 type TypeRole = 'admin' | 'logistica' | 'vendedor' | 'compras';
+
+interface ResponseObject {
+  _id?: string,
+  email?: string,
+  name?: string,
+  image?: string,
+  lastName?: string,
+  phone?: string,
+  role?: TypeRole[],
+  username?: string
+}

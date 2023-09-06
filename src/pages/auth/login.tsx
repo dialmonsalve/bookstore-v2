@@ -9,16 +9,19 @@ import { useForm } from "@/hooks/useForm";
 import { PublicLayout } from "@/components/layouts"
 import { ApiMessageError, Button, LoginForm } from "@/components/ui";
 
-import { login, loginValidationSchema, formValidator } from "@/helpers";
-import { useLogin, useOAuthClient } from "@/hooks";
+import { loginClient, loginClientValidationSchema, formValidator } from "@/helpers";
+
 import { } from "@/components/ui/ApiMessageError";
+import { useLoginOrRegistry, useLoginProviderOrLogout } from "@/hooks/auth";
 
 
 function Login() {
 
-  const { formState, isTouched, isFormSubmitted, handleFieldChange, handleBlur, areFieldsValid, handleResetForm } = useForm(login);
-  const { loginClient, isLoading, errorApiMessage, showError, setShowError } = useLogin();
-  const { loginProvider } = useOAuthClient()
+  const { formState, isTouched, isFormSubmitted, handleFieldChange, handleBlur, areFieldsValid, handleResetForm } = useForm(loginClient);
+  const { email, password } = formState;
+
+  const { loginUser, errorApiMessage, showError, setShowError } = useLoginOrRegistry("email");
+  const { loginProvider } = useLoginProviderOrLogout()
 
   const [providers, setProviders] = useState<any>({});
 
@@ -28,18 +31,16 @@ function Login() {
     })
   }, [])
 
-  const { email, password } = formState;
 
-  const errors = formValidator().getErrors(formState, loginValidationSchema);
-
+  const errors = formValidator().getErrors(formState, loginClientValidationSchema);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setShowError(false);
 
     if (areFieldsValid(errors)) {
+      loginUser.mutate({ email, password });
       handleResetForm()
-      loginClient({ email, password });
     }
   }
 
@@ -51,8 +52,8 @@ function Login() {
       <h1 >Entra para que la magia comience</h1>
 
       <ApiMessageError
-      showError={showError}
-      errorApiMessage={errorApiMessage}
+        showError={showError}
+        errorApiMessage={errorApiMessage}
       />
 
       <LoginForm
@@ -65,14 +66,17 @@ function Login() {
         handleBlur={handleBlur} />
 
       {
-        Object.values(providers).map((provider: any) => {
+
+        Object.values(providers) !==null && 
+
+        Object?.values(providers).map((provider: any) => {
           if (provider.id === 'credentials') return (<div key='credentials' ></div>);
 
           return (
             <Button
               backgroundColor={provider.name === 'Google' ? 'outline-red' : 'outline-blue'}
               key={provider.id}
-              onClick={() => loginProvider(provider.id)}
+              onClick={() => loginProvider.mutate(provider.id)}
               width="30rem"
             > <Image
                 priority

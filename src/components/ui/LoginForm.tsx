@@ -31,38 +31,58 @@ export const LoginForm = ({
 
   return (
     <form className="form" onSubmit={onSubmit} noValidate >
-      <div>
-      <FormControl
-        label={email ? 'email' : 'username'}
-        name="username"
-        type="email"
-        placeholder="Tu email"
-        value={username}
-        onChange={handleFieldChange}
-        onBlur={handleBlur}
-      />
-      <ErrorMessage
-        fieldName={errors?.username}
-        isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched?.username}
-      />
-      </div>
+      {
+        isStaff ?
+          <div>
+            <FormControl
+              label={'username'}
+              name="username"
+              type="email"
+              placeholder="username"
+              value={username}
+              onChange={handleFieldChange}
+              onBlur={handleBlur}
+            />
+            <ErrorMessage
+              fieldName={errors?.username}
+              isFormSubmitted={isFormSubmitted}
+              isTouched={isTouched?.username}
+            />
+          </div>
+
+          :  <div>
+          <FormControl
+            label={'email'}
+            name="email"
+            type="email"
+            placeholder="Tu email"
+            value={email}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+          <ErrorMessage
+            fieldName={errors?.email}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.email}
+          />
+        </div>
+      }
 
       <div>
-      <FormControl
-        label="password"
-        name="password"
-        type="password"
-        placeholder="Tu password"
-        value={password}
-        onChange={handleFieldChange}
-        onBlur={handleBlur}
-      />
-      <ErrorMessage
-        fieldName={errors?.password}
-        isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched?.password}
-      />
+        <FormControl
+          label="password"
+          name="password"
+          type="password"
+          placeholder="Tu password"
+          value={password}
+          onChange={handleFieldChange}
+          onBlur={handleBlur}
+        />
+        <ErrorMessage
+          fieldName={errors?.password}
+          isFormSubmitted={isFormSubmitted}
+          isTouched={isTouched?.password}
+        />
       </div>
 
       <div className="form__buttons">
@@ -72,7 +92,7 @@ export const LoginForm = ({
         {
           !isStaff &&
           <Link href='create-account' className="btn btn--green btn--medium" >
-            Crea cuenta
+            Crea tu cuenta
           </Link>
         }
 

@@ -1,11 +1,18 @@
 import React, { FormEvent } from 'react'
-import {  getSession } from "next-auth/react";
-
 import { GetServerSideProps } from 'next';
+import { getSession } from "next-auth/react";
+
+import { useForm } from '@/hooks';
 
 import { ApiMessageError, LoginForm } from '@/components/ui'
-import { useForm, useStaffLogin } from '@/hooks';
-import { formValidator, login, loginValidationSchema } from '@/helpers';
+
+import { formValidator, loginStaffValidationSchema } from '@/helpers';
+import { useLoginOrRegistry } from '@/hooks/auth';
+
+export const loginStaff = {
+  username: '',
+  password: '',
+}
 
 function PrivateLoginPage() {
 
@@ -17,13 +24,13 @@ function PrivateLoginPage() {
     handleBlur,
     areFieldsValid,
     handleResetForm
-  } = useForm(login);
+  } = useForm(loginStaff);
 
   const { username, password } = formState;
 
-  const errors = formValidator().getErrors(formState, loginValidationSchema);
+  const errors = formValidator().getErrors(formState, loginStaffValidationSchema);
 
-  const {setShowError, loginStaff, errorApiMessage, showError} = useStaffLogin()
+  const { loginUser, setShowError,  errorApiMessage, showError } = useLoginOrRegistry("username")
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -32,17 +39,15 @@ function PrivateLoginPage() {
     if (areFieldsValid(errors)) {
       handleResetForm()
 
-      console.log(username, password);
-      
-      loginStaff({ username, password });
+      loginUser.mutate({ username, password });
     }
   }
   return (
     <main className='admin-login' >
       <h1 style={{ color: 'white' }} >Login</h1>
       <ApiMessageError
-      showError={showError}
-      errorApiMessage={errorApiMessage}
+        showError={showError}
+        errorApiMessage={errorApiMessage}
       />
       <LoginForm
         formState={formState}
@@ -62,12 +67,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
   const session = await getSession({ req });
 
-  const { p = '/admin' } = query;
+  const { p = '/admin/store' } = query;
 
   if (session) {
     return {
       redirect: {
-        destination: p.toString(),
+        destination:  p.toString(),
         permanent: false
       }
     }

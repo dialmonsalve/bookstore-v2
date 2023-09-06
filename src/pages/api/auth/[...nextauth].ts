@@ -2,9 +2,7 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
-import { checkClientEmailPassword, oAuthDbClient, checkStaffEmailPassword } from "@/database/dbClients";
-
-
+import { checkEmailPassword, oAuthDbClient } from "@/database/dbUser";
 
 export default NextAuth({
   providers: [
@@ -25,12 +23,12 @@ export default NextAuth({
         username: { label: "username", type: "text", placeholder: "Username" },
       },
       async authorize(credentials): Promise<any> {
+        const validateField = credentials!.email || credentials!.username;
 
-        if(credentials!.email){
-          return await checkClientEmailPassword(credentials!.email, credentials!.password)
-        }else{
-          return await checkStaffEmailPassword(credentials!.username, credentials!.password)
+        if (!validateField) {
+          throw new Error('Las credenciales son obligatorias');
         }
+        return await checkEmailPassword(validateField, credentials!.password, !!credentials!.username);
       }
     })
   ],
@@ -43,6 +41,8 @@ export default NextAuth({
     strategy: 'jwt',
     updateAge: 86400,
   },
+  secret: process.env.NEXTAUTH_SECRET,
+
   callbacks: {
     async jwt({ token, account, user }) {
 
@@ -52,15 +52,21 @@ export default NextAuth({
         switch (account.type) {
 
           case 'oauth':
-            console.log(user);
-
             await oAuthDbClient(user.email || '', user.name || '', user.image || '');
+
             break;
 
           case 'credentials':
-            token.user = user
-            break;
 
+            token = {
+              name: user.name,
+              email: user.email,
+              picture: user.image,
+              sub: token.sub,
+              accessToken: token.accessToken,
+              username: user.username
+            }
+            break;
           default:
             break;
         }
@@ -68,19 +74,10 @@ export default NextAuth({
 
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
 
       session.accessToken = token.accessToken as string;
-      if (token.user) {
-        session.user = token.user ;
-      } else {
-        session.user = {
-          name: token.name,
-          email: token.email,
-          image: token.picture,
-        }
-      }
-
+      session.user = token;
       return session;
     }
   }

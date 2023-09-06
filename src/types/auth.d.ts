@@ -1,4 +1,5 @@
 import { Session } from 'next-auth';
+import { TypeRole } from '.';
 
 declare module 'next-auth' {
   interface Session {
@@ -8,7 +9,8 @@ declare module 'next-auth' {
       image?: string | null;
       lastName?: string | null;
       phone?: string | null;
-      
+      role?: TypeRole,
+      username?:string
     };
     accessToken?: string;
   }
