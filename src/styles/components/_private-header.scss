@@ -8,11 +8,13 @@
   padding: 0 2.5rem;
   width: 75%;
   margin-left: 30rem;
+  height: 10vh;
 
   @include m.responsive(phone) {
     padding: 5rem 1.5rem;
     margin-left: 0;
     width: 100%;
+    height: 20vh;
   }
 
   &__user {

@@ -3,6 +3,8 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
 import { checkEmailPassword, oAuthDbClient } from "@/database/dbUser";
+import { IStaff } from "@/types";
+
 
 export default NextAuth({
   providers: [
@@ -52,21 +54,26 @@ export default NextAuth({
         switch (account.type) {
 
           case 'oauth':
-            await oAuthDbClient(user.email || '', user.name || '', user.image || '');
+            const { username, _id } = await oAuthDbClient(user.email || '', user.name || '', user.image || '') as IStaff;
+
+            if (username) {
+              token.username = username;
+            }
+            if (_id) {
+              token._id = _id;
+            }
 
             break;
 
           case 'credentials':
-
             token = {
-              name: user.name,
-              email: user.email,
-              picture: user.image,
-              sub: token.sub,
-              accessToken: token.accessToken,
-              username: user.username
-            }
+              ...user,
+              iat: token.iat,
+              exp: token.exp,
+              jti: token.jti,
+            };
             break;
+
           default:
             break;
         }
@@ -75,9 +82,19 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-
       session.accessToken = token.accessToken as string;
-      session.user = token;
+
+      if (token.username) {
+        session.user.username = token?.username as string;
+      }
+      if (token._id) {
+        session.user._id = token._id as any;
+      }
+
+      if (token.user) {
+        session.user = token.user as IStaff;
+      }   
+
       return session;
     }
   }

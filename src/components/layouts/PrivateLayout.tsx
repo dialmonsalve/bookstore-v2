@@ -14,8 +14,8 @@ export const PrivateLayout = ({ title, children }: Props) => {
       <PrivateSidebar />
       <div  >
         <PrivateHeader />
-        <h1>{title}</h1>
         <main className='private-main' >
+        <h1>{title}</h1>
           {children}
         </main>
       </div>

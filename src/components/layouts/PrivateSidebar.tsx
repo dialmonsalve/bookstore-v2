@@ -37,7 +37,7 @@ export const PrivateSidebar = () => {
           }
       </ul>
       <button
-        className='private-nav__menu'
+        className={`private-nav__menu ${toggleSidebar ? 'menu-open' : 'menu-close'}`}
         onClick={handleToggleSidebar}
       >
         <Image

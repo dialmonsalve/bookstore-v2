@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcryptjs';
+import { getSession } from 'next-auth/react';
 
 import { db } from '@/database';
 import { Client, Staff } from '@/models';
@@ -25,13 +25,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const findUserByEmail = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-  const { email = '', username = '' } = req.query;
-
-  try {
-
-    if (!email  && !username) {
+  const session = await getSession({req});
+  
+  try {    
+    if (!session) {
       throw new Error('Las credenciales son obligatorias');
     }
+
+    const { email, username } = session?.user;
 
     await db.connect();
 
@@ -48,7 +49,7 @@ const findUserByEmail = async (req: NextApiRequest, res: NextApiResponse<Data>) 
 
     const responseObject: ResponseObject = {
       _id,
-      email: email?.toString().toLowerCase(),
+      email: email?.toLowerCase(),
       name,
       image,
       lastName,
@@ -57,7 +58,7 @@ const findUserByEmail = async (req: NextApiRequest, res: NextApiResponse<Data>) 
     };
 
     if (username) {
-      responseObject.username = username.toString().toLowerCase(),
+      responseObject.username = username.toLowerCase(),
       responseObject.email = staffEmail
     }
 

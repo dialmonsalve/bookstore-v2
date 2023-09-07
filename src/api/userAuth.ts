@@ -9,7 +9,7 @@ interface AuthResult { hasError: boolean, user?: IClient | IStaff, message?: str
 export const registerUser = async (fieldForm: { [key: string]: string, password: string }): Promise<AuthResult> => {
   
   try {
-    const { data } = await bookstoreApi.post<IClient>('/user/register-user', fieldForm);
+    const { data } = await bookstoreApi.post<IClient>('/users/register-user', fieldForm);
     return {
       hasError: false,
       user: data
@@ -38,7 +38,7 @@ export const handleLogin = async (fieldForm: { [key: string]: string, password: 
   };
 
   try {
-    const { data } = await bookstoreApi.post(`/user/login`, formData);
+    const { data } = await bookstoreApi.post(`/users/login`, formData);
 
     return {
       hasError: false,

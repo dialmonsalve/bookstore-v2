@@ -3,13 +3,15 @@ import { signIn,   } from "next-auth/react";
 import { useMutation,  useQueryClient } from "@tanstack/react-query";
 
 import { userAuth } from "@/api";
+import { useRouter } from "next/router";
 
 export const useLoginOrRegistry = (fieldForm: string) => {
 
+  const queryClient = useQueryClient();
+  const router = useRouter()
   const [showError, setShowError] = useState(false);
   const [errorApiMessage, setErrorApiMessage] = useState('');
 
-  const queryClient = useQueryClient();
 
   const loginUser = useMutation({
     mutationFn: (formData: { [key: string]: string; password: string }) => {
@@ -23,14 +25,16 @@ export const useLoginOrRegistry = (fieldForm: string) => {
     },
     onSuccess: async ({ hasError, message, user }, formData) => {
 
-
       if (hasError) {
         setShowError(true);
         setErrorApiMessage(message!)
         setTimeout(() => setShowError(false), 3000);
         return;
       }
-      queryClient.setQueriesData([fieldForm === "username" ? "staff" : "client"], user);
+
+      console.log(fieldForm);
+      
+      queryClient.setQueriesData([fieldForm === "username" ? "credential-staff" : "credential-client"], user);
       await signIn('credentials', formData);
     }
   })
@@ -60,15 +64,17 @@ export const useLoginOrRegistry = (fieldForm: string) => {
         setShowError(true);
         setErrorApiMessage(message!)
         setTimeout(() => setShowError(false), 3000);
-        return hasError
       }
-      queryClient.setQueriesData([username ? "staff" : "client"], user);
+      queryClient.setQueriesData([username ? "credential-staff" : "credential-client"], user);
 
-      if (username) return;
+      if (username) {
+        router.push('/admin/store/users')
+        return
+      };
       await signIn('credentials', { email, password, name });
 
-      return hasError = false;
-    }
+    },
+    
   })
 
   return {

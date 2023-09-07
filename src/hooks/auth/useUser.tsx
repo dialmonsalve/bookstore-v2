@@ -3,17 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { IStaff } from "@/types";
 import { bookstoreApi } from "@/api";
 import axios from "axios";
+import { useEmployeesStore } from "@/store/users";
 
-const handleLogin = async (fieldForm: { [key: string]: string | undefined }): Promise<IStaff | null> => {
-  const { email, username } = fieldForm;
-
-  const formData = {
-    username:username ? username : undefined,
-    email
-  }
+const handleLogin = async (): Promise<IStaff | null> => {
   
   try {
-    const { data } = await bookstoreApi.get(`/user/search-user`, {params: formData});
+    const { data } = await bookstoreApi.get(`/users/search-user`);
+  
     return data
 
   } catch (error) {
@@ -29,26 +25,21 @@ export const useUser = () => {
 
   const { data: session, status } = useSession();
 
-  const isStaff = session?.user.role ? "staff" : "client"
+  const isStaff = session?.user?.username ? "credential-staff" : "credential-client";
+ 
+  const user = useQuery({   
 
-  const formData = {
-    email: session?.user.email ? (session?.user.email ) : undefined,
-    username: session?.user.username ? session?.user.username  : undefined,
-  }
-  
-  const user = useQuery({
-
-    queryKey: [isStaff],
-
-    enabled: !!session?.user?.email!,
     queryFn: async () => {
 
       if (status === 'authenticated') {
-        const data = await handleLogin(formData)
+        const data = await handleLogin()
+        useEmployeesStore.getState().setSession(data); 
         return data;
       }
       return null;
-    }
+    },
+    queryKey: [ isStaff],
+    enabled: !!session?.user?.email!,
   })
 
 

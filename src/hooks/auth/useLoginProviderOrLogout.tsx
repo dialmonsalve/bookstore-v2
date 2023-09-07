@@ -6,7 +6,7 @@ export const useLoginProviderOrLogout = () => {
   const queryClient = useQueryClient();
   const session = useSession();
 
-  const urlUser = !!session.data?.user.username ? "/admin/auth" : "/auth/login"
+  const urlUser = !!session.data?.user?.username ? "/admin/auth" : "/auth/login"
 
   const logOut = useMutation({
     mutationFn: async () => await signOut({callbackUrl: urlUser}),
@@ -15,8 +15,9 @@ export const useLoginProviderOrLogout = () => {
     }
   })
 
-  const loginProvider = useMutation({
-    mutationFn: async (providerId: string) => await signIn(providerId)
+  const loginProvider = useMutation({    
+    mutationFn: async (providerId: string) => await signIn(providerId),
+    onSuccess:(user)=>  queryClient.setQueriesData(["credential-client"], user)
   })
 
   return {

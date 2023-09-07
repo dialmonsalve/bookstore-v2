@@ -3,10 +3,11 @@ import { FormEvent } from "react"
 import { useForm, } from "@/hooks"
 
 import { PrivateLayout } from "@/components/layouts"
-import { Button, RegisterForm, Spinner } from "@/components/ui"
+import {  RegisterForm, Spinner } from "@/components/ui"
 
 import { formValidator, newStaffValidationSchema } from "@/helpers"
 import { useLoginOrRegistry } from "@/hooks/auth"
+
 
 export const newStaff = {
   name: '',
@@ -19,7 +20,7 @@ export const newStaff = {
   role: 'vendedor'
 }
 
-function AdminUser() {
+function CreateStaffPage  ()  {
 
   const {
     formState,
@@ -49,16 +50,10 @@ function AdminUser() {
     return <Spinner />
   }
 
-  return (
-    <PrivateLayout title="Usuarios" >
-      <Button
-        buttonStyle="iconButton"
-        ico="plus"
-        top="10%"
-        position="fixed"
-        right="10%"
-      />
 
+   return (
+    <PrivateLayout title="Usuarios" >
+    
       <RegisterForm
         isStaff
         formState={formState}
@@ -71,9 +66,8 @@ function AdminUser() {
         handleFieldChange={handleFieldChange}
         onSubmit={handleRegisterClient}
       />
-
     </PrivateLayout>
   )
 }
 
-export default AdminUser;
+export default CreateStaffPage

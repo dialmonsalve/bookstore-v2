@@ -5,29 +5,24 @@ import { useRouter } from 'next/router';
 import { useLoginProviderOrLogout, useUser } from '@/hooks/auth';
 
 import { Spinner } from '../ui/Spinner';
-import { useSession } from 'next-auth/react';
+import { useEmployeesStore } from '@/store/users';
 
 export const Header = () => {
 
-  const {user} = useUser()
-
-
-  
-
-  const { data: client, status } = useSession()
-
+  const { status } = useUser();
   const router = useRouter();
+  const session = useEmployeesStore(state => state.session);
 
   const { logOut } = useLoginProviderOrLogout();
 
-  const existImage = client?.user?.image?.length! > 0;
-  const image = existImage ? client?.user?.image : '/user.svg'
+  const existImage = session?.image?.length! > 0;
+  const image = existImage ? session?.image : '/user.svg'
 
   const navigateTo = (url: string) => {
     router.push(url);
   }
 
-  if (status === 'loading') {
+  if (status=== 'loading') {
     return (<Spinner />)
   }
 
@@ -85,7 +80,7 @@ export const Header = () => {
               </>
               :
               <>
-                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {client?.user?.name}</span>
+                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {session?.name}</span>
                 <li className='header__login--nav-item' >
                   <button
                     className="header__login--nav-link"

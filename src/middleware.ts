@@ -1,4 +1,5 @@
 import { getToken } from 'next-auth/jwt';
+import { getSession } from 'next-auth/react';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -7,6 +8,9 @@ export async function middleware(req: NextRequest) {
   const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const requestedPage = req.nextUrl.pathname;
   const url = req.nextUrl.clone();  
+
+  
+  
 
   if (!session) {
 
@@ -18,8 +22,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!session?.username) {
-
-    if (requestedPage.startsWith('/admin/store')) {
+    if (requestedPage.startsWith('/admin')) {
       url.pathname = "/";
       return NextResponse.redirect(url);
     }

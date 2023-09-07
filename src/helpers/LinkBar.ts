@@ -4,36 +4,36 @@ export const links = [
     id:1,
     src: '/icons/home.svg',
     alt: 'home',
-    href: '/admin/store'
+    href: '/admin/bookstore'
   },
   {
     id:2,
     src: '/icons/books.svg',
     alt: 'libros',
-    href: '/admin/store/books'
+    href: '/admin/bookstore/books'
   },
   {
     id:3,
     src: '/icons/truck.svg',
     alt: 'juguetes',
-    href: '/admin/store/toys'
+    href: '/admin/bookstore/toys'
   },
   {
     id:4,
     src: '/icons/paper.svg',
     alt: 'papelería',
-    href: '/admin/store/stationeries/'
+    href: '/admin/bookstore/stationeries/'
   },
   {
     id:5,
     src: '/icons/user.svg',
     alt: 'usuarios',
-    href: '/admin/store/users'
+    href: '/admin/bookstore/users'
   },
   {
     id:6,
     src: '/icons/truck.svg',
     alt: 'logística',
-    href: '/admin/store/logistic'
+    href: '/admin/bookstore/logistic'
   },
 ]

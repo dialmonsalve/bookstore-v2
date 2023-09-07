@@ -67,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
   const session = await getSession({ req });
 
-  const { p = '/admin/store' } = query;
+  const { p = '/admin/bookstore' } = query;
 
   if (session) {
     return {

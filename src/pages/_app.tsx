@@ -8,7 +8,13 @@ import '../styles/main.scss';
 
 export default function App({ Component, pageProps }: AppProps) {
 
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions:{
+      queries:{
+        staleTime: 1000 * 60 * 60, // 1 hora
+      }
+    }
+  })
 
   return (
     <SessionAuthProvider>

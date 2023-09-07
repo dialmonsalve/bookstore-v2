@@ -7,6 +7,7 @@ h1 {
   text-align: center;
   text-transform: uppercase;
 
+
   @include m.responsive(phone) {
     font-size: v.$font-size + 1rem;
   }

@@ -43,7 +43,7 @@
   }
 
   &--outline-red {
-    @include m.btn-outline(v.$color-red-1, v.$color-red-2);
+    @include m.btn-outline(v.$color-red-2, v.$color-red-3);
   }
 
   &--outline-purple {
@@ -59,10 +59,10 @@
   }
 
   &--small {
-    font-size: v.$font-size - .4rem;
-    height: 10%;
-    padding: 0.7rem 0.5rem;
-    width: 25%;
+    font-size: v.$font-size - .5rem;
+    // height: 15%;
+    padding: 1rem 1rem;
+    // width: 50%;
 
     @include m.responsive(phone) {
       padding: .6rem 0rem;
@@ -112,8 +112,8 @@
 }
 
 .btn-ico {
-  width: 4rem;
-  height: 5rem;
+  width: 6rem;
+  height: 6rem;
   transition: all .3s;
 }
 
@@ -131,15 +131,26 @@
 
 .plus {
   @include m.btn-ico('/icons/plus.svg');
+  z-index: 10;
 
   &:hover {
-    transform: rotate(90deg);
-
-    @include m.responsive(phone) {
-      transform: rotate(0deg);
-    }
+    transform: scale(1.2);
   }
-}
+  &:hover::after {
+    content: "Crea usuario";
+    position: absolute;
+    bottom: -10%;
+    left: 0; 
+    color: v.$color-primary-dark;
+    padding: .5rem 1rem;
+    border: 1px solid v.$color-primary-dark;
+    border-radius: 5px;
+    font-size:1rem;
+    opacity: 0.8;
+    transform: translateY(100%)
+  }
+  }
+
 
 .edit {
   @include m.btn-ico('/icons/edit.svg');

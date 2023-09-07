@@ -5,3 +5,4 @@ export * from './FormControl';
 export * from './LoginForm';
 export * from './Spinner';
 export * from './RegisterForm';
+export * from './Table';

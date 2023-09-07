@@ -1,0 +1,59 @@
+@use '../abstract/variables' as v;
+@use '../abstract/mixins' as m;
+
+.table {
+  overflow: auto;
+ 
+  & > table{
+    border-collapse: collapse;
+
+  }
+
+  @include m.responsive(tab-port) {
+    align-self: flex-start;
+  }
+
+  &__header {    
+    background-color: v.$color-primary;
+    font-size: v.$font-size - .2rem;
+    position: sticky;
+    text-transform: uppercase;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+
+    &--titles {
+      color: white;
+
+      @include m.responsive(phone) {
+        color: v.$color-primary-dark;
+        background-color: white;
+      }
+    }
+  }
+
+  &__row {
+    font-size: v.$font-size - .2rem;
+    text-transform: uppercase;
+    border: 1px solid v.$color-gray-1;
+    color: v.$color-primary;
+    font-weight: 700;
+    
+    @include m.responsive(phone) {
+      border: 1px solid v.$color-white;
+    }
+    
+    &:hover {
+      background-color: v.$color-blue-1;
+    }
+  }
+
+  &__td {
+    padding: 1.5rem 1rem;
+    width: 12rem;
+    
+    @include m.responsive(phone) {
+      font-size: v.$font-size;
+    }
+  }
+}
