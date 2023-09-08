@@ -1,27 +1,31 @@
 
-import { IStaff } from "@/types"
+import { IEmployee } from "@/types"
 import { create, } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export interface InitialState {
-  employees: IStaff[] | null | undefined;
-  employee: IStaff;
-  session: IStaff | null | undefined;
-  setEmployees: (employees: IStaff[] | null | undefined) => void
-  setSession: (session: IStaff | null | undefined) => void
+interface State {
+  employees: IEmployee[] | null;
+  employee: IEmployee | null;
+  session: IEmployee | null;
 }
 
-export const useEmployeesStore = create<InitialState>()(devtools((set, get) => {
+interface Actions {
+  setSession: (session: IEmployee | null) => void
+  setEmployees: (employees: IEmployee[] | null) => void
+
+}
+
+export const useEmployeesStore = create<State & Actions> ()(devtools((set, get) => {
 
   return {
     employees: [],
-    employee: {} as IStaff,
-    session: {} as IStaff,
-    setEmployees: (employees: IStaff[] | null | undefined) => {
+    employee: {} as IEmployee,
+    session: {} as IEmployee,
+    setSession: (session: IEmployee | null) => {
+      set({ session }, false, "session")
+    },
+    setEmployees: (employees: IEmployee[] | null) => {
       set({ employees }, false, "employees")
     },
-    setSession: (session: IStaff | null | undefined) => {
-      set({session})
-    }
   }
 }))

@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 
 import { db } from '@/database';
-import { Client, Staff } from '@/models';
-import { IStaff, ResponseObject } from '@/types';
+import { Client, Employee } from '@/models';
+import { IEmployee, ResponseObject } from '@/types';
 
 
 type Data =
@@ -39,13 +39,13 @@ const findUserByEmail = async (req: NextApiRequest, res: NextApiResponse<Data>) 
     let user;
 
     if (username) {
-      user = await Staff.findOne({ username });
+      user = await Employee.findOne({ username });
     }
     else {
       user = await Client.findOne({ email });
     }
 
-    const { name, lastName, phone, _id, role, image, email: staffEmail } = user as IStaff;
+    const { name, lastName, phone, _id, role, image, email: employeeEmail } = user as IEmployee;
 
     const responseObject: ResponseObject = {
       _id,
@@ -59,7 +59,7 @@ const findUserByEmail = async (req: NextApiRequest, res: NextApiResponse<Data>) 
 
     if (username) {
       responseObject.username = username.toLowerCase(),
-      responseObject.email = staffEmail
+      responseObject.email = employeeEmail
     }
 
     return res.status(200).json(responseObject);

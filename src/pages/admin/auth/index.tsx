@@ -6,13 +6,8 @@ import { useForm } from '@/hooks';
 
 import { ApiMessageError, LoginForm } from '@/components/ui'
 
-import { formValidator, loginStaffValidationSchema } from '@/helpers';
-import { useLoginOrRegistry } from '@/hooks/auth';
-
-export const loginStaff = {
-  username: '',
-  password: '',
-}
+import { formValidator, loginEmployee, loginEmployeeValidationSchema } from '@/helpers';
+import { useLogin } from '@/hooks/auth';
 
 function PrivateLoginPage() {
 
@@ -24,13 +19,13 @@ function PrivateLoginPage() {
     handleBlur,
     areFieldsValid,
     handleResetForm
-  } = useForm(loginStaff);
+  } = useForm(loginEmployee);
 
   const { username, password } = formState;
 
-  const errors = formValidator().getErrors(formState, loginStaffValidationSchema);
+  const errors = formValidator().getErrors(formState, loginEmployeeValidationSchema);
 
-  const { loginUser, setShowError,  errorApiMessage, showError } = useLoginOrRegistry("username")
+  const { loginUser, setShowError,  errorApiMessage, showError } = useLogin("username")
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -57,7 +52,7 @@ function PrivateLoginPage() {
         onSubmit={handleSubmit}
         handleFieldChange={handleFieldChange}
         handleBlur={handleBlur}
-        isStaff
+        isEmployee
       />
     </main>
   )
@@ -67,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
   const session = await getSession({ req });
 
-  const { p = '/admin/bookstore' } = query;
+  const { p = '/bookstore' } = query;
 
   if (session) {
     return {

@@ -5,23 +5,10 @@ import { useForm, } from "@/hooks"
 import { PrivateLayout } from "@/components/layouts"
 import {  RegisterForm, Spinner } from "@/components/ui"
 
-import { formValidator, newStaffValidationSchema } from "@/helpers"
-import { useLoginOrRegistry } from "@/hooks/auth"
+import { formValidator, newEmployee, newEmployeeValidationSchema } from "@/helpers"
+import { useRegisterEmployee } from "@/hooks/auth"
 
-
-export const newStaff = {
-  name: '',
-  lastName: '',
-  username: '',
-  email: '',
-  phone: '',
-  password: '',
-  repitePassword: '',
-  role: 'vendedor'
-}
-
-function CreateStaffPage  ()  {
-
+function CreateEmployeePage  ()  {
   const {
     formState,
     areFieldsValid,
@@ -30,23 +17,24 @@ function CreateStaffPage  ()  {
     handleResetForm,
     isFormSubmitted,
     isTouched
-  } = useForm(newStaff);
+  } = useForm(newEmployee);
 
-  const { registerUser,  errorApiMessage, showError, setShowError} = useLoginOrRegistry("username");
+  const { registerEmployee,  errorApiMessage, showError, setShowError} = useRegisterEmployee();
 
-  const errors = formValidator().getErrors(formState, newStaffValidationSchema);
+  const errors = formValidator().getErrors(formState, newEmployeeValidationSchema);
 
   const handleRegisterClient = async (e: FormEvent) => {
     e.preventDefault();
     setShowError(false);
 
     if (areFieldsValid(errors)) {
-      registerUser.mutate(formState);
+      const { repitePassword, ...restFormState } = formState;
+      registerEmployee.mutate({ repitePassword, ...restFormState });
       handleResetForm()
     }
   }
 
-  if (registerUser.isLoading) {
+  if (registerEmployee.isLoading) {
     return <Spinner />
   }
 
@@ -55,7 +43,7 @@ function CreateStaffPage  ()  {
     <PrivateLayout title="Usuarios" >
     
       <RegisterForm
-        isStaff
+        isEmployee
         formState={formState}
         errorApiMessage={errorApiMessage}
         errors={errors}
@@ -70,4 +58,4 @@ function CreateStaffPage  ()  {
   )
 }
 
-export default CreateStaffPage
+export default CreateEmployeePage

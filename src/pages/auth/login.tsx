@@ -9,18 +9,17 @@ import { useForm } from "@/hooks/useForm";
 import { PublicLayout } from "@/components/layouts"
 import { ApiMessageError, Button, LoginForm } from "@/components/ui";
 
-import { loginClient, loginClientValidationSchema, formValidator } from "@/helpers";
+import {  loginClientValidationSchema, formValidator, loginClient } from "@/helpers";
 
 import { } from "@/components/ui/ApiMessageError";
-import { useLoginOrRegistry, useLoginProviderOrLogout } from "@/hooks/auth";
-
+import { useLogin, useLoginProviderOrLogout } from "@/hooks/auth";
 
 function Login() {
 
   const { formState, isTouched, isFormSubmitted, handleFieldChange, handleBlur, areFieldsValid, handleResetForm } = useForm(loginClient);
   const { email, password } = formState;
 
-  const { loginUser, errorApiMessage, showError, setShowError } = useLoginOrRegistry("email");
+  const { loginUser, errorApiMessage, showError, setShowError } = useLogin("email");
   const { loginProvider } = useLoginProviderOrLogout()
 
   const [providers, setProviders] = useState<any>({});
@@ -67,7 +66,7 @@ function Login() {
 
       {
 
-        Object.values(providers) !==null && 
+        Object?.values(providers) !==null && 
 
         Object?.values(providers).map((provider: any) => {
           if (provider.id === 'credentials') return (<div key='credentials' ></div>);

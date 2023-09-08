@@ -9,7 +9,7 @@ interface Props {
   formState: InitialForm;
   isFormSubmitted: boolean;
   isTouched: IsTouched;
-  isStaff?: boolean
+  isEmployee?: boolean
   handleBlur: (e: ReactFocusEvent) => void;
   handleFieldChange: (e: ReactChangeEvent) => void;
   onSubmit: (e: FormEvent) => void;
@@ -21,7 +21,7 @@ export const LoginForm = ({
   formState,
   isFormSubmitted,
   isTouched,
-  isStaff = false,
+  isEmployee = false,
   handleBlur,
   handleFieldChange,
   onSubmit,
@@ -32,7 +32,7 @@ export const LoginForm = ({
   return (
     <form className="form" onSubmit={onSubmit} noValidate >
       {
-        isStaff ?
+        isEmployee ?
           <div>
             <FormControl
               label={'username'}
@@ -77,6 +77,7 @@ export const LoginForm = ({
           value={password}
           onChange={handleFieldChange}
           onBlur={handleBlur}
+          autoComplete="off"
         />
         <ErrorMessage
           fieldName={errors?.password}
@@ -90,7 +91,7 @@ export const LoginForm = ({
           Login
         </Button>
         {
-          !isStaff &&
+          !isEmployee &&
           <Link href='create-account' className="btn btn--green btn--medium" >
             Crea tu cuenta
           </Link>

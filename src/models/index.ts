@@ -4,4 +4,4 @@ export {default as Category} from './Category';
 export {default as Client} from './Client';
 export {default as Distributor} from './Distributor';
 export {default as Editorial} from './Editorial';
-export {default as Staff} from './Staff';
+export {default as Employee} from './Employee';

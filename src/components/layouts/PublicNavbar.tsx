@@ -18,16 +18,16 @@ export const Navbar = () => {
       <div className="nav__menu" >
         <ul className="nav__menu--container" >
           <li className="nav__menu--item" >
-            <Link className="nav__menu--link" href='/store/books' >Libros</Link>
+            <Link className="nav__menu--link" href='/books' >Libros</Link>
           </li>
           <li>
-            <Link className="nav__menu--link" href='/store/stationeries' >Papelería</Link>
+            <Link className="nav__menu--link" href='/stationeries' >Papelería</Link>
           </li>
           <li>
-            <Link className="nav__menu--link" href='/store/toys' >Juguetes</Link>
+            <Link className="nav__menu--link" href='/toys' >Juguetes</Link>
           </li>
           <li>
-            <Link className="nav__menu--link" href='/store/fashion' >Fashion</Link>
+            <Link className="nav__menu--link" href='/fashion' >Fashion</Link>
           </li>
         </ul>
       </div>

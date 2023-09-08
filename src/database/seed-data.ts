@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 
-import { IStaff } from "@/types";
+import { IEmployee } from "@/types";
 
 
-export const user: IStaff[] = [
+export const user: IEmployee[] = [
   {
     email: 'correo@correo.com',
     name: 'diego',

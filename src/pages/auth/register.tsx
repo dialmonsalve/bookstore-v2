@@ -8,19 +8,10 @@ import { useForm,  } from "@/hooks";
 import { PublicLayout } from "@/components/layouts";
 import { Spinner , RegisterForm} from "@/components/ui";
 
-import { formValidator,  newUserValidationSchema } from "@/helpers";
-import { useLoginOrRegistry } from "@/hooks/auth";
+import { formValidator,  newClient,  newUserValidationSchema } from "@/helpers";
+import { useRegisterCLient } from "@/hooks/auth";
 
-export const newClient = {
-  name: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  password: '',
-  repitePassword: ''
-};
-
-function CreateAccount() {
+function RegisterPage() {
 
   const {
     formState,
@@ -29,11 +20,9 @@ function CreateAccount() {
     handleBlur,
     handleFieldChange,
     areFieldsValid,
-    handleResetForm
   } = useForm(newClient)
 
-  const { registerUser,  errorApiMessage, showError, setShowError,  } = useLoginOrRegistry("email");
-
+  const { registerCLient,  errorApiMessage, showError, setShowError,  } = useRegisterCLient();
   
   const errors = formValidator().getErrors(formState, newUserValidationSchema);
 
@@ -42,12 +31,13 @@ function CreateAccount() {
     setShowError(false);
 
     if (areFieldsValid(errors)) {
-      const { repitePassword, ...restFormState } = formState
-      registerUser.mutate({ repitePassword, ...restFormState })
+      const { repitePassword, ...restFormState } = formState;
+      
+      registerCLient.mutate({ repitePassword, ...restFormState })
     }
   }
 
-  if (registerUser.isLoading) {
+  if (registerCLient.isLoading) {
     return <Spinner />
   }
 
@@ -59,7 +49,7 @@ function CreateAccount() {
       <h1 >Crea tu cuenta y comienza a volar</h1>
 
       <RegisterForm
-        isStaff={false}
+        isEmployee={false}
         formState={formState}
         errorApiMessage={errorApiMessage}
         errors={errors}
@@ -97,4 +87,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
   }
 }
 
-export default CreateAccount
+export default RegisterPage

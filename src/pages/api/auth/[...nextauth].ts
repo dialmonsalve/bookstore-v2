@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
 import { checkEmailPassword, oAuthDbClient } from "@/database/dbUser";
-import { IStaff } from "@/types";
+import { IEmployee } from "@/types";
 
 
 export default NextAuth({
@@ -54,10 +54,14 @@ export default NextAuth({
         switch (account.type) {
 
           case 'oauth':
-            const { username, _id } = await oAuthDbClient(user.email || '', user.name || '', user.image || '') as IStaff;
+            const { 
+              username, 
+              _id, 
+              role } = await oAuthDbClient(user.email || '', user.name || '', user.image || '') as IEmployee;
 
             if (username) {
               token.username = username;
+              token.rol = role
             }
             if (_id) {
               token._id = _id;
@@ -92,8 +96,8 @@ export default NextAuth({
       }
 
       if (token.user) {
-        session.user = token.user as IStaff;
-      }   
+        session.user = token.user as IEmployee;
+      }    
 
       return session;
     }

@@ -8,7 +8,6 @@ export interface Props {
 
 export const SessionAuthProvider = ({ children }: Props) => {
 
-
   return (
     <SessionProvider >
       {children}

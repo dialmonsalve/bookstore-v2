@@ -1,10 +1,5 @@
 import { formValidator } from './formValidator';
 
-export const loginClient = {
-  email: '',
-  password: '',
-}
-
 export const loginClientValidationSchema = {
   email: formValidator()
     .string()
@@ -14,7 +9,7 @@ export const loginClientValidationSchema = {
     .string()
     .required('Campo password es requerido')
 };
-export const loginStaffValidationSchema = {
+export const loginEmployeeValidationSchema = {
   username: formValidator()
     .string()
     .required('Campo username es requerido'),
@@ -47,15 +42,6 @@ export const newUserValidationSchema = {
     .equalTo('password'),
 };
 
-
-export const newMessage = {
-  name: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  message: '',
-};
-
 export const newMessageValidationSchema = {
   name: formValidator()
     .string()
@@ -71,7 +57,7 @@ export const newMessageValidationSchema = {
     .min(15, 'El mensaje debe tener al menos 15 caracteres'),
 };
 
-export const newStaffValidationSchema = {
+export const newEmployeeValidationSchema = {
   name: formValidator()
     .string()
     .required('Campo nombre es requerido')

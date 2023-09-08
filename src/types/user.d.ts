@@ -9,6 +9,7 @@ interface IUser {
   updatedAt?: number;
   phone?: string;
   image?: string
+  repitePassword?:string
 }
 
 export interface IClient extends IUser {
@@ -16,9 +17,9 @@ export interface IClient extends IUser {
   email: string;
 }
 
-export interface IStaff extends IUser {
+export interface IEmployee extends IUser {
   role?: TypeRole[];
-  isNewStaff?: boolean;
+  isNewEmployee?: boolean;
   username: string;
   email?: string;
 }

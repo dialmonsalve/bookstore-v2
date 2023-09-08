@@ -1,12 +1,10 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { useUI } from '@/hooks';
 import { NavLink } from '../ui/NavLink';
 import { links } from '@/helpers';
 
 export const PrivateSidebar = () => {
-
 
   const { handleToggleSidebar, toggleSidebar } = useUI();
 

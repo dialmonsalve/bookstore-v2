@@ -1,6 +1,6 @@
-import { Client, Staff } from "@/models";
+import { Client, Employee } from "@/models";
 import { db } from "."
-import { IClient, IStaff, TypeRole } from "@/types";
+import { IClient, IEmployee, TypeRole } from "@/types";
 import bcrypt from 'bcryptjs';
 
 interface ResponseObject {
@@ -14,16 +14,16 @@ interface ResponseObject {
   username?: string
 }
 
-const findUser = async (validateField: string, isStaff: boolean) => {
+const findUser = async (validateField: string, isEmployee: boolean) => {
 
-  if (isStaff) {
-    return await Staff.findOne({ username: validateField });
+  if (isEmployee) {
+    return await Employee.findOne({ username: validateField });
   } else {
     return await Client.findOne({ email: validateField });
   }
 };
 
-export const checkEmailPassword = async (validateField: string, password: string, isStaff: boolean = false) => {
+export const checkEmailPassword = async (validateField: string, password: string, isEmployee: boolean = false) => {
 
   try {
 
@@ -31,7 +31,7 @@ export const checkEmailPassword = async (validateField: string, password: string
       throw new Error('Las credenciales son obligatorias');
     }
 
-    const user = await findUser(validateField, isStaff);
+    const user = await findUser(validateField, isEmployee);
 
     if (!user) {
       return null;
@@ -41,7 +41,7 @@ export const checkEmailPassword = async (validateField: string, password: string
       return null;
     }
 
-    const { name, image, lastName, phone, _id, email, role, username } = user as IStaff;
+    const { name, image, lastName,  _id, email, role, username } = user as IEmployee;
 
     const responseObject:ResponseObject = {
       _id,
@@ -49,11 +49,10 @@ export const checkEmailPassword = async (validateField: string, password: string
       name,
       image,
       lastName,
-      phone,
-      role,
     };
     if (username) {
       responseObject.username = validateField.toLocaleLowerCase();
+      responseObject.role= role;
     }
 
     return responseObject;
@@ -71,8 +70,8 @@ export const oAuthDbClient = async (oAuthEmail: string, oAuthName: string, oAuth
 
   if (client) {
     await db.disconnect();
-    const { _id, name, email, lastName, phone, image } = client as IClient
-    return { _id, name, email, lastName, phone, image }
+    const { _id, name, email, lastName, image } = client as IClient
+    return { _id, name, email, lastName, image }
   }
 
   const newClient = new Client({
@@ -82,13 +81,12 @@ export const oAuthDbClient = async (oAuthEmail: string, oAuthName: string, oAuth
     isAccountValidated: true,
     password: '@',
     lastName: '',
-    phone: '',
   })
 
   await newClient.save();
   await db.disconnect();
 
-  const { _id, name, lastName, email, phone, image } = newClient as IClient;
+  const { _id, name, lastName, email,  image } = newClient as IClient;
 
-  return { _id, name, lastName, email, phone, image };
+  return { _id, name, lastName, email,  image };
 }

@@ -1,7 +1,7 @@
 import { PrivateLayout } from "@/components/layouts"
 import { Button, Spinner, Table, TableHeader, Td, Row } from "@/components/ui"
 
-import { useStaff } from "@/hooks/staff/useStaff";
+import { useEmployee } from "@/hooks/employee/useEmployee";
 import { useEmployeesStore } from "@/store/users";
 
 import { useRouter } from "next/router";
@@ -9,24 +9,23 @@ import { useRouter } from "next/router";
 function UsersPage() {
 
   const router = useRouter();
-  const { isLoading } = useStaff();
 
-  const employees = useEmployeesStore(state => state.employees);
+  const {employees, employeesQuery } = useEmployee()
 
-  if (isLoading) {
+  if (employeesQuery.isLoading) {
     return <Spinner />
   }
 
   const handleNavigate =(): void =>{
-    router.push('/admin/bookstore/users/create')
+    router.push('/admin/users/create')
   }
 
-  const handleEditStaff =(id: string): void =>{
+  const handleEditEmployee =(id: string): void =>{
     console.log(id);
 
   }
 
-  const handleDeleteStaff =(id: string): void =>{
+  const handleDeleteEmployee =(id: string): void =>{
     console.log(id);
   }
 
@@ -70,12 +69,12 @@ function UsersPage() {
                     <Td  ><Button
                       size='small'
                       backgroundColor='outline-blue'
-                      onClick={() => handleEditStaff(user._id!)}
+                      onClick={() => handleEditEmployee(user._id!)}
                     >editar</Button> </Td>
                     <Td  ><Button
                       size='small'
                       backgroundColor='outline-red'
-                      onClick={() => handleDeleteStaff(user._id!)}
+                      onClick={() => handleDeleteEmployee(user._id!)}
                     >eliminar</Button> </Td>
                   </Row>
                 ))

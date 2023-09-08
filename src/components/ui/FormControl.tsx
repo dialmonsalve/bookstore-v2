@@ -1,5 +1,3 @@
-import { FocusEvent } from 'react';
-
 interface FormControlProps {
   label: string;
   type: string;
@@ -10,9 +8,10 @@ interface FormControlProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
   disabled?: boolean
   placeholder?: string;
+  autoComplete?: "on" | "off";
 }
 
-export const FormControl = ({ label, type, name, value, defaultValue, placeholder, onBlur, onChange, disabled = false }: FormControlProps) => {
+export const FormControl = ({ label, type, name, value, defaultValue, placeholder, onBlur, onChange, disabled = false, autoComplete="on" }: FormControlProps) => {
   
   return (
     <div className='form-control'>
@@ -27,6 +26,7 @@ export const FormControl = ({ label, type, name, value, defaultValue, placeholde
         defaultValue={defaultValue}
         onChange={onChange}
         disabled={disabled}
+        autoComplete={autoComplete}
       />
     </div>
   )

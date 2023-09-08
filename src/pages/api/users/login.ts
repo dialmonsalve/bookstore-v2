@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 
 import { db } from '@/database';
-import { Client, Staff } from '@/models';
-import { IStaff, ResponseObject, TypeRole } from '@/types';
+import { Client, Employee } from '@/models';
+import { IEmployee, ResponseObject } from '@/types';
 
 
 type Data =
@@ -25,7 +25,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const login = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-  const { email = '', password = '', username = '' } = req.body as IStaff;
+  const { email = '', password = '', username = '' } = req.body as IEmployee;
 
   try {
 
@@ -38,7 +38,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     let user;
 
     if (username) {
-      user = await Staff.findOne({ username });
+      user = await Employee.findOne({ username });
     }
     else {
       user = await Client.findOne({ email });
@@ -48,7 +48,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       return res.status(401).json({ message: 'Las credenciales no son válidas' })
     }
 
-    const { name, lastName, phone, _id, role, image, email: staffEmail } = user as IStaff;
+    const { name, lastName, phone, _id, role, image, email: employeeEmail } = user as IEmployee;
 
     const responseObject: ResponseObject = {
       _id,
@@ -62,7 +62,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     if (username) {
       responseObject.username = username.toLowerCase();
-      responseObject.email = staffEmail
+      responseObject.email = employeeEmail
     }
 
     return res.status(200).json(responseObject)

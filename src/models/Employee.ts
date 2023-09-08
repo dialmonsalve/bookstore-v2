@@ -1,8 +1,8 @@
 import mongoose, { Model, Schema, model } from 'mongoose';
-import { IStaff } from "../types";
+import { IEmployee } from "../types";
 import { Book } from '.';
 
-const StaffSchema = new Schema<IStaff>({
+const EmployeeSchema = new Schema<IEmployee>({
 
   name: {
     type: String,
@@ -45,7 +45,7 @@ const StaffSchema = new Schema<IStaff>({
     type: Boolean,
     default: false,
   },
-  isNewStaff: {
+  isNewEmployee: {
     type: Boolean,
     default: true,
   },
@@ -56,20 +56,20 @@ const StaffSchema = new Schema<IStaff>({
   timestamps: true
 })
 
-const Staff = Model<IStaff> = mongoose.models.Staff || model('Staff', StaffSchema);
+const Employee = Model<IEmployee> = mongoose.models.Employee || model('Employee', EmployeeSchema);
 
-export default Staff;
+export default Employee;
 
-StaffSchema.pre('deleteOne', { document: true }, async function (next) {
-  const Staff = this;
+EmployeeSchema.pre('deleteOne', { document: true }, async function (next) {
+  const Employee = this;
 
-  const hasTransactions = await Book.exists({ Staff: Staff._id });
+  const hasTransactions = await Book.exists({ Employee: Employee._id });
 
   if (hasTransactions) {
-    Staff.deleted = true;
-    await Staff.save();
+    Employee.deleted = true;
+    await Employee.save();
   } else {
-    await Staff.deleteOne();
+    await Employee.deleteOne();
   }
 
   next();

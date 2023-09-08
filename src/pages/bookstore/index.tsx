@@ -3,7 +3,7 @@ import { PrivateLayout } from "@/components/layouts"
 function AdminPage () {
 
   return (
-    <PrivateLayout title='Home' >
+    <PrivateLayout title='Panel DIABOOKS' >
     <section className='section'>
 
       <article className='section__article--news' >

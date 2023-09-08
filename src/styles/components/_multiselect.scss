@@ -1,0 +1,16 @@
+@use '../abstract/variables' as v;
+@use '../abstract/mixins' as m;
+
+.input-multiselect {
+  height: 4rem;
+  width: 55rem;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  font-size: v.$font-size;
+}
+
+.selected-options {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}

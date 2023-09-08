@@ -2,27 +2,29 @@ import Image from 'next/image';
 import Link from "next/link";
 import { useRouter } from 'next/router';
 
-import { useLoginProviderOrLogout, useUser } from '@/hooks/auth';
+import { useLoginProviderOrLogout, useAuthentication } from '@/hooks/auth';
 
 import { Spinner } from '../ui/Spinner';
-import { useEmployeesStore } from '@/store/users';
+import { useSession } from 'next-auth/react';
 
 export const Header = () => {
 
-  const { status } = useUser();
   const router = useRouter();
-  const session = useEmployeesStore(state => state.session);
+
+  const {status, data:session} = useSession();
+
+  useAuthentication()
 
   const { logOut } = useLoginProviderOrLogout();
 
-  const existImage = session?.image?.length! > 0;
-  const image = existImage ? session?.image : '/user.svg'
+  const existImage = session?.user?.image?.length! > 0;
+  const image = existImage ? session?.user?.image : '/user.svg'
 
   const navigateTo = (url: string) => {
     router.push(url);
   }
 
-  if (status=== 'loading') {
+  if (status === 'loading') {
     return (<Spinner />)
   }
 
@@ -67,8 +69,8 @@ export const Header = () => {
                 <li className='header__login--nav-item' >
                   <button
                     className="header__login--nav-link"
-                    onClick={() => navigateTo(`/auth/create-account?p=${router.asPath}`)}
-                  >Crear cuenta
+                    onClick={() => navigateTo(`/auth/register?p=${router.asPath}`)}
+                  >Crea tu cuenta
                   </button>
                 </li>
                 <li className='header__login--nav-item' >
@@ -80,7 +82,7 @@ export const Header = () => {
               </>
               :
               <>
-                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {session?.name}</span>
+                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {session?.user?.name}</span>
                 <li className='header__login--nav-item' >
                   <button
                     className="header__login--nav-link"

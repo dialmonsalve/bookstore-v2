@@ -23,12 +23,12 @@ const AuthorSchema = new Schema<IAuthor>({
   createdFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Staff'
+    ref: 'Employee'
   },
   updatedFor: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Staff'
+    ref: 'Employee'
   },
   isAvailable: {
     type: Boolean,

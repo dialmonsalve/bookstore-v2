@@ -1,6 +1,4 @@
 import { PublicLayout } from '@/components/layouts'
-import { useUser } from '@/hooks/auth'
-
 
 export default function Home() {
 

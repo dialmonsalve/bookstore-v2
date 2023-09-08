@@ -1,14 +1,14 @@
 
-import { useLoginProviderOrLogout, useUser } from "@/hooks/auth";
-import { useEmployeesStore } from "@/store/users";
+import { useLoginProviderOrLogout, useAuthentication } from "@/hooks/auth";
+import { useSession } from "next-auth/react";
 import Image from "next/image"
 import Link from "next/link"
 
 export const PrivateHeader = () => {
 
-  const session = useEmployeesStore(state => state.session);
-  const { user } = useUser();
   const { logOut } = useLoginProviderOrLogout();
+  const { data: session, status } = useSession()
+  useAuthentication();
 
   return (
     <header className="private-header">
@@ -17,10 +17,10 @@ export const PrivateHeader = () => {
       </Link>
 
       {
-        user.isLoading ? <p>Cargando...</p>
+        status === 'loading' ? <p>Cargando...</p>
           :
           <div className="private-header__user" >
-            <span >Bienvenido {session?.name}</span>
+            <span >Bienvenido {session?.user?.name}</span>
             <li className='private-header__user--item' >
               <button className="private-header__user--link" onClick={() => logOut.mutate()} >Logout</button>
             </li>
