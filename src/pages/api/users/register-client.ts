@@ -24,7 +24,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   }
 }
 
-const registerClient = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+async function registerClient (req: NextApiRequest, res: NextApiResponse<Data>) {
 
   const {
     email = '',

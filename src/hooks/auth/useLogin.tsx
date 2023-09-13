@@ -4,11 +4,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { userAuth } from "@/api";
 
-export const useLogin = (fieldForm: string) => {
+export function useLogin(fieldForm: string) {
 
   const queryClient = useQueryClient();
   const [showError, setShowError] = useState(false);
-  const [errorApiMessage, setErrorApiMessage] = useState(''); 
+  const [errorApiMessage, setErrorApiMessage] = useState('');
 
   const loginUser = useMutation({
     mutationFn: (formData: { [key: string]: string; password: string }) => {
@@ -25,7 +25,7 @@ export const useLogin = (fieldForm: string) => {
       if (hasError) {
         setShowError(true);
         setErrorApiMessage(message!)
-        setTimeout(() => setShowError(false), 3000);
+        // setTimeout(() => setShowError(false), 3000);
         return;
       }
       queryClient.setQueriesData([fieldForm === "username" ? "credential-employee" : "credential-client"], user);
@@ -38,6 +38,5 @@ export const useLogin = (fieldForm: string) => {
     showError,
     errorApiMessage,
     setShowError,
-
   };
 }

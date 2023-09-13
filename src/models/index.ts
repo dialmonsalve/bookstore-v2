@@ -5,3 +5,5 @@ export {default as Client} from './Client';
 export {default as Distributor} from './Distributor';
 export {default as Editorial} from './Editorial';
 export {default as Employee} from './Employee';
+// export {default as Order} from './Order';
+export {default as Transaction} from './Transaction';

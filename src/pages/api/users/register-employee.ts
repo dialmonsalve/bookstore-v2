@@ -22,7 +22,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   }
 }
 
-const registerEmployee = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+async function registerEmployee (req: NextApiRequest, res: NextApiResponse<Data>) {
 
   const {
     email = '',

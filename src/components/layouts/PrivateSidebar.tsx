@@ -9,10 +9,9 @@ export const PrivateSidebar = () => {
   const { handleToggleSidebar, toggleSidebar } = useUI();
 
   const handleContentClick = (e: React.MouseEvent<HTMLUListElement | HTMLLIElement, MouseEvent>) => {
-    e.stopPropagation();
-
+    e.stopPropagation();    
     if (!toggleSidebar) return;
-    handleToggleSidebar();
+    handleToggleSidebar(false);
   };
 
   return (
@@ -36,7 +35,7 @@ export const PrivateSidebar = () => {
       </ul>
       <button
         className={`private-nav__menu ${toggleSidebar ? 'menu-open' : 'menu-close'}`}
-        onClick={handleToggleSidebar}
+        onClick={()=>handleToggleSidebar(true)}
       >
         <Image
           src='/icons/menu.svg'

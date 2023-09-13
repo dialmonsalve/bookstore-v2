@@ -3,7 +3,6 @@ import Head from 'next/head';
 
 import { Navbar, Header, Footer } from './';
 
-
 interface Props {
   title: string;
   children: ReactNode | ReactNode[];
@@ -12,6 +11,7 @@ interface Props {
 }
 
 export const PublicLayout = ({ title, children, pageDescription, imageUrl }: Props) => {
+
   return (
     <>
       <Head>

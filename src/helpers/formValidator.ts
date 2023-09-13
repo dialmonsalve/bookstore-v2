@@ -1,7 +1,7 @@
 
 import { ErrorMessage, InitialForm, ValidationSchema, Validator, ValidatorReturn } from "../types";
 
-export const formValidator = (): ValidatorReturn => {
+export function formValidator ():ValidatorReturn {
 
   function getErrors<T extends InitialForm>(formState: T, objValidations: ValidationSchema) {
     let formCheckedValues = {} as ErrorMessage<T>;
@@ -98,9 +98,31 @@ export const formValidator = (): ValidatorReturn => {
       });
       return validator;
     },
+    notBlankSpace(): typeof validator{
+      const defaultMessage = 'El campo no debe llevar espacios en blanco'
+      validator.rules.push({
+        test: (value) => {
+          const blankSpace = /^\S+$/;
+          return blankSpace.test(value);
+        },
+        message: defaultMessage,
+      });
+      return validator;
+    },
     required(message: string): typeof validator {
       validator.rules.push({
-        test: (value) => typeof value === 'string' && value && value.trim().length > 0 || typeof value === 'number' && value && value > 0,
+        test: (value) => {
+          if (typeof value === 'string') {
+            return value.trim().length > 0;
+          } else if (typeof value === 'number') {
+            return value > 0;
+          } else if (Array.isArray(value)) {
+            // @ts-ignore
+            return value.length > 0;
+          }
+          return false; 
+        },
+
         message,
       });
       return validator;
@@ -108,6 +130,7 @@ export const formValidator = (): ValidatorReturn => {
     positiveNumber(message: string): typeof validator {
       validator.rules.push({
         test: (value) => {
+          
           const numberValue = parseFloat(value);
           return !isNaN(numberValue) && numberValue > 0;
         },
@@ -161,6 +184,7 @@ export const formValidator = (): ValidatorReturn => {
     isValidPhone: validator.isValidPhone.bind(validator),
     max: validator.max.bind(validator),
     min: validator.min.bind(validator),
+    notBlankSpace: validator.notBlankSpace.bind(validator),
     number: validator.number.bind(validator),
     password: validator.password.bind(validator),
     positiveNumber: validator.positiveNumber.bind(validator),

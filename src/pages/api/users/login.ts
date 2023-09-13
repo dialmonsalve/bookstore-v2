@@ -23,7 +23,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   }
 }
 
-const login = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+async function login(req: NextApiRequest, res: NextApiResponse<Data>) {
 
   const { email = '', password = '', username = '' } = req.body as IEmployee;
 

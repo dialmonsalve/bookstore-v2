@@ -32,7 +32,10 @@ const getEmployees = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
     }
     await db.connect();
 
-    const employee = await Employee.find().select('-password -createdAt -updatedAt -__v');
+    const employee: IEmployee[] = await Employee.find()
+      .select('-password -createdAt -updatedAt -__v')
+      .lean();
+
     return res.status(200).json(employee);
 
   } catch (error: any) {

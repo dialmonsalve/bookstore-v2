@@ -9,7 +9,7 @@ interface IUser {
   updatedAt?: number;
   phone?: string;
   image?: string
-  repitePassword?:string
+  repitePassword?: string
 }
 
 export interface IClient extends IUser {
@@ -24,7 +24,8 @@ export interface IEmployee extends IUser {
   email?: string;
 }
 
-type TypeRole = 'admin' | 'logistica' | 'vendedor' | 'compras';
+type TypeRole = | "admin" | "logistica" | "vendedor" | "compras"
+
 
 interface ResponseObject {
   _id?: string,

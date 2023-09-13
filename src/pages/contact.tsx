@@ -1,11 +1,20 @@
 import { FormEvent } from "react";
 
-import { useForm } from "@/hooks/useForm";
+
 
 import { PublicLayout } from "@/components/layouts";
 import { Button, FormControl, ErrorMessage } from "@/components/ui";
 
-import { formValidator, newMessage, newMessageValidationSchema } from "@/helpers";
+import { formValidator, newMessageValidationSchema } from "@/helpers";
+import { useForm } from "@/hooks/useForm";
+
+const newMessage = {
+  name: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  message: '',
+};
 
 function Contact() {
 
@@ -15,7 +24,7 @@ function Contact() {
     isTouched,
     handleBlur,
     handleFieldChange,
-    areFieldsValid,
+    hasErrors,
     handleResetForm
   } = useForm(newMessage)
 
@@ -26,7 +35,7 @@ function Contact() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (areFieldsValid(errors)) {
+    if (!hasErrors(errors)) {
       console.log({ formState });
 
       // TODO implement validation vs backend

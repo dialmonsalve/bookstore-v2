@@ -23,7 +23,7 @@ const findUser = async (validateField: string, isEmployee: boolean) => {
   }
 };
 
-export const checkEmailPassword = async (validateField: string, password: string, isEmployee: boolean = false) => {
+export async function checkEmailPassword(validateField: string, password: string, isEmployee: boolean = false) {
 
   try {
 
@@ -41,9 +41,9 @@ export const checkEmailPassword = async (validateField: string, password: string
       return null;
     }
 
-    const { name, image, lastName,  _id, email, role, username } = user as IEmployee;
+    const { name, image, lastName, _id, email, role, username } = user as IEmployee;
 
-    const responseObject:ResponseObject = {
+    const responseObject: ResponseObject = {
       _id,
       email: email?.toLowerCase(),
       name,
@@ -52,7 +52,7 @@ export const checkEmailPassword = async (validateField: string, password: string
     };
     if (username) {
       responseObject.username = validateField.toLocaleLowerCase();
-      responseObject.role= role;
+      responseObject.role = role;
     }
 
     return responseObject;
@@ -63,7 +63,7 @@ export const checkEmailPassword = async (validateField: string, password: string
 };
 
 
-export const oAuthDbClient = async (oAuthEmail: string, oAuthName: string, oAuthImage: string) => {
+export async function oAuthDbClient(oAuthEmail: string, oAuthName: string, oAuthImage: string) {
 
   await db.connect();
   const client = await Client.findOne({ email: oAuthEmail });
@@ -86,7 +86,7 @@ export const oAuthDbClient = async (oAuthEmail: string, oAuthName: string, oAuth
   await newClient.save();
   await db.disconnect();
 
-  const { _id, name, lastName, email,  image } = newClient as IClient;
+  const { _id, name, lastName, email, image } = newClient as IClient;
 
-  return { _id, name, lastName, email,  image };
+  return { _id, name, lastName, email, image };
 }

@@ -1,28 +1,41 @@
-import { FormEvent, useEffect, useState } from "react";
+import {  FormEvent, useEffect, useState } from "react";
 
 import { GetServerSideProps } from 'next';
 import { getProviders, getSession } from "next-auth/react";
 import Image from "next/image";
+import { PublicLayout } from "@/components/layouts"
+import { ApiMessageError, Button, LoginAuthentication } from "@/components/ui";
+
+import {  useLogin } from "@/hooks/auth";
 
 import { useForm } from "@/hooks/useForm";
+import Link from "next/link";
+import { formValidator, loginClientValidationSchema } from "@/helpers";
+import useLoginProviderOrLogout from "@/hooks/auth/useLoginProviderOrLogout";
 
-import { PublicLayout } from "@/components/layouts"
-import { ApiMessageError, Button, LoginForm } from "@/components/ui";
-
-import {  loginClientValidationSchema, formValidator, loginClient } from "@/helpers";
-
-import { } from "@/components/ui/ApiMessageError";
-import { useLogin, useLoginProviderOrLogout } from "@/hooks/auth";
+const loginClient = {
+  email: '',
+  password: '',
+}
 
 function Login() {
 
-  const { formState, isTouched, isFormSubmitted, handleFieldChange, handleBlur, areFieldsValid, handleResetForm } = useForm(loginClient);
-  const { email, password } = formState;
-
-  const { loginUser, errorApiMessage, showError, setShowError } = useLogin("email");
   const { loginProvider } = useLoginProviderOrLogout()
 
   const [providers, setProviders] = useState<any>({});
+  const { loginUser, showError, errorApiMessage } = useLogin("email")
+
+  const {
+    formState,
+    hasErrors,
+    handleResetForm,
+    handleBlur,
+    handleFieldChange,
+    isFormSubmitted,
+    isTouched
+  } = useForm(loginClient);
+  
+  const errors = formValidator().getErrors(formState, loginClientValidationSchema);
 
   useEffect(() => {
     getProviders().then(prov => {
@@ -30,16 +43,13 @@ function Login() {
     })
   }, [])
 
-
-  const errors = formValidator().getErrors(formState, loginClientValidationSchema);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setShowError(false);
+    const notErrorsForms = hasErrors(errors);
 
-    if (areFieldsValid(errors)) {
-      loginUser.mutate({ email, password });
+    if (notErrorsForms) {
       handleResetForm()
+      loginUser.mutate({ email: formState?.email, password: formState?.password });
     }
   }
 
@@ -54,19 +64,32 @@ function Login() {
         showError={showError}
         errorApiMessage={errorApiMessage}
       />
+      <form className="form" onSubmit={handleSubmit} noValidate >
+        <LoginAuthentication
+          isEmployee={false}
+          formState={formState}
+          handleBlur={handleBlur}
+          handleFieldChange={handleFieldChange}
+          isFormSubmitted={isFormSubmitted}
+          isTouched={isTouched}
+          errors={errors}
+        />
 
-      <LoginForm
-        formState={formState}
-        errors={errors}
-        onSubmit={handleSubmit}
-        isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched}
-        handleFieldChange={handleFieldChange}
-        handleBlur={handleBlur} />
+        <div className="form__buttons">
+          <Button type="submit" width='40%' backgroundColor="blue" disabled={!!errors}  >
+            Login
+          </Button>
 
+          <Link href='register' className="btn btn--green btn--medium" >
+            Crea tu cuenta
+          </Link>
+
+        </div>
+      </form>
+   
       {
 
-        Object?.values(providers) !==null && 
+        Object?.values(providers) !== null &&
 
         Object?.values(providers).map((provider: any) => {
           if (provider.id === 'credentials') return (<div key='credentials' ></div>);

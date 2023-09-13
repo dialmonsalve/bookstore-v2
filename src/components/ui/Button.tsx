@@ -60,7 +60,7 @@ export const Button = ({
     return (
       <button
         type={type}
-        className={`btn btn--${backgroundColor} btn--${size} ${isDisabled} ${className}`}
+        className={`btn btn--${backgroundColor} btn--${size} ${isDisabled} ${className || ""}`}
         style={{ width }}
         disabled={disabled}
         {...props}

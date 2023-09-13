@@ -1,59 +1,61 @@
-import React, { FormEvent } from 'react'
+import { FormEvent } from 'react';
 import { GetServerSideProps } from 'next';
 import { getSession } from "next-auth/react";
 
-import { useForm } from '@/hooks';
-
-import { ApiMessageError, LoginForm } from '@/components/ui'
-
-import { formValidator, loginEmployee, loginEmployeeValidationSchema } from '@/helpers';
 import { useLogin } from '@/hooks/auth';
+import { useForm } from '@/hooks/useForm';
+
+import { ApiMessageError, Button, LoginAuthentication } from '@/components/ui'
+import { formValidator, loginEmployeeValidationSchema } from '@/helpers';
+
+const login = {
+  username: '',
+  password: '',
+  email: ''
+}
 
 function PrivateLoginPage() {
 
-  const {
-    formState,
-    isFormSubmitted,
-    isTouched,
-    handleFieldChange,
-    handleBlur,
-    areFieldsValid,
-    handleResetForm
-  } = useForm(loginEmployee);
+  const { loginUser, showError, errorApiMessage } = useLogin("username")
 
-  const { username, password } = formState;
+  const { formState, hasErrors, handleResetForm, isTouched, isFormSubmitted, handleBlur, handleFieldChange } = useForm(login)
 
   const errors = formValidator().getErrors(formState, loginEmployeeValidationSchema);
 
-  const { loginUser, setShowError,  errorApiMessage, showError } = useLogin("username")
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setShowError(false);
+    const notErrorsForms = hasErrors(errors);
 
-    if (areFieldsValid(errors)) {
+    if (notErrorsForms) {
       handleResetForm()
-
-      loginUser.mutate({ username, password });
+      loginUser.mutate({ username: formState?.username, password: formState?.password });
     }
   }
   return (
+
     <main className='admin-login' >
+
       <h1 style={{ color: 'white' }} >Login</h1>
       <ApiMessageError
         showError={showError}
         errorApiMessage={errorApiMessage}
       />
-      <LoginForm
-        formState={formState}
-        errors={errors}
-        isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched}
-        onSubmit={handleSubmit}
-        handleFieldChange={handleFieldChange}
-        handleBlur={handleBlur}
-        isEmployee
-      />
+      <form className="form" onSubmit={handleSubmit} noValidate >
+        <LoginAuthentication
+          isEmployee
+          errors={errors}
+          formState={formState}
+          isFormSubmitted={isFormSubmitted}
+          isTouched={isTouched}
+          handleBlur={handleBlur}
+          handleFieldChange={handleFieldChange}
+        />
+        <div className="form__buttons">
+          <Button type="submit" width='40%' backgroundColor="blue" disabled={!!errors}  >
+            Login
+          </Button>
+        </div>
+      </form>
     </main>
   )
 }
@@ -67,7 +69,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
   if (session) {
     return {
       redirect: {
-        destination:  p.toString(),
+        destination: p.toString(),
         permanent: false
       }
     }

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ApiMessageError, Button, ErrorMessage, FormControl } from "./"
+import { ApiMessageError, Button, ErrorMessage, FormControl } from "."
 import { ErrorMessages, InitialForm, IsTouched, ReactChangeEvent, ReactFocusEvent, TypeRole } from "@/types";
 import React, { FormEvent, useState } from "react";
 
@@ -13,7 +13,7 @@ interface Props {
   showError: boolean,
   handleBlur: (e: ReactFocusEvent) => void;
   handleFieldChange: (e: ReactChangeEvent) => void;
-  onSubmit: (e: FormEvent) => void;
+  handleSubmit: (e: FormEvent) => void;
 }
 
 export const RegisterForm = ({
@@ -26,7 +26,7 @@ export const RegisterForm = ({
   showError,
   handleBlur,
   handleFieldChange,
-  onSubmit,
+  handleSubmit,
 }: Props) => {
 
   const [options, setOptions] = useState<TypeRole[]>([]); 
@@ -49,7 +49,6 @@ export const RegisterForm = ({
 
   const handleAddItem = (item: TypeRole) => {
     setSelectedItems(prevItems => [...prevItems, item]);
-    setInputValue('');
   
     setOptions(prevOptions => prevOptions.filter(option => option !== item));
   }
@@ -61,7 +60,6 @@ export const RegisterForm = ({
 }
 
   if (selectedItems === undefined) return;
-  console.log(selectedItems);
 
   const {
     email,
@@ -98,14 +96,13 @@ export const RegisterForm = ({
     }
   }
 
-
   return (
     <>
       <ApiMessageError
         showError={showError}
         errorApiMessage={errorApiMessage}
       />
-      <form style={{ width: "60rem" }} className="form" onSubmit={onSubmit}
+      <form style={{ width: "60rem" }} className="form" onSubmit={handleSubmit}
          >
 
         <div>

@@ -1,59 +1,127 @@
-import { FormEvent } from "react"
+import { FormEvent, useState } from 'react';
 
-import { useForm, } from "@/hooks"
+import { PrivateLayout } from '@/components/layouts';
+import { useRegisterEmployee } from '@/hooks/auth';
+import { useForm } from '@/hooks/useForm';
 
-import { PrivateLayout } from "@/components/layouts"
-import {  RegisterForm, Spinner } from "@/components/ui"
+import { ApiMessageError, Button, ErrorMessage, FormControl, RegisterEmploy, Select, selectOption } from '@/components/ui';
 
-import { formValidator, newEmployee, newEmployeeValidationSchema } from "@/helpers"
-import { useRegisterEmployee } from "@/hooks/auth"
+import { formValidator, newEmployeeValidationSchema } from '@/helpers';
+import { TypeRole } from '@/types';
 
-function CreateEmployeePage  ()  {
+const newEmployee = {
+  name: '',
+  lastName: '',
+  username: '',
+  email: '',
+  phone: '',
+  password: '',
+  repitePassword: '',
+  role: '',
+}
+const roles = [
+  { label: 'logistica', value: 1 },
+  { label: 'ventas', value: 2 },
+  { label: 'compras', value: 3 },
+]
+
+function CreateEmployeePage() {
+
+  const [option, setOption] = useState<selectOption[]>([roles[0]])
+  const [messageErrolRole, setMessageErrolRole] = useState<string | null>(null)
+  const [hasErrolRole, setHasErrolRole] = useState(false);
+  const { registerEmployee, errorApiMessage, showError } = useRegisterEmployee();
+
   const {
     formState,
-    areFieldsValid,
+    isFormSubmitted,
+    isTouched,
+    hasErrors,
     handleBlur,
     handleFieldChange,
-    handleResetForm,
-    isFormSubmitted,
-    isTouched
-  } = useForm(newEmployee);
-
-  const { registerEmployee,  errorApiMessage, showError, setShowError} = useRegisterEmployee();
+  } = useForm(newEmployee)
 
   const errors = formValidator().getErrors(formState, newEmployeeValidationSchema);
 
-  const handleRegisterClient = async (e: FormEvent) => {
+  const handleRegisterEmployee = (e: FormEvent) => {
     e.preventDefault();
-    setShowError(false);
+    const notErrorsForms = hasErrors(errors);
 
-    if (areFieldsValid(errors)) {
-      const { repitePassword, ...restFormState } = formState;
-      registerEmployee.mutate({ repitePassword, ...restFormState });
-      handleResetForm()
+    const newRoles = option.map(o => {
+      return o.label
+    })
+
+    if (newRoles.length === 0) {
+      setHasErrolRole(true);
+      setMessageErrolRole('El usuario debe tener al menos 1 rol')
+      // setTimeout(() => setHasErrolRole(false), 3000);
+      return;
+    }
+    if (notErrorsForms) {
+      registerEmployee.mutate({ ...formState, role: newRoles as TypeRole[] });
     }
   }
 
-  if (registerEmployee.isLoading) {
-    return <Spinner />
-  }
+  return (
+    <PrivateLayout title='Usuarios' >
 
-
-   return (
-    <PrivateLayout title="Usuarios" >
-    
-      <RegisterForm
-        isEmployee
-        formState={formState}
-        errorApiMessage={errorApiMessage}
-        errors={errors}
-        isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched}
-        showError={showError}
-        handleBlur={handleBlur}
-        handleFieldChange={handleFieldChange}
-        onSubmit={handleRegisterClient}
+      <ApiMessageError
+        showError={hasErrolRole}
+        errorApiMessage={messageErrolRole}
       />
+      <ApiMessageError
+        showError={showError}
+        errorApiMessage={errorApiMessage}
+      />
+      <form 
+      method='POST' 
+      style={{ width: '60rem' }} 
+      className='form' 
+      onSubmit={handleRegisterEmployee}
+      >
+        <RegisterEmploy isEmployee
+          formState={formState}
+          isTouched={isTouched}
+          isFormSubmitted={isFormSubmitted}
+          errors={errors}
+          handleBlur={handleBlur}
+          handleFieldChange={handleFieldChange}
+        />
+        <div>
+          <FormControl
+            label='Username'
+            name='username'
+            type='text'
+            placeholder='Username'
+            value={formState?.username}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+          />
+        </div>
+        <Select
+          options={roles || []}
+          value={option}
+          onChange={o => setOption(o)}
+          name={'role'}
+          multiple
+        />
+        <ErrorMessage
+          fieldName={errors?.role}
+          isFormSubmitted={isFormSubmitted}
+          isTouched={isTouched?.role}
+        />
+
+        <div style={{ display: 'flex' }}>
+          <Button
+            type='submit'
+            backgroundColor='green'
+            disabled={!!errors}
+          >
+            Crear Cuenta
+          </Button>
+
+        </div>
+      </form>
     </PrivateLayout>
   )
 }

@@ -2,30 +2,29 @@ import Image from 'next/image';
 import Link from "next/link";
 import { useRouter } from 'next/router';
 
-import { useLoginProviderOrLogout, useAuthentication } from '@/hooks/auth';
+import  useLoginProviderOrLogout  from '@/hooks/auth/useLoginProviderOrLogout';
 
 import { Spinner } from '../ui/Spinner';
-import { useSession } from 'next-auth/react';
+import useAuthentication from '@/hooks/auth/useAuthentication';
 
 export const Header = () => {
 
   const router = useRouter();
 
-  const {status, data:session} = useSession();
-
-  useAuthentication()
-
   const { logOut } = useLoginProviderOrLogout();
+  const {  status, nextSession } = useAuthentication();
 
-  const existImage = session?.user?.image?.length! > 0;
-  const image = existImage ? session?.user?.image : '/user.svg'
+  const user = nextSession?.user
+
+  const existImage = user?.image?.length! > 0;
+  const image = existImage ? user?.image : '/user.svg'
 
   const navigateTo = (url: string) => {
     router.push(url);
   }
 
   if (status === 'loading') {
-    return (<Spinner />)
+    return <Spinner />
   }
 
   return (
@@ -63,7 +62,7 @@ export const Header = () => {
         <ul className='header__login--nav' >
 
           {
-            status === 'unauthenticated'
+            !user
               ?
               <>
                 <li className='header__login--nav-item' >
@@ -82,7 +81,7 @@ export const Header = () => {
               </>
               :
               <>
-                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {session?.user?.name}</span>
+                <span style={{ textTransform: 'uppercase', fontSize: '1.2rem', color: '#0f386a' }} >Bienvenido {user?.name}</span>
                 <li className='header__login--nav-item' >
                   <button
                     className="header__login--nav-link"
@@ -94,7 +93,7 @@ export const Header = () => {
 
         </ul>
         {
-          status === 'authenticated' ?
+          user ?
             <Link href='/auth/configuration'>
               <Image className='header__login--user' src={`${image!}`} alt="user" width={35} height={35} />
             </Link>

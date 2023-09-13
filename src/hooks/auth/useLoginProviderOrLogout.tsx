@@ -1,7 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useLoginProviderOrLogout = () => {
+export default function useLoginProviderOrLogout() {
 
   const queryClient = useQueryClient();
   const session = useSession();
@@ -9,15 +9,15 @@ export const useLoginProviderOrLogout = () => {
   const urlUser = !!session.data?.user?.username ? "/admin/auth" : "/auth/login"
 
   const logOut = useMutation({
-    mutationFn: async () => await signOut({callbackUrl: urlUser}),
+    mutationFn: async () => await signOut({ callbackUrl: urlUser }),
     onSuccess: () => {
       queryClient.removeQueries();
     }
   })
 
-  const loginProvider = useMutation({    
+  const loginProvider = useMutation({
     mutationFn: async (providerId: string) => await signIn(providerId),
-    onSuccess:(user)=>  queryClient.setQueriesData(["credential-client"], user)
+    onSuccess: (user) => queryClient.setQueriesData(["credential-client"], user)
   })
 
   return {

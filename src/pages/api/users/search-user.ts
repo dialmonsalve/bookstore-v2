@@ -23,11 +23,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   }
 }
 
-const findUserByEmail = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+async function findUserByEmail(req: NextApiRequest, res: NextApiResponse<Data>) {
 
-  const session = await getSession({req});
-  
-  try {    
+  const session = await getSession({ req });
+
+  try {
     if (!session) {
       throw new Error('Las credenciales son obligatorias');
     }
@@ -59,7 +59,7 @@ const findUserByEmail = async (req: NextApiRequest, res: NextApiResponse<Data>) 
 
     if (username) {
       responseObject.username = username.toLowerCase(),
-      responseObject.email = employeeEmail
+        responseObject.email = employeeEmail
     }
 
     return res.status(200).json(responseObject);

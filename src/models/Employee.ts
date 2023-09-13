@@ -1,6 +1,6 @@
 import mongoose, { Model, Schema, model } from 'mongoose';
 import { IEmployee } from "../types";
-import { Book } from '.';
+import { Transaction } from './';
 
 const EmployeeSchema = new Schema<IEmployee>({
 
@@ -37,8 +37,8 @@ const EmployeeSchema = new Schema<IEmployee>({
     type: String,
     required: true,
     enum: {
-      values: ['admin', 'logistica', 'vendedor', 'compras'],
-      message: `{VALUE no es un rol válido}`
+      values: ['admin', 'logistica', 'ventas', 'compras'],
+      message: '{VALUE} no es un rol válido'
     },
   }],
   deleted: {
@@ -63,7 +63,7 @@ export default Employee;
 EmployeeSchema.pre('deleteOne', { document: true }, async function (next) {
   const Employee = this;
 
-  const hasTransactions = await Book.exists({ Employee: Employee._id });
+  const hasTransactions = await Transaction.exists({ Employee: Employee._id });
 
   if (hasTransactions) {
     Employee.deleted = true;
@@ -71,6 +71,5 @@ EmployeeSchema.pre('deleteOne', { document: true }, async function (next) {
   } else {
     await Employee.deleteOne();
   }
-
   next();
 });

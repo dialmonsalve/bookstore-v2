@@ -1,4 +1,5 @@
 
+import { useEmployeesStore } from '@/store/employee';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const NavLink = ({ src, alt, children, href }: Props) => {
+
   return (
     <li
       className='private-nav__container--item'

@@ -1,16 +1,127 @@
 @use '../abstract/variables' as v;
 @use '../abstract/mixins' as m;
 
-.input-multiselect {
-  height: 4rem;
-  width: 55rem;
-  border-radius: 1.5rem;
-  padding: 2rem;
-  font-size: v.$font-size;
-}
-
-.selected-options {
+.select-container {
+  margin-top: 1rem;
+  position: sticky;
+  width: 100%;
+  min-height: 4.2em;
+  border: 0.2em solid #777;
   display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: .5em;
+  padding: 0.5em 3em 0.5em 1em;
+  border-radius: 2.2em;
+  outline: none;
+  background-color: v.$color-white;
+
+  &:focus {
+    border-color:v.$color-red-2;
+  }
+
+  &__span {
+    flex-grow: 1;
+    display: flex;
+    gap: .5em;
+    flex-wrap: wrap;
+
+    &--option-badge {
+      display: flex;
+      align-items: center;
+      border: .2em solid v.$color-blue-1;
+      background-color: v.$color-primary ;
+      border-radius: 1.2em;
+      padding: .2em .5em;
+      gap: 1.5em;
+      cursor: pointer;
+      color: v.$color-white;
+      outline: none;
+
+      &:hover,
+      &:focus {
+        background-color: v.$color-red-2;
+        border-color: v.$color-red-3;
+      }
+
+      &:hover,
+      >.remove-btn,
+      &:focus>.remove-btn {
+
+        color: v.$color-white;
+      }
+
+      &>.remove-btn,
+      &>.remove-btn {
+        font-size: 1em;
+        color: v.$color-white;
+      }
+    }
+  }
+
+  &__clear-btn {
+    background: none;
+    color: v.$color-red-2;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 3em;
+
+    &:focus,
+    &:hover {
+      color: v.$color-red-3;
+    }
+  }
+
+  &__caret {
+    border: .35em solid transparent;
+    border-top-color: v.$color-red-2;
+    translate: 50% 25%;
+    font-size: 3em;
+    cursor: pointer;
+  }
+
+
+  &__options {
+    position: absolute;
+    margin: 0;
+    padding: 0 1rem 1rem;
+    display: none;
+    max-height: 12em;
+    overflow-y: auto;
+    border-radius: 1em;
+    width: 100%;
+    left: 0;
+    top: calc(100% + .5em);
+    background-color: white;
+    z-index: 100;
+    font-size: v.$font-size ;
+    color: v.$color-primary;
+
+    @include m.responsive(phone){
+      max-height: 6em;
+    }
+    
+    &--option {
+      padding: .25em .5em;
+      cursor: pointer;
+    }
+    &--selected {
+      background-color: v.$color-red-1;
+      border-radius: 1.5rem;
+      color: white;
+    }
+    
+    &--highlighted {
+      background-color: hsl(200, 100%, 50%);
+      color: white;
+      border: 1px solid v.$color-primary;
+      border-radius: 1.5rem;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.623);
+    }
+  }
+
+  &__show {
+    display: block;
+  }
 }

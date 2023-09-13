@@ -2,8 +2,7 @@ interface FormControlProps {
   label: string;
   type: string;
   name: string;
-  value?: string | number | readonly string[] | undefined;
-  defaultValue?: string | number | readonly string[] | undefined;
+  value: string | number | readonly string[] | undefined;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
   disabled?: boolean
@@ -11,7 +10,7 @@ interface FormControlProps {
   autoComplete?: "on" | "off";
 }
 
-export const FormControl = ({ label, type, name, value, defaultValue, placeholder, onBlur, onChange, disabled = false, autoComplete="on" }: FormControlProps) => {
+export const FormControl = ({ label, type, name, value,  placeholder, onBlur, onChange, disabled = false, autoComplete="on" }: FormControlProps) => {
   
   return (
     <div className='form-control'>
@@ -23,7 +22,6 @@ export const FormControl = ({ label, type, name, value, defaultValue, placeholde
         placeholder={placeholder}
         onBlur={onBlur}
         value={value}
-        defaultValue={defaultValue}
         onChange={onChange}
         disabled={disabled}
         autoComplete={autoComplete}

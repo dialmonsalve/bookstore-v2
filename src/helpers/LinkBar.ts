@@ -22,7 +22,7 @@ export const links = [
     id:4,
     src: '/icons/paper.svg',
     alt: 'papelería',
-    href: '/bookstore/stationeries/'
+    href: '/bookstore/stationery/'
   },
   {
     id:5,

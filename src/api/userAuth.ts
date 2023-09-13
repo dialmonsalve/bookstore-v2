@@ -1,23 +1,23 @@
-import axios from 'axios'
+import axios from 'axios';
 
-import { authApi } from "@/api/bookstoreApi";
+import { authApi } from '@/api/bookstoreApi';
 
-import { IClient, IEmployee, TypeRole } from "@/types";
+import { IClient, IEmployee, TypeRole } from '@/types';
 
 interface AuthResult { hasError: boolean, user?: IEmployee | IClient, message?: string }
 interface Admin { adminRole: TypeRole[] | undefined, userAdmin: string | undefined }
 
 export const registerUser = async (employee: IEmployee | IClient, admin: Admin |null, isClient: boolean): Promise<AuthResult> => {
 
-  const endpoint = isClient ? "client" : "employee"
-  
+  const endpoint = isClient ? 'client' : 'employee'
+
   if (!isClient) {
-    const isAdmin = admin?.adminRole?.includes("admin")
+    const isAdmin = admin?.adminRole?.includes('admin')
 
     if (!isAdmin) {
       return {
         hasError: true,
-        message: "No está autorizado para esta operación"
+        message: 'No está autorizado para esta operación'
       }
     }
   }

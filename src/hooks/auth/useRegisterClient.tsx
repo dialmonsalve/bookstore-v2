@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userAuth } from "@/api";
 import { IClient, } from "@/types";
 
-export const useRegisterCLient = () => {
+export function  useRegisterCLient ()  {
 
   const queryClient = useQueryClient();
   const [showError, setShowError] = useState(false);
@@ -20,7 +20,7 @@ export const useRegisterCLient = () => {
       if (hasError) {
         setShowError(true);
         setErrorApiMessage(message!)
-        setTimeout(() => setShowError(false), 3000);
+        // setTimeout(() => setShowError(false), 3000);
         return;
       }
       queryClient.setQueriesData(["credential-client"], client);

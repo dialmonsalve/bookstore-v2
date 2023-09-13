@@ -1,4 +1,4 @@
-import { ReactNode, useReducer } from 'react';
+import { ReactNode, useCallback, useReducer } from 'react';
 import { UIContext, uiReducer } from './';
 
 export interface Props {
@@ -7,26 +7,41 @@ export interface Props {
 
 export interface UIState {
   toggleSidebar: boolean;
+  toggleAlert: boolean
+
 }
 
-
-export const UI_INITIAL_STATE: UIState = {
+const UI_INITIAL_STATE: UIState = {
   toggleSidebar: false,
+  toggleAlert: false
 }
 
 export const UIProvider = ({ children }: Props) => {
 
+
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
 
-  const handleToggleSidebar = () => {
-    
-    dispatch({ type: '[UI] - handleToggleSidebar', payload: !state.toggleSidebar})
+  const handleToggleSidebar = (toggleSidebar: boolean) => {
+
+    dispatch({ type: 'UI/handleToggleSidebar', payload: toggleSidebar })
+
+  }
+
+  function setAlert() {
+    dispatch({ type: 'UI/setAlert', payload: true });
+    setTimeout(() => {
+      dispatch({ type: 'UI/setAlert', payload: true });
+      setTimeout(() => {
+        dispatch({ type: 'UI/setAlert', payload: false });
+      }, 2500);
+    }, 1000);
   }
 
   return (
     <UIContext.Provider value={{
       ...state,
-      handleToggleSidebar
+      handleToggleSidebar,
+      setAlert
     }}>
       {children}
     </UIContext.Provider>

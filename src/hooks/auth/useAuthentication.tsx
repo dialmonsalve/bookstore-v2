@@ -1,11 +1,12 @@
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-import { IEmployee } from "@/types";
-import { authApi } from "@/api";
 import axios from "axios";
-import { useEmployeesStore } from "@/store/users";
 
-const handleLogin = async (): Promise<IEmployee | null> => {
+import { authApi } from "@/api";
+import { useEmployeesStore } from "@/store/employee";
+import {  IEmployee } from "@/types";
+
+async function handleLogin (): Promise<IEmployee | null> {
   
   try {
     const { data } = await authApi.get(`/search-user`);
@@ -21,13 +22,11 @@ const handleLogin = async (): Promise<IEmployee | null> => {
   return null
 }
 
-export const useAuthentication = () => {
+export default function useAuthentication () {
 
   const { data: nextSession, status } = useSession();
-
-  const isEmployee = nextSession?.user?.username ? "credential-employee" : "credential-client";
  
-  const sessionQuery = useQuery({   
+  const sessionQuery = useQuery({
 
     queryFn: async () => {
 
@@ -38,13 +37,12 @@ export const useAuthentication = () => {
       }
       return null;
     },
-    queryKey: [ isEmployee],
+    queryKey: [ "credentials"],
     enabled: !!nextSession?.user?.email!,
+    staleTime: Infinity,
+    refetchOnMount: true,
   })
 
-
-  return {
-    sessionQuery,
-    status
-  };
+  return {sessionQuery, status, nextSession}
+  
 }

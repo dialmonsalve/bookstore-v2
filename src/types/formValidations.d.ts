@@ -17,6 +17,7 @@ export interface Validator {
   isValidPhone():Validator
   max(length: number, message: string): Validator;
   min(length: number, message: string): Validator;
+  notBlankSpace(): Validator;
   number(): Validator;
   password(regex: string, message: string): Validator;
   positiveNumber(message: string): Validator;
