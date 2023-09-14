@@ -48,6 +48,26 @@ export const newEmployeeValidationSchema = {
     .required('Campo password es requerido')
     .min(4, 'El password debe tener al menos de 4 caracteres'),
 };
+export const updateEmployeeValidationSchema = {
+
+  name: formValidator()
+    .string()
+    .required('Campo nombre es requerido')
+    .min(3, 'El nombre debe tener al menos de 3 caracteres'),
+  lastName: formValidator()
+    .string(),
+  email: formValidator()
+    .string()
+    .required('Campo email es requerido')
+    .email(),
+  username: formValidator()
+    .string()
+    .required('Campo username es requerido')
+    .min(4, 'El username debe tener al menos de 4 caracteres')
+    .notBlankSpace(),
+  phone: formValidator()
+    .isValidPhone(),
+};
 
 
 export const loginClientValidationSchema = {

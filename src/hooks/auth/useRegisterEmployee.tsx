@@ -14,7 +14,7 @@ export function  useRegisterEmployee()  {
   const [errorApiMessage, setErrorApiMessage] = useState<string | null>('');
   const router = useRouter();
   const queryClient = useQueryClient();
-  const {setAlert} = useUIContext()
+  const {setAlert} = useUIContext();
   
   const adminRole = useEmployeesStore(state => state.session?.role);
   const userAdmin = useEmployeesStore(state => state.session?.username);

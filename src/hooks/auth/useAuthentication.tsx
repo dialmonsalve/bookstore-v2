@@ -2,14 +2,14 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-import { authApi } from "@/api";
+import { userApi } from "@/api";
 import { useEmployeesStore } from "@/store/employee";
 import {  IEmployee } from "@/types";
 
 async function handleLogin (): Promise<IEmployee | null> {
   
   try {
-    const { data } = await authApi.get(`/search-user`);
+    const { data } = await userApi.get(`/search-user`);
   
     return data
 

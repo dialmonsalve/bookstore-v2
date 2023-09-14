@@ -1,44 +1,37 @@
-import { authApi } from "@/api";
-import { Spinner } from "@/components/ui";
+import { getEmployeeById, getEmployees } from "@/api/employee";
 import { useEmployeesStore } from "@/store/employee";
 import { IEmployee } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
-async function getEmployees(): Promise<IEmployee[] | null> {
+export function useEmployee(employeeId:string, employee:IEmployee) {
 
-  try {
-    const { data } = await authApi.get<IEmployee[] | null>('/');
+  const setEmployee = useEmployeesStore(state=>state.setEmployee)
+  setEmployee(employee)
 
-    return data
-
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message)
-    }
-  }
-  return null
-}
-
-export default function useEmployees() {
-
-  const setEmployees = useEmployeesStore(state => state.setEmployees);
-
-  const employeesQuery = useQuery(
-
-    ["employees"],
-    async function(){
-      const data = await getEmployees();
-      if (data !== undefined) {
-        setEmployees(data)
-        return data;
-      }
-      return null
-    },
+  return useQuery(
+    ["employee", employeeId],
+    ()=>getEmployeeById(employeeId),
     {
+      initialData:employee,
       staleTime: Infinity,
     }
   )
-
-  return employeesQuery;
 }
+
+export default function useEmployees(employees:IEmployee[]) {
+
+  const setEmployees = useEmployeesStore(state=>state.setEmployees)
+  setEmployees(employees)
+
+  return useQuery(
+    ["employees"],
+     getEmployees
+    ,{
+      staleTime: Infinity,
+      initialData:employees
+    }
+  )
+
+}
+
+

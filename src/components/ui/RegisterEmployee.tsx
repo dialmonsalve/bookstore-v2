@@ -1,27 +1,26 @@
-import { ErrorMessages, InitialForm, IsTouched, ReactChangeEvent, ReactFocusEvent } from "@/types"
-import {   ErrorMessage, FormControl,  } from "./"
+import { ErrorMessages, IClient, IEmployee, InitialForm, IsTouched, ReactChangeEvent, ReactFocusEvent } from "@/types"
+import { ErrorMessage, FormControl, } from "./"
 
 interface Props {
-  isEmployee: boolean
-  formState: InitialForm
+  isCreate?: boolean
+  formState: IEmployee | IClient | null
   isTouched: IsTouched
   isFormSubmitted: boolean
-  errors: ErrorMessages<InitialForm> | undefined 
+  errors: ErrorMessages<IEmployee | IClient > | undefined
   handleBlur: (e: ReactFocusEvent) => void
   handleFieldChange: (e: ReactChangeEvent) => void
 }
 
+export const RegisterEmployOrClient = ({
+  errors,
+  formState,
+  handleBlur,
+  handleFieldChange,
+  isFormSubmitted,
+  isTouched,
+  isCreate = true
+}: Props) => {
 
-export const RegisterEmploy = ({
-errors,
-formState, 
-handleBlur, 
-handleFieldChange,
-isEmployee, 
-isFormSubmitted, 
-isTouched
-}:Props) => {
-  const { } = formState
 
   return (
     <>
@@ -94,25 +93,26 @@ isTouched
           isTouched={isTouched?.phone}
         />
       </div>
-
-      <div>
-        <FormControl
-          label="password"
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formState?.password}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-          autoComplete="off"
-        />
-
-        <ErrorMessage
-          fieldName={errors?.password}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.password}
-        />
-      </div>
+      {
+        isCreate &&
+        <div>
+          <FormControl
+            label="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={formState?.password}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+            autoComplete="off"
+          />
+          <ErrorMessage
+            fieldName={errors?.password}
+            isFormSubmitted={isFormSubmitted}
+            isTouched={isTouched?.password}
+          />
+        </div>
+      }
     </>
   )
 }

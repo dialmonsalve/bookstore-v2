@@ -4,7 +4,6 @@ import { db } from '../../../database';
 import { IEmployee } from '@/types';
 import { Employee } from '@/models';
 
-
 type Data =
   | { message: string }
   | IEmployee
@@ -12,6 +11,7 @@ type Data =
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
   const { id } = req.query;
+
   if (!mongoose.isValidObjectId(id)) {
     return res.status(400).json({ message: `el id ${id} no es válido` })
   }
@@ -31,6 +31,8 @@ const updateEmployee = async (req: NextApiRequest, res: NextApiResponse<Data>) =
 
   const { id } = req.query;
 
+  
+
   await db.connect();
 
   const employeeToUpdate = await Employee.findById(id);
@@ -39,9 +41,6 @@ const updateEmployee = async (req: NextApiRequest, res: NextApiResponse<Data>) =
     await db.disconnect();
     return res.status(400).json({ message: `No usuario con el id ${id}` })
   }
-
-
-
 
 
   const {
@@ -70,18 +69,18 @@ const updateEmployee = async (req: NextApiRequest, res: NextApiResponse<Data>) =
   } finally {
     await db.disconnect();
   }
-
 }
 const getEmployee = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();
-	const employee = await Employee.findById(id)
-	await db.disconnect();
+  const employee = await Employee.findById(id).select('-password -createdAt -updatedAt -__v')
+  .lean();
+  await db.disconnect();
 
   if (!employee) {
-		return res.status(400).json({ message: `No hay usuario con el id ${id}` })
-	}
+    return res.status(400).json({ message: `No hay usuario con el id ${id}` })
+  }
 
-  res.status(200).json(employee)
+  res.status(200).json(employee as IEmployee)
 }

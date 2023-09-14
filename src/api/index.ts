@@ -1,3 +1,3 @@
 export {bookstoreApi} from "./bookstoreApi";
-export {authApi} from "./bookstoreApi";
+export {userApi} from "./bookstoreApi";
 export * as userAuth from "./userAuth";

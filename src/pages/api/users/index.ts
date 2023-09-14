@@ -24,13 +24,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const getEmployees = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-  const session = await getSession({ req });
+  // const session = await getSession({ req });
+
+  // if (!session) {
+  //   throw new Error('Las credenciales son obligatorias');
+  // }
+  await db.connect();
 
   try {
-    if (!session) {
-      throw new Error('Las credenciales son obligatorias');
-    }
-    await db.connect();
 
     const employee: IEmployee[] = await Employee.find()
       .select('-password -createdAt -updatedAt -__v')
@@ -39,11 +40,11 @@ const getEmployees = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
     return res.status(200).json(employee);
 
   } catch (error: any) {
-    console.error('No hay ningún usuario registrado con las credenciales:', error.message);
+    console.error(error.message);
 
     res.status(500).json({ message: 'Verificar logs' });
-
-  } finally {
+    
+  }finally{    
     await db.disconnect();
   }
 }

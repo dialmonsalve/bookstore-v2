@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 import { PrivateHeader, PrivateSidebar } from "./";
+import { QueryProvider } from "@/context/providers/QueryProvider";
 
 interface Props {
   title: string;
@@ -8,17 +9,15 @@ interface Props {
 }
 
 export const PrivateLayout = ({ title, children }: Props) => {
-  return (
 
+  return (
     <>
       <PrivateSidebar />
-      <div  >
-        <PrivateHeader />
-        <main className='private-main' >
+      <PrivateHeader />
+      <main className='private-main' >
         <h1>{title}</h1>
-          {children}
-        </main>
-      </div>
+        {children}
+      </main>
     </>
   )
 }

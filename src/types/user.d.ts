@@ -1,4 +1,6 @@
-interface IUser {
+import { InitialForm } from ".";
+
+interface IUser extends InitialForm {
   _id?: string;
   createdAt?: number;
   deleted?: boolean;

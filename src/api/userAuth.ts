@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { authApi } from '@/api/bookstoreApi';
+import { userApi } from '@/api/bookstoreApi';
 
 import { IClient, IEmployee, TypeRole } from '@/types';
 
@@ -23,7 +23,7 @@ export const registerUser = async (employee: IEmployee | IClient, admin: Admin |
   }
 
   try {
-    const { data } = await authApi.post<IEmployee>(`/register-${endpoint}`, { ...employee, ...admin });
+    const { data } = await userApi.post<IEmployee>(`/register-${endpoint}`, { ...employee, ...admin });
     return {
       hasError: false,
       user: data
@@ -52,7 +52,7 @@ export const handleLogin = async (fieldForm: { [key: string]: string, password: 
   };
 
   try {
-    const { data } = await authApi.post(`/login`, formData);
+    const { data } = await userApi.post(`/login`, formData);
 
     return {
       hasError: false,

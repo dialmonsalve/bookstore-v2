@@ -4,7 +4,7 @@ import { PrivateLayout } from '@/components/layouts';
 import { useRegisterEmployee } from '@/hooks/auth';
 import { useForm } from '@/hooks/useForm';
 
-import { ApiMessageError, Button, ErrorMessage, FormControl, RegisterEmploy, Select, selectOption } from '@/components/ui';
+import { ApiMessageError, Button, ErrorMessage, FormControl, RegisterEmployOrClient, Select, selectOption } from '@/components/ui';
 
 import { formValidator, newEmployeeValidationSchema } from '@/helpers';
 import { TypeRole } from '@/types';
@@ -79,7 +79,7 @@ function CreateEmployeePage() {
       className='form' 
       onSubmit={handleRegisterEmployee}
       >
-        <RegisterEmploy isEmployee
+        <RegisterEmployOrClient
           formState={formState}
           isTouched={isTouched}
           isFormSubmitted={isFormSubmitted}

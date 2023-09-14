@@ -1,7 +1,7 @@
 
-import {  IEmployee } from "@/types"
 import { create, } from "zustand"
 import { devtools } from "zustand/middleware"
+import { IEmployee } from "@/types"
 
 interface State {
   employees: IEmployee[] | null;
@@ -12,6 +12,7 @@ interface State {
 interface Actions {
   setSession: (session: IEmployee | null) => void
   setEmployees: (employees: IEmployee[] | null) => void
+  setEmployee: (employee: IEmployee | null) => void
 }
 
 export const useEmployeesStore = create<State & Actions>()(devtools((set, get) => {
@@ -20,12 +21,14 @@ export const useEmployeesStore = create<State & Actions>()(devtools((set, get) =
     employees: [],
     employee: {} as IEmployee,
     session: {} as IEmployee,
-
+    setEmployee(newEmployee) {
+      set({ employee:newEmployee }, false, "employee")
+    },
+    setEmployees(newEmployees) {
+      set({ employees:newEmployees }, false, "employees")
+    },
     setSession(newSession: IEmployee | null) {
       set({ session: newSession }, false, "session")
-    },
-    setEmployees(newEmployees: IEmployee[] | null) {
-      set({ employees: newEmployees }, false, "employees")
     },
   }
 }))
