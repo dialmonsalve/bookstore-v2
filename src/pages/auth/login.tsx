@@ -1,17 +1,18 @@
 import {  FormEvent, useEffect, useState } from "react";
-
 import { GetServerSideProps } from 'next';
-import { getProviders, getSession } from "next-auth/react";
 import Image from "next/image";
-import { PublicLayout } from "@/components/layouts"
-import { ApiMessageError, Button, LoginAuthentication } from "@/components/ui";
+import Link from "next/link";
+import { getProviders, getSession } from "next-auth/react";
 
 import {  useLogin } from "@/hooks/auth";
-
 import { useForm } from "@/hooks/useForm";
-import Link from "next/link";
-import { formValidator, loginClientValidationSchema } from "@/helpers";
 import useLoginProviderOrLogout from "@/hooks/auth/useLoginProviderOrLogout";
+
+import { Layout } from "@/components/layouts/e-commerce";
+import { ApiMessageError, Button } from "@/components/ui/client";
+import { LoginAuthentication } from "@/components/ui/services";
+
+import { formValidator, loginClientValidationSchema } from "@/helpers";
 
 const loginClient = {
   email: '',
@@ -54,7 +55,7 @@ function Login() {
   }
 
   return (
-    <PublicLayout
+    <Layout
       title={'Ingresa y comienza a encontrar los libros que necesitas'}
       pageDescription={'Página para hacer login en diabooks. Permite a nuestros usuarios hacer sus compras e inscribirse a nuestros boletines'}>
 
@@ -109,7 +110,7 @@ function Login() {
           )
         })
       }
-    </PublicLayout>
+    </Layout>
   )
 }
 

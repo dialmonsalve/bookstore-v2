@@ -1,9 +1,9 @@
-import { PublicLayout } from '@/components/layouts'
+import { Layout } from '@/components/layouts/e-commerce'
 
 export default function Home() {
 
   return (
-    <PublicLayout
+    <Layout
       title={'DIABOOKS | Encuentra los libros que necesites para soñar'}
       pageDescription={'Esta es la página de inicio de la librería DIABOOKS'}>
       <h1>Read and dream</h1>
@@ -32,7 +32,7 @@ export default function Home() {
 
       </section>
 
-    </PublicLayout>
+    </Layout>
 
   )
 }

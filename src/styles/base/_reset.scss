@@ -35,7 +35,16 @@ body {
 	font-family: v.$font-family;
 	margin: 0;
 	height: 100vh;
+	overflow: auto; //! Quitar auto y dejar hidden
+}
+
+.reglavacia{
+	
+}
+
+.body-public {
 	overflow: auto;
+	height: 100vh;
 }
 
 .public-main {

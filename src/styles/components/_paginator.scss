@@ -1,0 +1,27 @@
+.paginator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  
+}
+
+.contenedor-paginator {
+  position: absolute;
+  bottom: 0%;
+  width: 50%;
+  
+  
+  &__paginator {
+    position: sticky;
+    bottom: 5%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    
+  }  
+}

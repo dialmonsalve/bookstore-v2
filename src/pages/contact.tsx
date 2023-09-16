@@ -1,9 +1,7 @@
 import { FormEvent } from "react";
+import { Layout } from "@/components/layouts/e-commerce"
 
-
-
-import { PublicLayout } from "@/components/layouts";
-import { Button, FormControl, ErrorMessage } from "@/components/ui";
+import { Button, FormControl, ErrorMessage } from "@/components/ui/client";
 
 import { formValidator, newMessageValidationSchema } from "@/helpers";
 import { useForm } from "@/hooks/useForm";
@@ -44,7 +42,7 @@ function Contact() {
     }
   }
   return (
-    <PublicLayout
+    <Layout
       title={'DIABOOKS | Escríbenos y cuéntanos que piensas acerca de nosotros, o si necesitas ayuda en tu proceso'}
       pageDescription={'Esta página le permite a nuestros usuarios contactarnos y que nos pregunten acerca de todas sus dudas'}>
       <h1 >Cuéntanos, ¿Qué quieres saber?</h1>
@@ -125,7 +123,7 @@ function Contact() {
         </Button>
       </form>
 
-    </PublicLayout>
+    </Layout>
   )
 }
 

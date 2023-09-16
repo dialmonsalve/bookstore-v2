@@ -62,7 +62,6 @@ export async function checkEmailPassword(validateField: string, password: string
   }
 };
 
-
 export async function oAuthDbClient(oAuthEmail: string, oAuthName: string, oAuthImage: string) {
 
   await db.connect();

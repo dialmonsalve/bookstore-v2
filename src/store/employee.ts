@@ -13,6 +13,7 @@ interface Actions {
   setSession: (session: IEmployee | null) => void
   setEmployees: (employees: IEmployee[] | null) => void
   setEmployee: (employee: IEmployee | null) => void
+  setDeleteEmployee:(id: string)=> void
 }
 
 export const useEmployeesStore = create<State & Actions>()(devtools((set, get) => {
@@ -22,13 +23,22 @@ export const useEmployeesStore = create<State & Actions>()(devtools((set, get) =
     employee: {} as IEmployee,
     session: {} as IEmployee,
     setEmployee(newEmployee) {
-      set({ employee:newEmployee }, false, "employee")
+      set({ employee: newEmployee }, false, "employee")
     },
     setEmployees(newEmployees) {
-      set({ employees:newEmployees }, false, "employees")
+      set({ employees: newEmployees }, false, "employees")
     },
     setSession(newSession: IEmployee | null) {
       set({ session: newSession }, false, "session")
     },
+    setDeleteEmployee(id) {
+      set((state) => ({
+        employees: state.employees?.filter(employee => {
+
+          console.log(employee._id === id);
+          return employee._id !== id
+        })
+      }), false, "employees")
+    }
   }
-}))
+},{name:"employees"}))

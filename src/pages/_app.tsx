@@ -1,10 +1,9 @@
 import type { AppProps } from 'next/app'
-import { SessionAuthProvider } from '@/components/ui/SessionAuthProvider';
+import { SessionAuthProvider } from '@/components/ui/services/SessionAuthProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
 
-import { UIProvider } from '@/context/ui';
 import '../styles/main.scss';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -15,9 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <SessionAuthProvider>
       <QueryClientProvider client={queryClient} >
         <ReactQueryDevtools initialIsOpen={false} />
-        <UIProvider>
-          <Component {...pageProps} />
-        </UIProvider>
+          <Component {...pageProps} />   
       </QueryClientProvider>
     </SessionAuthProvider>
   )

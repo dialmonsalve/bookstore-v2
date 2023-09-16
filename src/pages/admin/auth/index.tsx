@@ -5,8 +5,9 @@ import { getSession } from "next-auth/react";
 import { useLogin } from '@/hooks/auth';
 import { useForm } from '@/hooks/useForm';
 
-import { ApiMessageError, Button, LoginAuthentication } from '@/components/ui'
 import { formValidator, loginEmployeeValidationSchema } from '@/helpers';
+import { ApiMessageError, Button } from '@/components/ui/client';
+import { LoginAuthentication } from '@/components/ui/services';
 
 const login = {
   username: '',

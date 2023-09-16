@@ -20,14 +20,13 @@ export interface IClient extends IUser {
 }
 
 export interface IEmployee extends IUser {
-  role?: TypeRole[];
+  role: TypeRole[];
   isNewEmployee?: boolean;
   username: string;
   email?: string;
 }
 
-type TypeRole = | "admin" | "logistica" | "vendedor" | "compras"
-
+export type TypeRole = "admin" | "logistica" | "ventas" | "compras"
 
 interface ResponseObject {
   _id?: string,

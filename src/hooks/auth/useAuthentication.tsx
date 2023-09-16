@@ -1,26 +1,8 @@
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
-import { userApi } from "@/api";
+import { userAuth } from "@/api";
 import { useEmployeesStore } from "@/store/employee";
-import {  IEmployee } from "@/types";
-
-async function handleLogin (): Promise<IEmployee | null> {
-  
-  try {
-    const { data } = await userApi.get(`/search-user`);
-  
-    return data
-
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message)
-    }
-  }
-
-  return null
-}
 
 export default function useAuthentication () {
 
@@ -31,7 +13,7 @@ export default function useAuthentication () {
     queryFn: async () => {
 
       if (status === 'authenticated') {
-        const data = await handleLogin()
+        const data = await userAuth.searchUser()
         useEmployeesStore.getState().setSession(data)
         return data;
       }

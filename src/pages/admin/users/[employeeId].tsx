@@ -1,30 +1,28 @@
-import { userApi } from "@/api";
-import { getEmployeeById } from "@/api/employee";
-import { PrivateLayout } from "@/components/layouts"
-import { Button, ErrorMessage, FormControl, RegisterEmployOrClient, Select, Spinner, selectOption } from "@/components/ui";
-import { formValidator, updateEmployeeValidationSchema } from "@/helpers";
-import { useEmployee } from "@/hooks/employee/useEmployees";
-import { useForm } from "@/hooks/useForm";
-import { ErrorMessages, IClient, IEmployee, InitialForm } from "@/types";
+import { FormEvent, useState } from "react";
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+
+import { useEmployee , useUpdateEmployee} from "@/hooks/employee";
+import { useForm } from "@/hooks/useForm";
+
+import { Layout } from "@/components/layouts/app";
+import { RegisterEmployOrClient } from "@/components/ui/services";
+import { AlertSuccess, ApiMessageError, Button, ErrorMessage, FormControl, Select, Spinner } from "@/components/ui/client";
+
+import { ROLES, formValidator, updateEmployeeValidationSchema } from "@/helpers";
+import { getEmployeeById } from "@/api/employee/employee";
+
+import { ErrorMessages, IClient, IEmployee, InitialForm, TypeRole, ErrorMessage as TypeError } from "@/types";
+import { useUisStore } from "@/store/ui";
 
 interface Props {
   employee: IEmployee
   employeeId: string
 }
 
-const oldRoles = [
-  { label: 'logistica', value: 1 },
-  { label: 'ventas', value: 2 },
-  { label: 'compras', value: 3 },
-]
-
-
 function UpdateEmployee({ employeeId, employee }: Props) {
 
-
-  const employeeQuery = useEmployee(employeeId, employee)
+  const employeeQuery = useEmployee(employeeId, employee);
+  
   const {
     formState,
     handleBlur,
@@ -35,32 +33,43 @@ function UpdateEmployee({ employeeId, employee }: Props) {
     isTouched
   } = useForm(employeeQuery.data)
 
-  const roles = formState?.role?.map((rol, idx) => {
+  const [option, setOption] = useState<TypeRole[]>(formState?.role!);
+  const setErrorApiMessage = useUisStore(state => state.setErrorMessage)
 
-    const newrol = {
-      label: rol,
-      value: idx + 1
-    }
-    console.log(newrol);
-    
-    return newrol
-  })
+  const updateEmployee = useUpdateEmployee(employeeId)
 
-  console.log(roles);
+  const errors = formValidator().getErrors(formState as InitialForm, updateEmployeeValidationSchema) 
   
-
-  const [option, setOption] = useState<selectOption[]>([...roles!])
-
-  const errors = formValidator().getErrors(formState as InitialForm, updateEmployeeValidationSchema)
-
   if (employeeQuery.isLoading) {
     return <Spinner />
   }
+  const handleUpdateEmployee = (e: FormEvent) => {
+    e.preventDefault();
+    const notErrorsForms = hasErrors(errors as TypeError<IEmployee> | undefined)
+
+    const newRoles = option.map(opt => {
+      return opt
+    }) as TypeRole[]
+
+    if (newRoles.length === 0) {
+      setErrorApiMessage(true, 'El usuario debe tener al menos 1 rol');
+      setTimeout(() => setErrorApiMessage(false), 3000);
+      return;
+    }
+    if (notErrorsForms) {
+
+      const updatedEmployee = { ...formState, role: newRoles }
+      updateEmployee.mutate(updatedEmployee as IEmployee);
+    }
+  }
 
   return (
-    <PrivateLayout title={`${employeeQuery.data?.name} ${employeeQuery.data?.lastName}`} >
+    <Layout title={`${employeeQuery.data?.name} ${employeeQuery.data?.lastName}`} >
 
-      <form className="form" action="PUT">
+      <ApiMessageError />
+      <AlertSuccess />
+
+      <form className="form" onSubmit={handleUpdateEmployee} >
 
         <RegisterEmployOrClient
           formState={formState}
@@ -83,7 +92,7 @@ function UpdateEmployee({ employeeId, employee }: Props) {
           />
         </div>
         <Select
-          options={oldRoles || []}
+          options={ROLES || []}
           value={option}
           onChange={o => setOption(o)}
           name={'role'}
@@ -99,15 +108,14 @@ function UpdateEmployee({ employeeId, employee }: Props) {
           <Button
             type='submit'
             backgroundColor='green'
-            disabled={!!errors}
+            disabled={!!errors  || updateEmployee.isLoading}
           >
-            Actualiza Usuario
+            {`${updateEmployee.isLoading ? 'Espere' : 'Actualiza Usuario'} `}
+            
           </Button>
         </div>
       </form>
-
-
-    </PrivateLayout>
+    </Layout>
   )
 }
 

@@ -95,6 +95,8 @@
 
 .disabled {
   background-color: v.$color-gray-2;
+  color: white;
+  outline: none;
 
   &:hover {
     background-color: v.$color-gray-2;
@@ -130,24 +132,10 @@
 
 .plus {
   @include m.btn-ico('/icons/plus.svg');
-  z-index: 10;
+  z-index: 4;
 
   &:hover {
     transform: scale(1.2);
-  }
-
-  &:hover::after {
-    content: "Crea usuario";
-    position: absolute;
-    bottom: -10%;
-    left: 0;
-    color: v.$color-primary-dark;
-    padding: .5rem 1rem;
-    border: 1px solid v.$color-primary-dark;
-    border-radius: 5px;
-    font-size: 1rem;
-    opacity: 0.8;
-    transform: translateY(100%)
   }
 }
 
@@ -162,4 +150,27 @@
       transform: rotate(0);
     }
   }
+}
+
+.back {
+  @include m.btn-ico('/icons/back.svg');
+  width: 8rem;
+  height: 6rem;
+  top: 18vh;
+  left: 12%;
+  position: absolute;
+  
+  &:hover {
+    transform: scale(1.3);
+  }
+  @include m.responsive(phone) {
+    top: 24.5vh;
+    left: 2%;
+    width: 6rem;
+
+    &:hover {
+      transform: scale(1);
+    }
+  }
+
 }

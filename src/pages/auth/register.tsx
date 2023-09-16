@@ -1,14 +1,16 @@
+import { FormEvent } from "react";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
+import Link from "next/link";
 
-import { PublicLayout } from "@/components/layouts";
-import { ApiMessageError, Button, ErrorMessage, FormControl, RegisterEmploy } from "@/components/ui";
-
-import { formValidator, newClientValidationSchema } from "@/helpers";
 import { useForm } from "@/hooks/useForm";
 import { useRegisterCLient } from "@/hooks/auth";
-import { FormEvent } from "react";
-import Link from "next/link";
+
+import { Layout } from "@/components/layouts/e-commerce";
+import {  RegisterEmployOrClient } from "@/components/ui/services";
+import { ApiMessageError, Button, ErrorMessage, FormControl } from "@/components/ui/client";
+
+import { formValidator, newClientValidationSchema } from "@/helpers";
 
 const newClient = {
   name: '',
@@ -21,7 +23,7 @@ const newClient = {
 
 function CreateCLientPage() {
 
-  const { registerCLient, errorApiMessage, showError } = useRegisterCLient();
+  const { registerCLient } = useRegisterCLient();
 
   const {
     formState,
@@ -45,20 +47,16 @@ function CreateCLientPage() {
   }
 
   return (
-    <PublicLayout
+    <Layout
       title={'Crea tu cuenta y comienza a volar'}
       pageDescription={'Creación de cuenta en diaBbooks para comenzar a usar nuestros servicios'}
     >
       <h1 >Crea tu cuenta y comienza a volar</h1>
 
-      <ApiMessageError
-        showError={showError}
-        errorApiMessage={errorApiMessage}
-      />
+      <ApiMessageError />
       <form method="POST" style={{ width: "60rem" }} className="form" onSubmit={handleRegisterClient}
       >
-        <RegisterEmploy
-          isEmployee={false}
+        <RegisterEmployOrClient
           formState={formState}
           isTouched={isTouched}
           isFormSubmitted={isFormSubmitted}
@@ -100,7 +98,7 @@ function CreateCLientPage() {
 
       </form>
 
-    </PublicLayout>
+    </Layout>
   )
 }
 

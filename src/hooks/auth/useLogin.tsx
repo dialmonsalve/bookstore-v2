@@ -25,7 +25,7 @@ export function useLogin(fieldForm: string) {
       if (hasError) {
         setShowError(true);
         setErrorApiMessage(message!)
-        // setTimeout(() => setShowError(false), 3000);
+        setTimeout(() => setShowError(false), 3000);
         return;
       }
       queryClient.setQueriesData([fieldForm === "username" ? "credential-employee" : "credential-client"], user);

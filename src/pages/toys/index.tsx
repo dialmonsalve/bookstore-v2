@@ -1,10 +1,10 @@
-import { PublicLayout } from "@/components/layouts"
+import { Layout } from "@/components/layouts/e-commerce"
 
 const ToysPage = () => {
   return (
-    <PublicLayout title="Find your favorite book" pageDescription="In this page you find all toys categories" >
+    <Layout title="Find your favorite book" pageDescription="In this page you find all toys categories" >
       <h1>Toys</h1>
-    </PublicLayout>
+    </Layout>
   )
 }
 

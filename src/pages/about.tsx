@@ -1,8 +1,8 @@
-import { PublicLayout } from "@/components/layouts"
+import { Layout } from "@/components/layouts/e-commerce"
 
 function About() {
   return (
-    <PublicLayout 
+    <Layout 
     title={'DIABOOKS | Conoce más acerca de nuestra librería '} 
     pageDescription={'Esta es la página de quienes somos para que nuestro público conozca más de como es ser una persona DiaBooks'}>
       <h1>Aprende más acerca de nosotros</h1>
@@ -16,7 +16,7 @@ function About() {
           Minus placeat molestias assumenda culpa, reiciendis necessitatibus quo molestiae est maiores in, pariatur porro facilis facere sit rerum! Quae ut aspernatur facilis soluta, dicta debitis facere nemo porro nesciunt totam?
         </p>
 
-    </PublicLayout>
+    </Layout>
   )
 }
 

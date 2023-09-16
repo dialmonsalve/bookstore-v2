@@ -1,13 +1,16 @@
 import { FormEvent, useState } from 'react';
 
-import { PrivateLayout } from '@/components/layouts';
-import { useRegisterEmployee } from '@/hooks/auth';
 import { useForm } from '@/hooks/useForm';
 
-import { ApiMessageError, Button, ErrorMessage, FormControl, RegisterEmployOrClient, Select, selectOption } from '@/components/ui';
+import { useRegisterEmployee } from '@/hooks/employee';
 
-import { formValidator, newEmployeeValidationSchema } from '@/helpers';
-import { TypeRole } from '@/types';
+import { Layout } from '@/components/layouts/app';
+import { AlertSuccess, ApiMessageError, Button, ErrorMessage, FormControl, Select } from '@/components/ui/client';
+import { RegisterEmployOrClient } from '@/components/ui/services';
+
+import { ROLES, formValidator, newEmployeeValidationSchema } from '@/helpers';
+import { IEmployee, TypeRole } from '@/types';
+import { useUisStore } from '@/store/ui';
 
 const newEmployee = {
   name: '',
@@ -17,20 +20,13 @@ const newEmployee = {
   phone: '',
   password: '',
   repitePassword: '',
-  role: '',
+  role: ''
 }
-const roles = [
-  { label: 'logistica', value: 1 },
-  { label: 'ventas', value: 2 },
-  { label: 'compras', value: 3 },
-]
-
 function CreateEmployeePage() {
 
-  const [option, setOption] = useState<selectOption[]>([roles[0]])
-  const [messageErrolRole, setMessageErrolRole] = useState<string | null>(null)
-  const [hasErrolRole, setHasErrolRole] = useState(false);
-  const { registerEmployee, errorApiMessage, showError } = useRegisterEmployee();
+  const [option, setOption] = useState<TypeRole[]>([ROLES[0]] as TypeRole[]);
+  const setErrorApiMessage = useUisStore(state => state.setErrorMessage);
+  const registerEmployee = useRegisterEmployee();
 
   const {
     formState,
@@ -47,37 +43,32 @@ function CreateEmployeePage() {
     e.preventDefault();
     const notErrorsForms = hasErrors(errors);
 
-    const newRoles = option.map(o => {
-      return o.label
+    const newRoles = option.map(opt => {
+      return opt
     })
 
     if (newRoles.length === 0) {
-      setHasErrolRole(true);
-      setMessageErrolRole('El usuario debe tener al menos 1 rol')
-      // setTimeout(() => setHasErrolRole(false), 3000);
+      setErrorApiMessage(true, 'El usuario debe tener al menos 1 rol');
+      setTimeout(() => setErrorApiMessage(false), 3000);
       return;
     }
     if (notErrorsForms) {
-      registerEmployee.mutate({ ...formState, role: newRoles as TypeRole[] });
+      const { repitePassword, ...rest } = formState
+      const newEmployee = { ...rest, role: newRoles }
+      registerEmployee.mutate(newEmployee as IEmployee);
     }
   }
 
   return (
-    <PrivateLayout title='Usuarios' >
+    <Layout title='Usuarios' >
+      <ApiMessageError />
+      <AlertSuccess />
 
-      <ApiMessageError
-        showError={hasErrolRole}
-        errorApiMessage={messageErrolRole}
-      />
-      <ApiMessageError
-        showError={showError}
-        errorApiMessage={errorApiMessage}
-      />
-      <form 
-      method='POST' 
-      style={{ width: '60rem' }} 
-      className='form' 
-      onSubmit={handleRegisterEmployee}
+      <form
+        method='POST'
+        style={{ width: '60rem' }}
+        className='form'
+        onSubmit={handleRegisterEmployee}
       >
         <RegisterEmployOrClient
           formState={formState}
@@ -87,6 +78,7 @@ function CreateEmployeePage() {
           handleBlur={handleBlur}
           handleFieldChange={handleFieldChange}
         />
+
         <div>
           <FormControl
             label='Username'
@@ -99,7 +91,7 @@ function CreateEmployeePage() {
           />
         </div>
         <Select
-          options={roles || []}
+          options={ROLES || []}
           value={option}
           onChange={o => setOption(o)}
           name={'role'}
@@ -115,14 +107,14 @@ function CreateEmployeePage() {
           <Button
             type='submit'
             backgroundColor='green'
-            disabled={!!errors}
+            disabled={!!errors || registerEmployee.isLoading}
           >
-            Crear Cuenta
+            {`${registerEmployee.isLoading ? 'Espere' : 'Crear Cuenta'} `}
           </Button>
 
         </div>
       </form>
-    </PrivateLayout>
+    </Layout>
   )
 }
 

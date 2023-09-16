@@ -1,16 +1,12 @@
-import { PrivateLayout } from "@/components/layouts"
-import { Spinner } from "@/components/ui";
+import { Layout } from "@/components/layouts/app"
+import { Spinner } from "@/components/ui/client";
 
 
 function AdminPage() {
 
 
-  // if (status === 'loading') {
-  //   return <Spinner />
-  // }
-
   return (
-    <PrivateLayout title='Panel DIABOOKS' >
+    <Layout title='Panel DIABOOKS' >
       <section className='section'>
 
         <article className='section__article--news' >
@@ -29,7 +25,7 @@ function AdminPage() {
 
         </article >
       </section>
-    </PrivateLayout>
+    </Layout>
   )
 }
 

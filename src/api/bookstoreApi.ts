@@ -5,5 +5,9 @@ export const bookstoreApi = axios.create({
 });
 
 export const userApi = axios.create({
-  baseURL:'http://localhost:3000/api/users'
+  baseURL:'http://localhost:3000/api/auth'
+});
+
+export const employeeApi = axios.create({
+  baseURL:'http://localhost:3000/api/employees'
 });

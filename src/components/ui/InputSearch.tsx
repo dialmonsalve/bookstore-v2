@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react"
-import { Row, Table, TableHeader, Td } from ".";
+import { Row, Table, TableHeader, Td } from "./services";
 
 export const InputSearch = () => {
 

@@ -1,3 +1,4 @@
+import { TypeRole } from '@/types';
 import { formValidator } from './formValidator';
 
 export const newClientValidationSchema = {
@@ -103,6 +104,8 @@ export const newMessageValidationSchema = {
     .required('Por favor ingresa tu mensaje')
     .min(15, 'El mensaje debe tener al menos 15 caracteres'),
 };
+
+export const ROLES = ['logistica', 'ventas', 'compras'] as TypeRole[]
 
 
 

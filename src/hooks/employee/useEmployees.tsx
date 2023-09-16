@@ -1,37 +1,52 @@
-import { getEmployeeById, getEmployees } from "@/api/employee";
-import { useEmployeesStore } from "@/store/employee";
-import { IEmployee } from "@/types";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-export function useEmployee(employeeId:string, employee:IEmployee) {
+import { getEmployees } from "@/api/employee/employee";
+import { useEmployeesStore } from "@/store/employee";
 
-  const setEmployee = useEmployeesStore(state=>state.setEmployee)
-  setEmployee(employee)
+import { IEmployee } from "@/types";
+import { useRouter } from "next/router";
 
-  return useQuery(
-    ["employee", employeeId],
-    ()=>getEmployeeById(employeeId),
-    {
-      initialData:employee,
+export function useEmployees(employees:IEmployee[]) {
+
+  const setEmployees = useEmployeesStore(state => state.setEmployees);
+  const [page, setPage] = useState<number>(1)
+
+  const router = useRouter()
+
+  const queryEmployees = useQuery(
+    ["employees", { page }],
+    async () => {
+      const data = await getEmployees(page)
+      setEmployees(data)
+      return data
+    }
+    , {
       staleTime: Infinity,
+      initialData: employees,  
+      enabled:!!page    
     }
   )
+
+  const nextPage = () => {
+    if (queryEmployees.data?.length === 0) return;
+    setPage(page +1)
+    router.push(`/admin/users/?page=${page}&limit=2`)
+
+  }
+
+  const prevPage = () => {
+    if (page > 1) setPage(page - 1);
+    router.push(`/admin/users/?page=${page}&limit=2`)
+  }
+
+
+
+  return {
+    queryEmployees,
+    page: queryEmployees.isFetching ? 'loading' : page,
+    nextPage,
+    prevPage
+  }
+
 }
-
-export default function useEmployees(employees:IEmployee[]) {
-
-  const setEmployees = useEmployeesStore(state=>state.setEmployees)
-  setEmployees(employees)
-
-  return useQuery(
-    ["employees"],
-     getEmployees
-    ,{
-      staleTime: Infinity,
-      initialData:employees
-    }
-  )
-
-}
-
-

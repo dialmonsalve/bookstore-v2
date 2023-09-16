@@ -20,7 +20,7 @@ export function  useRegisterCLient ()  {
       if (hasError) {
         setShowError(true);
         setErrorApiMessage(message!)
-        // setTimeout(() => setShowError(false), 3000);
+        setTimeout(() => setShowError(false), 3000);
         return;
       }
       queryClient.setQueriesData(["credential-client"], client);

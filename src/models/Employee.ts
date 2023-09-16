@@ -2,7 +2,7 @@ import mongoose, { Model, Schema, model } from 'mongoose';
 import { IEmployee } from "../types";
 import { Transaction } from './';
 
-const EmployeeSchema = new Schema<IEmployee>({
+const EmployeeSchema = new Schema({
 
   name: {
     type: String,
@@ -62,6 +62,7 @@ export default Employee;
 
 EmployeeSchema.pre('deleteOne', { document: true }, async function (next) {
   const Employee = this;
+  console.log({eliminando: "Por acá pasamos"})
 
   const hasTransactions = await Transaction.exists({ Employee: Employee._id });
 
@@ -71,5 +72,12 @@ EmployeeSchema.pre('deleteOne', { document: true }, async function (next) {
   } else {
     await Employee.deleteOne();
   }
+  next();
+});
+
+EmployeeSchema.pre('save', function (next) {
+
+  console.log({save: "Por acá pasamos"})
+
   next();
 });
