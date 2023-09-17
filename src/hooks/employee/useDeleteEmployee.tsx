@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUisStore } from "@/store/ui";
 
 import { deleteEmployee } from "@/api/employee/employee";
-import { useEmployees } from ".";
 
 const useDeleteEmployee = () => {
 
@@ -12,7 +11,6 @@ const useDeleteEmployee = () => {
   const setAlert = useUisStore(state => state.setAlert)
   const setErrorApiMessage = useUisStore(state => state.setErrorMessage)  
   const setShowModal = useUisStore(state => state.setShowModal);
-  // const {page} =useEmployees()
 
   return useMutation(
     async (id: string) =>deleteEmployee(id),

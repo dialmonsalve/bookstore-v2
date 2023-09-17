@@ -16,6 +16,7 @@ interface ButtonProps {
   disabled?: boolean
   onClick?: () => void;
   width?: string;
+  height?: string;
 
   style?: CSSProperties;
   className?: string
@@ -36,6 +37,7 @@ export const Button = ({
   type = 'button',
   disabled,
   width,
+  height,
   top,
   bottom,
   left,
@@ -53,6 +55,8 @@ export const Button = ({
     left,
     right,
     position,
+    width,
+    height:width
   }
 
   if (buttonStyle === 'normal') {

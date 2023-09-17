@@ -1,27 +1,22 @@
+@use '../abstract/variables' as v;
+@use '../abstract/mixins' as m;
+
+
 .paginator {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
   width: 100%;
-  position: sticky;
+  // position: sticky;
+  // background-color: v.$color-blue-1;
   bottom: 0;
-  
-}
 
-.contenedor-paginator {
-  position: absolute;
-  bottom: 0%;
-  width: 50%;
-  
-  
-  &__paginator {
-    position: sticky;
-    bottom: 5%;
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+  &__span {
+    font-size: v.$font-size + .6rem;
     
-  }  
+    @include m.responsive (phone){
+      font-size: v.$font-size - .6rem;
+    }
+  }
 }

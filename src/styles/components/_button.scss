@@ -64,7 +64,8 @@
 
 
     @include m.responsive(phone) {
-      padding: .6rem 0rem;
+      padding: .6rem ;
+
     }
   }
 
@@ -74,7 +75,7 @@
     // width: 40%;
 
     @include m.responsive(phone) {
-      font-size: v.$font-size ;
+      font-size: v.$font-size;
       padding: 1.2rem 1rem;
       text-align: center;
     }
@@ -120,6 +121,7 @@
 
 .trash {
   @include m.btn-ico('/icons/trash-normal.svg');
+  width: 2.5rem;
 
   &:hover {
     background-image: url('/icons/trash-full.svg');
@@ -142,6 +144,7 @@
 
 .edit {
   @include m.btn-ico('/icons/edit.svg');
+  width: 2.5rem;
 
   &:hover {
     transform: rotate(5deg);
@@ -156,15 +159,15 @@
   @include m.btn-ico('/icons/back.svg');
   width: 8rem;
   height: 6rem;
-  top: 18vh;
+  top: 13vh;
   left: 12%;
   position: absolute;
   
   &:hover {
-    transform: scale(1.3);
+    transform: scale(1.1);
   }
   @include m.responsive(phone) {
-    top: 24.5vh;
+    top: 20vh;
     left: 2%;
     width: 6rem;
 

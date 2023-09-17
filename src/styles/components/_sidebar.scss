@@ -7,12 +7,11 @@
   z-index: 10;
   transition: all .4s;
   width: 100%;
-  border: transparent;
+  background-color:v.$color-gray-1;
 
   &__container {
     padding: 0 1.5rem;
     width: 25rem;
-    background-color: v.$color-gray-2;
     height: 100vh;
     background-color: v.$color-white;
 

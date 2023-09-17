@@ -4,20 +4,23 @@ import { devtools } from "zustand/middleware"
 
 export interface State {
   toggleSidebar: boolean;
-  isAlert: boolean
-  alertMessage: string | null
-  isApiError: boolean
-  errorApiMessage: string | null
-  messageModal: string | null
-  showModal: boolean
-  isShowModal: boolean
+  isAlert: boolean;
+  alertMessage: string | null;
+  isApiError: boolean;
+  errorApiMessage: string | null;
+  messageModal: string | null;
+  showModal: boolean;
+  // isShowModal: boolean;
+  page: number;
 }
 
 interface Actions {
-  setToggleSidebar: () => void
-  setAlert: (isAlert: boolean, alertMessage?: string | null) => void
-  setErrorMessage: (isAlert: boolean, alertMessage?: string | null) => void
-  setShowModal: (showModal: boolean, messageModal?: string | null) => void
+  setToggleSidebar: () => void;
+  setAlert: (isAlert: boolean, alertMessage?: string | null) => void;
+  setErrorMessage: (isAlert: boolean, alertMessage?: string | null) => void;
+  setShowModal: (showModal: boolean, messageModal?: string | null) => void;
+  nextPage: () => void;
+  prevPage: () => void;
 }
 
 const UI_INITIAL_STATE: State = {
@@ -28,7 +31,8 @@ const UI_INITIAL_STATE: State = {
   alertMessage: null,
   errorApiMessage: null,
   messageModal: null,
-  isShowModal: false,
+  // isShowModal: false,
+  page: 1,
 }
 
 export const useUisStore = create<State & Actions>()(devtools((set, get) => {
@@ -62,9 +66,16 @@ export const useUisStore = create<State & Actions>()(devtools((set, get) => {
       set(({
         showModal,
         messageModal,
-        isShowModal:true
+        // isShowModal: true
       }), false, "modal")
     },
-
+    nextPage() {
+      set((state) => ({ page: state.page + 1 }), false, "page")
+    },
+    prevPage() {
+      set((state) => ({
+        page: state.page > 1 ? state.page - 1 : state.page
+      }), false, "page")
+    },
   }
-},{name:"User Interface"}))
+}, { name: "User Interface" }))

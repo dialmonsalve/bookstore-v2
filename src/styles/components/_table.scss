@@ -3,7 +3,7 @@
 
 .table {
   overflow: auto;
-  height: 65vh;
+  // height: 65vh;
   max-width: 100%;
  
   & > table{
@@ -53,7 +53,7 @@
   &__td {
     padding: 1.5rem 1rem;
     width: 12rem;
-    
+
     @include m.responsive(phone) {
       font-size: v.$font-size;
     }

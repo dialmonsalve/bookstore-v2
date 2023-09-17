@@ -7,8 +7,7 @@ import { IEmployee } from '@/types';
 
 type Data =
   | { message: string }
-  | IEmployee[]
-
+  | { employees: IEmployee[], totalEmployees: number }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
@@ -23,20 +22,22 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const getEmployees = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-  const { limit,  page } = req.query
+  const { limit, page } = req.query
 
   try {
 
     await db.connect();
 
-    const employee: IEmployee[] = await Employee.find()
+    const employees: IEmployee[] = await Employee.find()
       .select('-password -createdAt -updatedAt -__v')
       .sort({ name: 1 })
       .skip(Number(page) > 0 ? (Number(page) - 1) * Number(limit) : 0)
       .limit(Number(limit))
       .lean();
 
-    return res.status(200).json(employee);
+    const totalEmployees = await Employee.countDocuments();
+
+    return res.status(200).json({ employees, totalEmployees });
 
   } catch (error: any) {
     console.error(error.message);

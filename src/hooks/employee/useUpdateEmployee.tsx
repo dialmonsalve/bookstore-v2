@@ -15,8 +15,6 @@ export const useUpdateEmployee = (_id: string) => {
   const setAlert = useUisStore(state => state.setAlert)
   const setErrorApiMessage = useUisStore(state => state.setErrorMessage)
 
-  // const {page} =useEmployees()
-
   return useMutation(
     async (data: IEmployee) => updateEmployee(_id, data),
     {

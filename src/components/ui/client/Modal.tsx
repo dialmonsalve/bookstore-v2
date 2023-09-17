@@ -1,6 +1,7 @@
 import { useUisStore } from "@/store/ui"
 import { Button } from ".";
 import { ReactNode } from "react";
+import Image from "next/image";
 
 
 interface ModalProps {
@@ -12,12 +13,10 @@ export const Modal = ({ typeModal, children }: ModalProps) => {
   const messageModal = useUisStore(state => state.messageModal);
   const showModal = useUisStore(state => state.showModal);
   const setShowModal = useUisStore(state => state.setShowModal);
-  const isShowModal = useUisStore(state => state.isShowModal);
-
 
   const color =
     typeModal === 'success' ? "#0c8f4c"
-      : typeModal === "warning" ? "#bfb52e" : "#f60909b2"
+      : typeModal === "warning" ? "#f60909b2" : "#f60909b2"
 
   const handleCancelAction = () => {
     setShowModal(false);
@@ -26,16 +25,25 @@ export const Modal = ({ typeModal, children }: ModalProps) => {
   return (
 
     showModal &&
-    <div className={`${isShowModal ? 'show-modal' : 'hide-modal'}`}
+    <div className={`modal`}
       onClick={handleCancelAction} >
-      <div className="show-modal__container" onClick={(e) => { e.stopPropagation() }
+      <div className="modal__container" onClick={(e) => { e.stopPropagation() }
       } >
         <h4
-          className="show-modal__container--title"
+          className="modal__container--title"
           style={{ color }}
-        >{typeModal}</h4>
-        <p className="show-modal__container--message" >{messageModal}</p>
-        <div className="show-modal__container--buttons" >
+        >
+          {typeModal}
+        </h4>
+        <Image
+          src={`/media/${typeModal}.png`}
+          className="modal__container--image"
+          alt={typeModal}
+          width={200}
+          height={200}
+        />
+        <p className="modal__container--message" >{messageModal}</p>
+        <div className="modal__container--buttons" >
           {children}
           <Button onClick={handleCancelAction} >
             Cancelar

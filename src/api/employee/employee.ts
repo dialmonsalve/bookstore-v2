@@ -3,18 +3,21 @@ import axios from 'axios';
 import { employeeApi } from '../';
 
 import { IEmployee } from '@/types';
+import { URL_CONSTANTS } from '@/database';
+
+interface Data {hasError: boolean, employees: IEmployee[] | null, message?: string, totalEmployees: number} 
 
 
 //! Get all employees
-export async function getEmployees(page: number): Promise<IEmployee[] | null> {
+export async function getEmployees(page: number): Promise<Data | null> {
 
   const params = new URLSearchParams();
 
   params.append('page', page?.toString())
-  params.append('limit', '2')
+  params.append('limit', `${URL_CONSTANTS.limit}`)
 
   try {
-    const { data } = await employeeApi.get<IEmployee[] | null>('/', {params});
+    const { data } = await employeeApi.get<Data>(``, { params });
     return data
 
   } catch (error) {
