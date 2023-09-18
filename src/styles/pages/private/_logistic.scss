@@ -1,8 +1,11 @@
+@use '../../abstract/variables' as v;
+@use '../../abstract/mixins' as m;
+
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
-  align-content: center;
+  align-content: center;  
 }
 
 .card {
@@ -10,9 +13,30 @@
   flex-direction: column;
   align-items: center;
   gap: .5rem;
+  padding: 2rem;
 
-  &__buttons {
+
+  &__title {
+    font-size: v.$font-size;
+    color: v.$color-primary;
+    text-align: center;
+  }
+
+  &__button{
     display: flex;
-    width: 50%;
+    flex-direction: column;
+    padding: 2rem;
+    justify-content: space-between;
+
+  }
+
+  &__link {
+    @include m.btn-color(v.$color-green-3, v.$color-secondary-dark);
+    padding: 1rem;
+    font-size: v.$font-size;
+    text-transform: uppercase;
+    width: 90%;
+    border-radius: 1rem;
+    text-align: center;
   }
 }

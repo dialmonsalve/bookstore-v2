@@ -8,7 +8,8 @@ import '../styles/main.scss';
 
 export default function App({ Component, pageProps }: AppProps) {
 
-  const [queryClient] = useState(() => new QueryClient())
+  // const [queryClient] = useState(() => new QueryClient())
+  const queryClient = new QueryClient()
 
   return (
     <SessionAuthProvider>

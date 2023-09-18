@@ -3,10 +3,9 @@
 
 .table {
   overflow: auto;
-  // height: 65vh;
   max-width: 100%;
- 
-  & > table{
+
+  &>table {
     border-collapse: collapse;
 
   }
@@ -15,7 +14,7 @@
     align-self: flex-start;
   }
 
-  &__header {    
+  &__header {
     background-color: v.$color-primary;
     font-size: v.$font-size - .2rem;
     position: sticky;
@@ -40,11 +39,11 @@
     border: 1px solid v.$color-gray-1;
     color: v.$color-primary;
     font-weight: 700;
-    
+
     @include m.responsive(phone) {
       border: 1px solid v.$color-white;
     }
-    
+
     &:hover {
       background-color: v.$color-blue-1;
     }
@@ -56,6 +55,44 @@
 
     @include m.responsive(phone) {
       font-size: v.$font-size;
+    }
+  }
+
+  &__row-form {
+    font-size: v.$font-size - .2rem;
+    text-transform: uppercase;
+    border: 1px solid v.$color-gray-1;
+    color: v.$color-primary;
+    font-weight: 700;
+
+    @include m.responsive(phone) {
+      border: 1px solid v.$color-white;
+    }
+  }
+
+  &__td-form {
+    padding: 1rem;
+    font-size: v.$font-size;
+
+    @include m.responsive(phone) {
+      font-size: v.$font-size;
+    }
+  }
+
+  &__input {
+    padding: 1rem 0.5rem;
+    font-size: v.$font-size + .2rem;
+    border-radius: .5rem;
+    letter-spacing: .5px;
+    color: v.$color-primary;
+
+    border: none;
+    &:focus {
+      outline: 2px solid v.$color-green-3;
+    }
+
+    &[type="number"] {
+      width: 100%;
     }
   }
 }

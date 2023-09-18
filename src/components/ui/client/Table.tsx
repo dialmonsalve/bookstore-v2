@@ -2,13 +2,14 @@ import { ReactNode } from "react"
 
 interface TableProps {
   children: ReactNode | ReactNode[],
+  height?:string
 }
 
 
-export const Table = ({ children }: TableProps) => {
+export const Table = ({ children, height }: TableProps) => {
 
   return (
-    <div className="table"  >
+    <div className="table" style={{height}}  >
       <table>
         {children}
       </table>
@@ -18,6 +19,7 @@ export const Table = ({ children }: TableProps) => {
 
 interface TableContentProps {
   children: ReactNode | ReactNode[],
+  uniqueId?: any
 }
 
 export const TableHeader = ({ children }: TableContentProps) => {
@@ -32,7 +34,7 @@ export const TableHeader = ({ children }: TableContentProps) => {
 }
 
 
-export const Row = ({ children }: TableContentProps) => {
+export const Row = ({ children, uniqueId }: TableContentProps) => {
 
   return (
     <tr className={`table__row`} >
@@ -46,10 +48,27 @@ interface TdProps {
   colSpan?: number
   textAlign?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent'
 }
-export const Td = ({ children, textAlign, colSpan}: TdProps) => {
+export const Td = ({ children, textAlign, colSpan }: TdProps) => {
 
   return (
     <td className="table__td" colSpan={colSpan} style={{ textAlign }}>
+      {children}
+    </td>
+  )
+}
+export const RowForm = ({ children }: TableContentProps) => {
+
+  return (
+    <tr className={`table__row-form`} >
+      {children}
+    </tr>
+  )
+}
+
+export const TdForm = ({ children, textAlign, colSpan }: TdProps) => {
+
+  return (
+    <td className="table__td-form" colSpan={colSpan} style={{ textAlign }}>
       {children}
     </td>
   )

@@ -43,7 +43,7 @@ export const Sidebar = () => {
       >
         <Image
           src='/icons/menu.svg'
-          alt='books' width={30} height={30}
+          alt='books' width={40} height={40}
           priority
         />
       </button>

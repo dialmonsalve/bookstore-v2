@@ -2,7 +2,6 @@
 @use '../abstract/mixins' as m;
 
 .btn {
-  border-radius: 2.5rem;
   display: block;
   font-weight: 700;
   letter-spacing: 1px;
@@ -10,6 +9,10 @@
   outline: 1px solid v.$color-white;
   text-transform: uppercase;
 
+  &--transparent {
+    @include m.btn-color(transparent, v.$color-white);
+    outline: 1px solid  v.$color-black-3;
+  }
   &--blue {
     @include m.btn-color(v.$color-blue-3, v.$color-primary);
   }
@@ -28,6 +31,10 @@
 
   &--purple {
     @include m.btn-color(v.$color-purple-2, v.$color-purple-3);
+  }
+
+  &--black {
+    @include m.btn-color(rgba(0, 0, 0, 1), rgba(0, 0, 0, .8));
   }
 
   &--outline-blue {
@@ -50,6 +57,10 @@
     @include m.btn-outline(v.$color-purple-2, v.$color-purple-3);
   }
 
+  &--outline-black {
+    @include m.btn-outline(black, rgba(0, 0, 0, .8));
+  }
+
   &--small,
   &--medium,
   &--large {
@@ -62,7 +73,6 @@
     font-size: v.$font-size - .5rem;
     padding: 1rem 1rem;
 
-
     @include m.responsive(phone) {
       padding: .6rem ;
 
@@ -72,7 +82,6 @@
   &--medium {
     font-size: v.$font-size;
     padding: 1.1rem;
-    // width: 40%;
 
     @include m.responsive(phone) {
       font-size: v.$font-size;
@@ -167,8 +176,8 @@
     transform: scale(1.1);
   }
   @include m.responsive(phone) {
-    top: 20vh;
-    left: 2%;
+    top: 25vh;
+    left: 6%;
     width: 6rem;
 
     &:hover {

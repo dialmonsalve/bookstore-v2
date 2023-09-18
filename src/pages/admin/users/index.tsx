@@ -17,10 +17,6 @@ function UsersPage() {
   const deleteEmployee = useDeleteEmployee();
   const setShowModal = useUisStore(state => state.setShowModal);
 
-  const handleCreateEmployee = (): void => {
-    router.push('/admin/users/create')
-  }
-
   const handleEditEmployee = (employeeId: string): void => {
     router.push(`/admin/users/${employeeId}`)
   }
@@ -50,12 +46,11 @@ function UsersPage() {
         <Button
           buttonStyle="iconButton"
           ico="plus"
-          top="20vh"
+          top="26vh"
           position="fixed"
           right="3%"
-          onClick={handleCreateEmployee}
+          onClick={()=>router.push('/admin/users/create')}
         />
-
         <TableEmployees
           handleDeleteEmployee={handleDeleteEmployee}
           handleEditEmployee={handleEditEmployee}

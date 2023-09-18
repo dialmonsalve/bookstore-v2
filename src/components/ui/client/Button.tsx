@@ -2,11 +2,12 @@ import { CSSProperties, ReactNode } from "react";
 
 type Color =
   | 'blue' | 'red' | 'green' | 'purple' | 'yellow'
-  | 'outline-blue' | 'outline-red' | 'outline-green' | 'outline-purple' | 'outline-yellow' | 'transparent';
+  | 'outline-blue' | 'outline-red' | 'outline-green' | 'outline-purple' | 'outline-yellow' | 'transparent' |'black' | 'outline-black';
 
 interface ButtonProps {
-  buttonStyle?: 'normal' | 'iconButton'
+  buttonStyle?: 'normal' | 'iconButton' | 'square'
   backgroundColor?: Color;
+  borderRadius?:string;
   children?: string | ReactNode;
   ico?: string;
   margin?: string
@@ -30,6 +31,7 @@ interface ButtonProps {
 
 export const Button = ({
   backgroundColor = 'blue',
+  borderRadius,
   buttonStyle = 'normal',
   className,
   children,
@@ -65,7 +67,23 @@ export const Button = ({
       <button
         type={type}
         className={`btn btn--${backgroundColor} btn--${size} ${isDisabled} ${className || ""}`}
-        style={{ width }}
+        style={{ width, borderRadius:'2.5rem', height }}
+        disabled={disabled}
+        {...props}
+      >
+        {children}
+      </button>
+    )
+  }
+
+  
+  if (buttonStyle === 'square') {
+
+    return (
+      <button
+        type={type}
+        className={`btn btn--${backgroundColor} btn--${size} ${isDisabled} ${className || ""}`}
+        style={{ width, borderRadius }}
         disabled={disabled}
         {...props}
       >

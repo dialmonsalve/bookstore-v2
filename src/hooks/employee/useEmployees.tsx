@@ -26,7 +26,4 @@ export function useEmployees() {
   )
 
   return queryEmployees
-
-
-
 }

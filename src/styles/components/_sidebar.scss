@@ -2,7 +2,7 @@
 @use '../abstract/mixins' as m;
 
 .private-nav {
-  position: absolute;
+  position: fixed;
   display: flex;
   z-index: 10;
   transition: all .4s;
@@ -64,7 +64,7 @@
     position: fixed;
     bottom: 0;
     background-color: v.$color-primary;
-    height: 6vh;
+    height: 10vh;
 
     &>img {
       filter: invert(42%) sepia(93%) saturate(1200%) hue-rotate(2000deg) brightness(500%) contrast(119%);
@@ -81,7 +81,7 @@
 }
 
 .openSidebar {
-  transform: translateY(0);
+  // transform: translate(0, 0);
   backdrop-filter: blur(4px);
 }
 
