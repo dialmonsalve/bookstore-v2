@@ -15,7 +15,6 @@ export function useForm<T>(initialForm: T) {
   const handleFieldChange = (e: ReactChangeEvent) => {
     const { name, value } = e.target;
 
-
     setFormState((prevFormState) => ({
       ...prevFormState,
       [name]: value

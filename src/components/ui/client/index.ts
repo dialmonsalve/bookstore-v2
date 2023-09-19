@@ -3,6 +3,7 @@ export * from './ApiMessageError';
 export * from './Button';
 export * from './ErrorMessage';
 export * from './FormControl';
+export * from './TableInputForm';
 export * from './NavLink';
 export * from './Select';
 export * from './Spinner';

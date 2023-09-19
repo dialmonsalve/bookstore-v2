@@ -1,16 +1,19 @@
 import { Layout } from "@/components/layouts/app";
 import { Button } from "@/components/ui/client";
+import { InputForm } from "@/components/ui/client/TableInputForm";
 
 function AdminStationeries() {
   return (
     <Layout title="papelería" >
-            <Button
+      <Button
         buttonStyle="iconButton"
         ico="plus"
-        bottom="10%"
+        top="26vh"
         position="fixed"
-        right="10%"
+        right="3%"
       />
+
+      <InputForm />
 
     </Layout>
   )
