@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { useUisStore } from '@/store/ui';
 
 import { NavLink } from '../../ui/client/NavLink';
-import { links } from '@/helpers';
+
+import { LINKS } from '@/constants';
 
 export const Sidebar = () => {
 
@@ -26,7 +27,7 @@ export const Sidebar = () => {
         className='private-nav__container'
       >
         {
-          links.map(link => (
+          LINKS.map(link => (
 
             <NavLink key={link.id} href={link.href} alt={link.alt} src={link.src} >
               {link.alt}

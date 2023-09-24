@@ -3,7 +3,6 @@ import { Button } from ".";
 import { ReactNode } from "react";
 import Image from "next/image";
 
-
 interface ModalProps {
   typeModal: 'success' | 'warning' | 'error';
   children: ReactNode

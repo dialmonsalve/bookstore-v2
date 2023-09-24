@@ -10,7 +10,6 @@ export interface State {
   errorApiMessage: string | null;
   messageModal: string | null;
   showModal: boolean;
-  // isShowModal: boolean;
   page: number;
 }
 
@@ -31,7 +30,6 @@ const UI_INITIAL_STATE: State = {
   alertMessage: null,
   errorApiMessage: null,
   messageModal: null,
-  // isShowModal: false,
   page: 1,
 }
 

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { employeeApi } from '../';
 
 import { IEmployee } from '@/types';
-import { URL_CONSTANTS } from '@/database';
+import { URL_CONSTANTS } from '@/constants';
+
 
 interface Data {hasError: boolean, employees: IEmployee[] | null, message?: string, totalEmployees: number} 
 
@@ -42,7 +43,6 @@ export async function getEmployeeById(id: string): Promise<IEmployee | null> {
   }
   return null
 }
-
 
 //! Update Employee
 interface AuthResult { hasError: boolean, user?: IEmployee, message?: string }

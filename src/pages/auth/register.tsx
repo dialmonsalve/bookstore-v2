@@ -5,12 +5,16 @@ import Link from "next/link";
 
 import { useForm } from "@/hooks/useForm";
 import { useRegisterCLient } from "@/hooks/auth";
+import { useFormStore } from "@/store/form";
 
+import { CreateEditPerson } from "@/components/ui/services/CreateEditPerson";
 import { Layout } from "@/components/layouts/e-commerce";
-import {  RegisterEmployOrClient } from "@/components/ui/services";
-import { ApiMessageError, Button, ErrorMessage, FormControl } from "@/components/ui/client";
+import { ApiMessageError, Button } from "@/components/ui/client";
 
-import { formValidator, newClientValidationSchema } from "@/helpers";
+import { formValidator } from "@/helpers";
+import { USER_VALIDATION_SCHEMA } from "@/constants";
+import { IClient } from "@/types";
+
 
 const newClient = {
   name: '',
@@ -22,27 +26,21 @@ const newClient = {
 };
 
 function CreateCLientPage() {
-
-  const { registerCLient } = useRegisterCLient();
-
-  const {
-    formState,
-    isFormSubmitted,
-    isTouched,
-    hasErrors,
-    handleBlur,
-    handleFieldChange,
-  } = useForm(newClient)
-  const errors = formValidator().getErrors(formState, newClientValidationSchema);
+  
+  const { handleFieldChange } = useForm(newClient)
+  const formState = useFormStore<IClient>(state => state.formState)
+  const checkFormErrors = useFormStore(state => state.checkFormErrors)
+  const errors = formValidator().getErrors(formState, USER_VALIDATION_SCHEMA.newClient);
+  const registerCLient = useRegisterCLient();
 
   const handleRegisterClient = async (e: FormEvent) => {
     e.preventDefault();
 
-    const notErrorsForms = hasErrors(errors);
+    const hasFormErrors = checkFormErrors(errors);
 
-    if (notErrorsForms) {
+    if (!hasFormErrors) {
       const { repitePassword, ...restFormState } = formState;
-      registerCLient.mutate({ repitePassword, ...restFormState })
+      registerCLient.mutate(restFormState)
     }
   }
 
@@ -56,31 +54,12 @@ function CreateCLientPage() {
       <ApiMessageError />
       <form method="POST" style={{ width: "60rem" }} className="form" onSubmit={handleRegisterClient}
       >
-        <RegisterEmployOrClient
-          formState={formState}
-          isTouched={isTouched}
-          isFormSubmitted={isFormSubmitted}
+        <CreateEditPerson
+          handleFieldChange={handleFieldChange}
           errors={errors}
-          handleBlur={handleBlur}
-          handleFieldChange={handleFieldChange} />
-
-        <div>
-          <FormControl
-            label="repite password"
-            name="repitePassword"
-            type="password"
-            placeholder="Repite el password"
-            value={formState?.repitePassword}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-            autoComplete="off"
-          />
-          <ErrorMessage
-            fieldName={errors?.repitePassword}
-            isFormSubmitted={isFormSubmitted}
-            isTouched={isTouched?.repitePassword}
-          />
-        </div>
+          isCreate
+          isEmployee={false}
+        />
 
         <div style={{ display: 'flex' }}>
           <Button
@@ -90,7 +69,7 @@ function CreateCLientPage() {
             Crear Cuenta
           </Button>
 
-          <Link href='login' style={{ textAlign: 'center', lineHeight: 1, letterSpacing: "0px", fontSize:"1.2rem",marginTop:'1.7rem'  }} >
+          <Link href='login' style={{ textAlign: 'center', lineHeight: 1, letterSpacing: "0px", fontSize: "1.2rem", marginTop: '1.7rem' }} >
             Ya tienes cuenta?, Inicia sesión
           </Link>
 
@@ -119,7 +98,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
   return {
     props: {
-
     }
   }
 }

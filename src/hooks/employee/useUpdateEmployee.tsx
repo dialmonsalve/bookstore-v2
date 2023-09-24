@@ -5,7 +5,7 @@ import { useUisStore } from "@/store/ui";
 
 import { updateEmployee } from "@/api/employee/employee";
 import { IEmployee } from "@/types";
-import { useEmployees } from ".";
+import { useFormStore } from "@/store/form";
 
 export const useUpdateEmployee = (_id: string) => {
 
@@ -14,6 +14,8 @@ export const useUpdateEmployee = (_id: string) => {
 
   const setAlert = useUisStore(state => state.setAlert)
   const setErrorApiMessage = useUisStore(state => state.setErrorMessage)
+
+  const handleRestForm = useFormStore(state => state.handleResetForm)
 
   return useMutation(
     async (data: IEmployee) => updateEmployee(_id, data),
@@ -27,7 +29,8 @@ export const useUpdateEmployee = (_id: string) => {
         }
         queryClient.invalidateQueries(["employees"])
         router.push('/admin/users')
-        setTimeout(() => setAlert(true, "Usuario actualizado correctamente"), 500);
+        handleRestForm({})
+        setTimeout(() => setAlert(true, "Usuario actualizado con éxito"), 500);
       },
     }
   )

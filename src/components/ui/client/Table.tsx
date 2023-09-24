@@ -1,75 +1,75 @@
-import { ReactNode } from "react"
+import { Button } from "./"
 
-interface TableProps {
-  children: ReactNode | ReactNode[],
-  height?:string
+interface Props {
+
+  data: Record<string, any>[] | null
+  tableTitles: string[]
+  nameTableFields: string[]
+  isEditable: boolean
+  handleEdit?: (id: string | number,) => void
+  handleDelete: (id: string | number, username?: string | number) => void
 }
 
-
-export const Table = ({ children, height }: TableProps) => {
+export const Table = ({
+  data,
+  tableTitles,
+  nameTableFields,
+  isEditable,
+  handleEdit,
+  handleDelete
+}: Props) => {
 
   return (
-    <div className="table" style={{height}}  >
-      <table>
-        {children}
-      </table>
-    </div>
-  )
-}
+    <table className="table">
+      <thead className='table__header' >
+        <tr className='table__header--titles' >
+          <th className="table__th" >items</th>
+          {
+            tableTitles?.map(title => (
+              <th className="table__th" key={title}>{title}</th>
+            ))
+          }
+          <th className="table__th" colSpan={2}>
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          data?.map(tableRow => (
+            <tr className='table__row' key={tableRow._id }>
+              <td className="table__td" >{tableRow.item}</td>
+              {
+                nameTableFields?.map(field => (
+                  <td className="table__td" key={field}>{`${tableRow[field]}`}</td>
+                ))
+              }
+              {
+                !tableRow.role?.includes("admin") ?
+                  <>
+                    {isEditable &&
+                      <td className="table__td" >
+                        <Button
+                          buttonStyle="iconButton"
+                          ico="edit"
+                          onClick={() => { handleEdit!(tableRow._id!) }}
+                        />
+                      </td>}
 
-interface TableContentProps {
-  children: ReactNode | ReactNode[],
-  uniqueId?: any
-}
-
-export const TableHeader = ({ children }: TableContentProps) => {
-
-  return (
-    <thead className={`table__header`} >
-      <tr className={`table__header--titles`} >
-        {children}
-      </tr>
-    </thead>
-  )
-}
-
-
-export const Row = ({ children, uniqueId }: TableContentProps) => {
-
-  return (
-    <tr className={`table__row`} >
-      {children}
-    </tr>
-  )
-}
-
-interface TdProps {
-  children?: string | string[] | ReactNode;
-  colSpan?: number
-  textAlign?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent'
-}
-export const Td = ({ children, textAlign, colSpan }: TdProps) => {
-
-  return (
-    <td className="table__td" colSpan={colSpan} style={{ textAlign }}>
-      {children}
-    </td>
-  )
-}
-export const RowForm = ({ children }: TableContentProps) => {
-
-  return (
-    <tr className={`table__row-form`} >
-      {children}
-    </tr>
-  )
-}
-
-export const TdForm = ({ children, textAlign, colSpan }: TdProps) => {
-
-  return (
-    <td className="table__td-form" colSpan={colSpan} style={{ textAlign }}>
-      {children}
-    </td>
+                    <td className="table__td" >
+                      <Button
+                        buttonStyle="iconButton"
+                        ico="trash"
+                        onClick={() => handleDelete(tableRow._id!, tableRow.username)}
+                      />
+                    </td>
+                  </>
+                  : <><td className="table__td"></td><td className="table__td"></td></>
+              }
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
   )
 }

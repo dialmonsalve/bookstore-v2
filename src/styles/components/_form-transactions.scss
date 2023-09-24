@@ -1,0 +1,194 @@
+@use '../abstract/variables' as v;
+@use '../abstract/mixins' as m;
+
+@mixin input() {
+  border-radius: 1.3rem;
+  border: none;
+  font-size: v.$font-size;
+  outline: 1px solid v.$color-gray-2;
+  padding: 1rem;
+
+  &:focus {
+    outline: 3px solid v.$color-green-3;
+  }
+}
+
+.transactions {
+  width: 80%;
+
+  @include m.responsive(tab-port){
+    width: 100%;
+  }
+}
+
+.form-transactions {
+  display: grid;
+  grid-template-areas:
+    "transactions-header__left transactions-header__right"
+    "transactions-body transactions-body"
+    "transactions-footer__left transactions-footer__right"
+    "transactions-button__left transactions-button__right";
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem 1rem;
+  padding: 3rem;
+
+  &> :nth-child(3n) {
+    margin-bottom: 2rem;
+  }
+
+  @include m.responsive(phone){
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+  }
+}
+
+.transactions-header {
+  
+  &__left {
+    grid-area: transactions-header__left;
+    padding: 2rem 0;
+    font-size: v.$font-size;
+
+    @include m.responsive(phone){
+      padding: 0rem;
+      font-size: v.$font-size - .5rem;
+    }
+  }
+
+  &__right {
+    grid-area: transactions-header__right;
+    padding: 2rem 0;
+    font-size: v.$font-size;
+    @include m.responsive(phone){
+      padding: 0rem;
+      font-size: v.$font-size - .5rem;
+    }
+  }
+}
+
+.transactions-body {
+  grid-area: transactions-body;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__select {
+    width: 25%;
+  }
+
+  &__inputs {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+
+    @include m.responsive(phone){
+      flex-direction: column;
+    }
+
+    &--inputs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      align-content: space-between;
+      // flex-grow: 1;
+
+      @include m.responsive(phone){
+        flex-direction: column;
+        gap: .1rem;
+      }
+    }
+
+    & label {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
+
+    & input {
+      flex-grow: 1;
+      @include input();
+      @include m.responsive(tab-port){
+        width: 50%;
+      }
+      @include m.responsive(phone){
+        width: 100%;
+      }
+    }
+
+    & select {
+      // width: 15%;
+      background-color: v.$color-white;
+      height: 95%;
+      @include input();
+
+      @include m.responsive(tab-port){
+        width: 30%;
+      }
+      @include m.responsive(phone){
+        width: 60%;
+      }
+    }
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+
+
+    &--inputs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @include m.responsive(phone){
+       flex-direction: column;
+       gap: 1.5rem;
+      }
+    }
+
+    & label {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
+
+    & input {
+      width: 80%;
+      @include input();
+    }
+  }
+}
+
+.transactions-footer {
+
+  &__left {
+    grid-area: transactions-footer__left;
+    padding: 1rem;
+    resize: none;
+    @include input();
+  }
+
+  &__right {
+    grid-area: transactions-footer__right;
+    background-color: white;
+    border-radius: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: flex-end;
+    outline: 1px solid v.$color-gray-2;
+    text-transform: uppercase;
+    font-size: v.$font-size;
+
+    @include m.responsive(phone){
+      width: 60%;
+      align-items: flex-start;
+      gap: 1.5rem;
+      font-size: v.$font-size - .5rem;
+    }
+  }
+
+}

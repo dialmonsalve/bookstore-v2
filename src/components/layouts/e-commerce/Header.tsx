@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import  useLoginProviderOrLogout  from '@/hooks/auth/useLoginProviderOrLogout';
 
-
 import useAuthentication from '@/hooks/auth/useAuthentication';
 import { Spinner } from '@/components/ui/client';
 

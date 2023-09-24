@@ -1,5 +1,5 @@
 
-export const links = [
+export const LINKS = [
   {
     id:1,
     src: '/icons/home.svg',

@@ -39,7 +39,7 @@ export interface ValidationSchema {
 export type ValidatorFunction = Omit<Validator, 'rules'>;
 
 export interface getErrors {
-  getErrors: <T extends InitialForm> (formState: T, objValidations: ValidationSchema) => ErrorMessage<T> | undefined
+  getErrors: <T extends Record<string, any>> (formState: T, objValidations: ValidationSchema) => ErrorMessage<T> | undefined
 }
 
 

@@ -1,16 +1,17 @@
 import { FormEvent, useState } from 'react';
 
 import { useForm } from '@/hooks/useForm';
-
 import { useRegisterEmployee } from '@/hooks/employee';
+import { useUisStore } from '@/store/ui';
+import { useFormStore } from '@/store/form';
 
 import { Layout } from '@/components/layouts/app';
-import { AlertSuccess, ApiMessageError, Button, ErrorMessage, FormControl, Select } from '@/components/ui/client';
-import { RegisterEmployOrClient } from '@/components/ui/services';
+import { AlertSuccess, ApiMessageError, Button,  Select, Spinner, } from '@/components/ui/client';
+import { CreateEditPerson } from '@/components/ui/services';
 
-import { ROLES, formValidator, newEmployeeValidationSchema } from '@/helpers';
+import {  formValidator } from '@/helpers';
+import { USER_VALIDATION_SCHEMA } from "@/constants";
 import { IEmployee, TypeRole } from '@/types';
-import { useUisStore } from '@/store/ui';
 
 const newEmployee = {
   name: '',
@@ -22,26 +23,24 @@ const newEmployee = {
   repitePassword: '',
   role: ''
 }
+
+
 function CreateEmployeePage() {
 
-  const [option, setOption] = useState<TypeRole[]>([ROLES[0]] as TypeRole[]);
+  const [option, setOption] = useState<TypeRole[]>([USER_VALIDATION_SCHEMA.ROLES[0]] as TypeRole[]);
+
   const setErrorApiMessage = useUisStore(state => state.setErrorMessage);
   const registerEmployee = useRegisterEmployee();
 
-  const {
-    formState,
-    isFormSubmitted,
-    isTouched,
-    hasErrors,
-    handleBlur,
-    handleFieldChange,
-  } = useForm(newEmployee)
+  const { handleFieldChange } = useForm(newEmployee)
+  const formState = useFormStore(state => state.formState)
+  const checkFormErrors = useFormStore(state => state.checkFormErrors)
 
-  const errors = formValidator().getErrors(formState, newEmployeeValidationSchema);
+  const errors = formValidator().getErrors(formState, USER_VALIDATION_SCHEMA.newEmployee);
 
   const handleRegisterEmployee = (e: FormEvent) => {
     e.preventDefault();
-    const notErrorsForms = hasErrors(errors);
+    const hasErrors = checkFormErrors(errors);
 
     const newRoles = option.map(opt => {
       return opt
@@ -52,7 +51,7 @@ function CreateEmployeePage() {
       setTimeout(() => setErrorApiMessage(false), 3000);
       return;
     }
-    if (notErrorsForms) {
+    if (!hasErrors) {
       const { repitePassword, ...rest } = formState
       const newEmployee = { ...rest, role: newRoles }
       registerEmployee.mutate(newEmployee as IEmployee);
@@ -63,6 +62,7 @@ function CreateEmployeePage() {
     <Layout title='Usuarios' >
       <ApiMessageError />
       <AlertSuccess />
+      {registerEmployee.isLoading && <Spinner />}
 
       <form
         method='POST'
@@ -70,37 +70,18 @@ function CreateEmployeePage() {
         className='form'
         onSubmit={handleRegisterEmployee}
       >
-        <RegisterEmployOrClient
-          formState={formState}
-          isTouched={isTouched}
-          isFormSubmitted={isFormSubmitted}
-          errors={errors}
-          handleBlur={handleBlur}
+        <CreateEditPerson
           handleFieldChange={handleFieldChange}
+          errors={errors}
+          isCreate
+          isEmployee
         />
-
-        <div>
-          <FormControl
-            label='Username'
-            name='username'
-            type='text'
-            placeholder='Username'
-            value={formState?.username}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
-        </div>
         <Select
-          options={ROLES || []}
+          options={USER_VALIDATION_SCHEMA.ROLES || []}
           value={option}
           onChange={o => setOption(o)}
           name={'role'}
           multiple
-        />
-        <ErrorMessage
-          fieldName={errors?.role}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.role}
         />
 
         <div style={{ display: 'flex' }}>

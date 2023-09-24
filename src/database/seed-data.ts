@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs';
 
 import { IEmployee, TypeRole } from "@/types";
 
-
 export const user: IEmployee[] = [
   {
     name: 'diego',

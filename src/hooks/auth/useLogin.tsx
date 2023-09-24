@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { userAuth } from "@/api";
+import { useUisStore } from "@/store";
 
 export function useLogin(fieldForm: string) {
 
   const queryClient = useQueryClient();
-  const [showError, setShowError] = useState(false);
-  const [errorApiMessage, setErrorApiMessage] = useState('');
+
+  const setErrorApiMessage = useUisStore(state => state.setErrorMessage);
 
   const loginUser = useMutation({
     mutationFn: (formData: { [key: string]: string; password: string }) => {
@@ -23,9 +23,8 @@ export function useLogin(fieldForm: string) {
     onSuccess: async ({ hasError, message, user }, formData) => {
 
       if (hasError) {
-        setShowError(true);
-        setErrorApiMessage(message!)
-        setTimeout(() => setShowError(false), 3000);
+        setErrorApiMessage(true, message!)
+        setTimeout(() => setErrorApiMessage(false), 3000);
         return;
       }
       queryClient.setQueriesData([fieldForm === "username" ? "credential-employee" : "credential-client"], user);
@@ -33,10 +32,5 @@ export function useLogin(fieldForm: string) {
     }
   })
 
-  return {
-    loginUser,
-    showError,
-    errorApiMessage,
-    setShowError,
-  };
+  return loginUser
 }

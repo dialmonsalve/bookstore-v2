@@ -6,6 +6,10 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
   align-content: center;  
+
+  @include m.responsive(phone){
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .card {

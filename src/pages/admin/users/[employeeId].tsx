@@ -1,63 +1,54 @@
 import { FormEvent, useState } from "react";
 import { GetServerSideProps } from "next";
 
-import { useEmployee , useUpdateEmployee} from "@/hooks/employee";
+import { useEmployee, useUpdateEmployee } from "@/hooks/employee";
 import { useForm } from "@/hooks/useForm";
+import { useUisStore } from "@/store/ui";
+import { useFormStore } from "@/store/form";
 
 import { Layout } from "@/components/layouts/app";
-import { RegisterEmployOrClient } from "@/components/ui/services";
-import { AlertSuccess, ApiMessageError, Button, ErrorMessage, FormControl, Select, Spinner } from "@/components/ui/client";
+import { CreateEditPerson } from "@/components/ui/services";
+import { AlertSuccess, ApiMessageError, Button, Select, Spinner } from "@/components/ui/client";
 
-import { ROLES, formValidator, updateEmployeeValidationSchema } from "@/helpers";
+import { formValidator } from "@/helpers";
 import { getEmployeeById } from "@/api/employee/employee";
-
-import { ErrorMessages, IClient, IEmployee, InitialForm, TypeRole, ErrorMessage as TypeError } from "@/types";
-import { useUisStore } from "@/store/ui";
+import { USER_VALIDATION_SCHEMA } from "@/constants";
+import { IEmployee, TypeRole, } from "@/types";
 
 interface Props {
   employee: IEmployee
   employeeId: string
 }
 
-function UpdateEmployee({ employeeId, employee }: Props) {
+function UpdateEmployeePage({ employeeId, employee }: Props) {
 
   const employeeQuery = useEmployee(employeeId, employee);
-  
-  const {
-    formState,
-    handleBlur,
-    handleFieldChange,
-    handleResetForm,
-    hasErrors,
-    isFormSubmitted,
-    isTouched
-  } = useForm(employeeQuery.data)
+  const { handleFieldChange } = useForm(employeeQuery.data as Record<string, any>)
 
-  const [option, setOption] = useState<TypeRole[]>(formState?.role!);
+  const formState = useFormStore<IEmployee>(state => state.formState)
+  const checkFormErrors = useFormStore(state => state.checkFormErrors)
+
   const setErrorApiMessage = useUisStore(state => state.setErrorMessage)
 
-  const updateEmployee = useUpdateEmployee(employeeId)
+  const updateEmployee = useUpdateEmployee(employeeId);
 
-  const errors = formValidator().getErrors(formState as InitialForm, updateEmployeeValidationSchema) 
-  
-  if (employeeQuery.isLoading) {
-    return <Spinner />
-  }
+  const errors = formValidator().getErrors(formState, USER_VALIDATION_SCHEMA.updateEmployee)
+  const [option, setOption] = useState<TypeRole[]>(formState.role);
+
   const handleUpdateEmployee = (e: FormEvent) => {
     e.preventDefault();
-    const notErrorsForms = hasErrors(errors as TypeError<IEmployee> | undefined)
+    const hasFormErrors = checkFormErrors(errors)
 
-    const newRoles = option.map(opt => {
+    const newRoles = formState.role.map(opt => {
       return opt
-    }) as TypeRole[]
+    })
 
     if (newRoles.length === 0) {
       setErrorApiMessage(true, 'El usuario debe tener al menos 1 rol');
       setTimeout(() => setErrorApiMessage(false), 3000);
       return;
     }
-    if (notErrorsForms) {
-
+    if (!hasFormErrors) {
       const updatedEmployee = { ...formState, role: newRoles }
       updateEmployee.mutate(updatedEmployee as IEmployee);
     }
@@ -68,50 +59,35 @@ function UpdateEmployee({ employeeId, employee }: Props) {
 
       <ApiMessageError />
       <AlertSuccess />
+      {updateEmployee.isLoading && <Spinner />}
 
       <form className="form" onSubmit={handleUpdateEmployee} >
 
-        <RegisterEmployOrClient
-          formState={formState}
-          handleBlur={handleBlur}
+        <CreateEditPerson
           handleFieldChange={handleFieldChange}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched}
-          errors={errors as ErrorMessages<IEmployee | IClient>}
+          errors={errors}
           isCreate={false}
+          isEmployee
         />
         <div>
-          <FormControl
-            label='Username'
-            name='username'
-            type='text'
-            placeholder='Username'
-            value={formState?.username}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-          />
+
         </div>
         <Select
-          options={ROLES || []}
-          value={option}
+          options={USER_VALIDATION_SCHEMA.ROLES}
+          value={option || formState.role}
           onChange={o => setOption(o)}
           name={'role'}
           multiple
-        />
-        <ErrorMessage
-          fieldName={errors?.role}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.role}
         />
 
         <div style={{ display: 'flex' }}>
           <Button
             type='submit'
             backgroundColor='green'
-            disabled={!!errors  || updateEmployee.isLoading}
+            disabled={!!errors || updateEmployee.isLoading}
           >
             {`${updateEmployee.isLoading ? 'Espere' : 'Actualiza Usuario'} `}
-            
+
           </Button>
         </div>
       </form>
@@ -133,4 +109,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 }
 
-export default UpdateEmployee
+export default UpdateEmployeePage

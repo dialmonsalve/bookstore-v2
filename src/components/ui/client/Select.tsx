@@ -1,8 +1,6 @@
 import { TypeRole } from "@/types";
 import { useEffect, useRef, useState } from "react";
 
-// export type TypeRole = string | null;
-
 type SingleSelectProps = {
   multiple?: false
   value?: TypeRole
@@ -107,7 +105,7 @@ export const Select = ({ multiple, value, onChange, options, name }: SelectProps
   }
 
   const isOptionSelected = (option: TypeRole) => {
-    return multiple ? value.includes(option) : option === value
+    return multiple ? value?.includes(option) : option === value
   }
 
   return (
@@ -122,7 +120,7 @@ export const Select = ({ multiple, value, onChange, options, name }: SelectProps
       
     >
 
-      <span className="select-container__span" >{multiple ? value.map(v => (
+      <span className="select-container__span" >{multiple ? value?.map(v => (
         <button key={v}
           onClick={e => {
             e.stopPropagation()

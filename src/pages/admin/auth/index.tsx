@@ -4,30 +4,48 @@ import { getSession } from "next-auth/react";
 
 import { useLogin } from '@/hooks/auth';
 import { useForm } from '@/hooks/useForm';
+import { useFormStore } from '@/store/form';
 
-import { formValidator, loginEmployeeValidationSchema } from '@/helpers';
-import { ApiMessageError, Button } from '@/components/ui/client';
-import { LoginAuthentication } from '@/components/ui/services';
+import { ApiMessageError, Button, FormControl } from '@/components/ui/client';
+
+import { formValidator } from '@/helpers';
+import { LOGIN_VALIDATION_SCHEMA } from '@/constants';
 
 const login = {
   username: '',
   password: '',
-  email: ''
 }
+const options = [
+  {
+    _id: 0,
+    name: 'username',
+    type: 'text',
+    label: 'username',
+  },
+  {
+    _id: 1,
+    name: 'password',
+    type: 'password',
+    label: 'password',
+  },
+]
 
 function PrivateLoginPage() {
 
-  const { loginUser, showError, errorApiMessage } = useLogin("username")
+  const  loginUser  = useLogin("username");
 
-  const { formState, hasErrors, handleResetForm, isTouched, isFormSubmitted, handleBlur, handleFieldChange } = useForm(login)
+  const { handleFieldChange } = useForm(login);
+  const formState = useFormStore(state => state.formState);
+  const handleResetForm = useFormStore(state => state.handleResetForm);
+  const checkFormErrors = useFormStore(state => state.checkFormErrors);
 
-  const errors = formValidator().getErrors(formState, loginEmployeeValidationSchema);
+  const errors = formValidator().getErrors(formState, LOGIN_VALIDATION_SCHEMA.employee);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const notErrorsForms = hasErrors(errors);
+    const hasErrors = checkFormErrors(errors);
 
-    if (notErrorsForms) {
+    if (!hasErrors) {
       handleResetForm()
       loginUser.mutate({ username: formState?.username, password: formState?.password });
     }
@@ -37,19 +55,16 @@ function PrivateLoginPage() {
     <main className='admin-login' >
 
       <h1 style={{ color: 'white' }} >Login</h1>
-      <ApiMessageError
-        showError={showError}
-        errorApiMessage={errorApiMessage}
-      />
+      <ApiMessageError />
       <form className="form" onSubmit={handleSubmit} noValidate >
-        <LoginAuthentication
-          isEmployee
-          errors={errors}
-          formState={formState}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched}
-          handleBlur={handleBlur}
+
+        <FormControl 
           handleFieldChange={handleFieldChange}
+          errors={errors}
+          formFields={options}
+          className="form-control"
+          classNameInput="form-control__input"
+          classNameLabel="form-control__label"
         />
         <div className="form__buttons">
           <Button type="submit" width='40%' backgroundColor="blue" disabled={!!errors}  >
@@ -75,7 +90,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       }
     }
   }
-
   return {
     props: {
 

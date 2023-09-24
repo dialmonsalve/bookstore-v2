@@ -1,32 +1,60 @@
+import { ErrorMessage } from "./";
+
+import { formOptions, useFormStore } from "@/store/form";
+
+import { ErrorMessages, InitialForm, ReactChangeEvent } from "@/types";
+
 interface FormControlProps {
-  label: string;
-  type: string;
-  name: string;
-  value: string | number | readonly string[] | undefined;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
-  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+  className?: string
+  classNameInput?: string
+  classNameLabel?: string
   disabled?: boolean
-  placeholder?: string;
-  autoComplete?: "on" | "off";
+  errors?: ErrorMessages<InitialForm | undefined>
+  formFields: formOptions[];
+  handleFieldChange: (e: ReactChangeEvent) => void
 }
 
-export const FormControl = ({ label, type, name, value,  placeholder, onBlur, onChange, disabled = false, autoComplete="on" }: FormControlProps) => {
-  
+export const FormControl = ({
+  className, 
+  classNameInput, 
+  classNameLabel, 
+  disabled, 
+  errors, 
+  formFields, 
+  handleFieldChange
+}: FormControlProps) => {
+
+  const formState = useFormStore(state => state.formState);
+  const handleBlur = useFormStore(state => state.handleBlur);
+  const isTouched = useFormStore(state => state.isTouched);
+  const isFormSubmitted = useFormStore(state => state.isFormSubmitted);
+
   return (
-    <div className='form-control'>
-      <label htmlFor={name} className={`form-control__label`}>{label}</label>
-      <input
-      id={name}
-        className={`form-control__input ${disabled ? 'input-disabled' : ''}`}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        onBlur={onBlur}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        autoComplete={autoComplete}
-      />
-    </div>
+    formFields.map(option => (
+      <div key={option._id} >
+        <div className={className} >
+          <label
+            className={classNameLabel}
+            htmlFor={`${option.name}`}>{option.label}</label>
+          <input
+            className={`${classNameInput} ${disabled ? 'input-disabled' : ''} `}
+            type={`${option.type}`}
+            name={`${option.name}`}
+            value={formState[option.name] || ''}
+            placeholder={`${option.label}`}
+            id={`${option.name}`}
+            onChange={handleFieldChange}
+            onBlur={handleBlur}
+            autoComplete={`${option.type === 'password' ? 'off' : 'on'}`}
+            disabled={disabled}
+          />
+        </div>
+        <ErrorMessage
+          fieldName={errors?.[option.name]}
+          isTouched={isTouched?.[option.name]}
+          isFormSubmitted={isFormSubmitted}
+        />
+      </div>
+    ))
   )
 }

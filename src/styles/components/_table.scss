@@ -2,13 +2,9 @@
 @use '../abstract/mixins' as m;
 
 .table {
-  overflow: auto;
-  max-width: 100%;
-
-  &>table {
-    border-collapse: collapse;
-
-  }
+  border-collapse: collapse;
+  // flex-grow: 1;
+  min-width: 100%;
 
   @include m.responsive(tab-port) {
     align-self: flex-start;
@@ -25,6 +21,7 @@
 
     &--titles {
       color: white;
+      // padding: 1.5rem 1rem;
 
       @include m.responsive(phone) {
         color: v.$color-primary-dark;
@@ -49,50 +46,16 @@
     }
   }
 
-  &__td {
+  &__th {
     padding: 1.5rem 1rem;
-    width: 12rem;
+  }
+
+  &__td {
+    text-align: center;
+    padding: .5rem 1rem;
 
     @include m.responsive(phone) {
       font-size: v.$font-size;
-    }
-  }
-
-  &__row-form {
-    font-size: v.$font-size - .2rem;
-    text-transform: uppercase;
-    border: 1px solid v.$color-gray-1;
-    color: v.$color-primary;
-    font-weight: 700;
-
-    @include m.responsive(phone) {
-      border: 1px solid v.$color-white;
-    }
-  }
-
-  &__td-form {
-    padding: 1rem;
-    font-size: v.$font-size;
-
-    @include m.responsive(phone) {
-      font-size: v.$font-size;
-    }
-  }
-
-  &__input {
-    padding: 1rem 0.5rem;
-    font-size: v.$font-size + .2rem;
-    border-radius: .5rem;
-    letter-spacing: .5px;
-    color: v.$color-primary;
-
-    border: none;
-    &:focus {
-      outline: 2px solid v.$color-green-3;
-    }
-
-    &[type="number"] {
-      width: 100%;
     }
   }
 }

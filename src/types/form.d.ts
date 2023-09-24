@@ -1,5 +1,6 @@
 export type GenericOption = {
   [key: string]: string | number;
+  [key: string]: string[] ;
 };
 
 export type IsTouched = { [key: string]: boolean } | null

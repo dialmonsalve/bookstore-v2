@@ -148,6 +148,12 @@
   &:hover {
     transform: scale(1.2);
   }
+
+  @include m.responsive(phone) {
+    // top: 20vh;
+    // left: 80%;
+    // width: 4rem;
+  }
 }
 
 
@@ -171,12 +177,13 @@
   top: 13vh;
   left: 12%;
   position: absolute;
+  z-index: 3;
   
   &:hover {
     transform: scale(1.1);
   }
   @include m.responsive(phone) {
-    top: 25vh;
+    top: 18vh;
     left: 6%;
     width: 6rem;
 

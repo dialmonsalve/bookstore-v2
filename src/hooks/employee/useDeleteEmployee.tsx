@@ -24,7 +24,7 @@ const useDeleteEmployee = () => {
         queryClient.invalidateQueries(["employees"])
         setShowModal(false)
         
-        setAlert(true, "Usuario eliminado correctamente")
+        setAlert(true, "Usuario eliminado con éxito")
       }
     }
   )
