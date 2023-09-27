@@ -12,9 +12,9 @@ export const ErrorMessage = ({ isFormSubmitted, fieldName, isTouched }: Props) =
 
 		<div className="error-container" >
 			{showErrors || isFormSubmitted ?
-				<div className="error-container__message" >
+				<span className="error-container__message" >
 					{fieldName ? fieldName[0] : ""}
-				</div>
+				</span>
 				: <></>}
 		</div>
 

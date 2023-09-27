@@ -69,11 +69,8 @@ export const useUITransactionStore = create<State<any> & Actions>()(devtools((se
               item: item.item - 1,
             };
           }
-
           return item;
         });
-
-
         return { formItems: updatedItemsWithAdjustedItem }
       })
     },
@@ -81,5 +78,4 @@ export const useUITransactionStore = create<State<any> & Actions>()(devtools((se
       set({ disabled: false, formItems: [] })
     }
   }
-
 }, { name: "Transactions Interface" }))

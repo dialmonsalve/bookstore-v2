@@ -5,9 +5,10 @@
 .form-control {
   display: flex;
   gap: .5rem;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: .2rem;
   text-transform: uppercase;
+  width: 100%;
 
   @include m.responsive(phone) {
     flex-direction: column;
@@ -20,14 +21,12 @@
   }
 
   &__label {
-    font-size: v.$font-size;
+    font-size: v.$font-size - .2rem;
     letter-spacing: .1rem;
     padding: 1rem 0;
-    width: 30%;
-    font-weight: 700;
 
     @include m.responsive(phone) {
-      width: 100%;
+ 
       letter-spacing: 0;
     }
 
@@ -35,14 +34,15 @@
 
   &__input {
     border: none;
-    outline: 2px solid rgb(149, 149, 149);
+    outline: 2px solid v.$color-gray-2;
     transition: width .3s;
-    width: 60%;
+    width: 70%;
     padding: 0rem 1rem;
     letter-spacing: 1px;
+    
 
     @include m.responsive(phone) {
-      width: 100%;
+      // width: 100%;
     }
 
     &::placeholder {
@@ -53,15 +53,15 @@
     &,
     &:link,
     &:visited {
-      border-radius: 2.5rem;
-      font-size: v.$font-size + 0.2rem;
+      border-radius: 1rem;
+      // font-size: v.$font-size;
       padding: 0.5rem 1rem;
       border-bottom: 3px solid rgb(233, 233, 233);
     }
 
     &:focus {
       outline: 2px solid v.$color-green-3;
-      width: 66%;
+      // width: 66%;
 
       @include m.responsive(phone) {
         width: 100%;

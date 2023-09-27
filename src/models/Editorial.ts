@@ -1,57 +1,57 @@
-import { IEditorial } from '@/types/backend/book';
-import mongoose, { Model, Schema, model } from 'mongoose';
+// import { IEditorial } from '@/types/backend/book';
+// import mongoose, { Model, Schema, model } from 'mongoose';
 
-const EditorialSchema = new Schema<IEditorial>({
+// const EditorialSchema = new Schema<IEditorial>({
 
-  nit: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-  },
-  phone: {
-    type: String,
-  },
-  country: {
-    type: String,
-  },
-  web: {
-    type: String,
-  },
-  email: {
-    type: String,
-  }
-,
-distributor: [{
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Distributor'
-  }],
-  createdFor: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Employee'
-  },
-  updatedFor: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Employee'
-  },
-  isAvailable: {
-    type: Boolean,
-    default: true
-  },
+//   nit: {
+//     type: String,
+//     required: true,
+//   },
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+//   address: {
+//     type: String,
+//   },
+//   phone: {
+//     type: String,
+//   },
+//   country: {
+//     type: String,
+//   },
+//   web: {
+//     type: String,
+//   },
+//   email: {
+//     type: String,
+//   }
+// ,
+// distributor: [{
+//     type: Schema.Types.ObjectId,
+//     required: true,
+//     ref: 'Distributor'
+//   }],
+//   createdFor: {
+//     type: Schema.Types.ObjectId,
+//     required: true,
+//     ref: 'Employee'
+//   },
+//   updatedFor: {
+//     type: Schema.Types.ObjectId,
+//     required: true,
+//     ref: 'Employee'
+//   },
+//   isAvailable: {
+//     type: Boolean,
+//     default: true
+//   },
 
-}, {
-  timestamps: true
-})
+// }, {
+//   timestamps: true
+// })
 
 
-const Editorial = Model<IEditorial> = mongoose.models.Editorial || model('Editorial', EditorialSchema);
+// const Editorial = Model<IEditorial> = mongoose.models.Editorial || model('Editorial', EditorialSchema);
 
-export default Editorial;
+// export default Editorial;

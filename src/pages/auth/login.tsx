@@ -40,8 +40,6 @@ function Login() {
 
   const [providers, setProviders] = useState<any>({});
   const loginUser = useLogin("email")
-
-  const { handleFieldChange } = useForm(login);
   const formState = useFormStore(state => state.formState);
   const handleResetForm = useFormStore(state => state.handleResetForm);
   const checkFormErrors = useFormStore(state => state.checkFormErrors);
@@ -59,7 +57,7 @@ function Login() {
     const hasErrors = checkFormErrors(errors);
 
     if (!hasErrors) {
-      handleResetForm()
+      handleResetForm(login)
       loginUser.mutate({ email: formState?.email, password: formState?.password });
     }
   }
@@ -74,12 +72,13 @@ function Login() {
       <ApiMessageError />
       <form className="form" onSubmit={handleSubmit} noValidate >
         <FormControl
-          handleFieldChange={handleFieldChange}
+          
           errors={errors}
           formFields={options}
           className="form-control"
           classNameInput="form-control__input"
           classNameLabel="form-control__label"
+          initialForm={login}
         />
 
         <div className="form__buttons">

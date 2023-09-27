@@ -6,9 +6,11 @@ import { useEmployeesStore } from "@/store/employee";
 
 export default function useAuthentication () {
 
-  const { data: nextSession, status } = useSession();
- 
-  const sessionQuery = useQuery({
+  const { data: nextSession, status } = useSession(); 
+
+  const employee = nextSession?.user.username ?"credential-employee" : 'credential-client';
+
+  const sessionQuery = useQuery({   
 
     queryFn: async () => {
 
@@ -19,7 +21,7 @@ export default function useAuthentication () {
       }
       return null;
     },
-    queryKey: [ "credentials"],
+    queryKey: [employee],
     enabled: !!nextSession?.user?.email!,
     staleTime: Infinity,
     refetchOnMount: true,

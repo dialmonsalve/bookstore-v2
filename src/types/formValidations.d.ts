@@ -23,6 +23,7 @@ export interface Validator {
   positiveNumber(message: string): Validator;
   required(message: string): Validator;
   string(): Validator;
+  zero(message: string): Validator;
 }
 
 export interface ValidationRule {

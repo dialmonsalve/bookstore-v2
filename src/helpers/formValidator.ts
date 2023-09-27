@@ -1,14 +1,16 @@
 
 import { ErrorMessage, InitialForm, ValidationSchema, Validator, ValidatorReturn } from "../types";
 
-export function formValidator ():ValidatorReturn {
+export function formValidator(): ValidatorReturn {
 
   function getErrors<T extends InitialForm>(formState: T, objValidations: ValidationSchema) {
     let formCheckedValues = {} as ErrorMessage<T>;
 
+    if (formState === undefined) return;
+
     for (const fieldRules of Object.keys(objValidations)) {
 
-      if (Object.prototype.hasOwnProperty.call(formState, fieldRules)) {
+      if (Object.prototype.hasOwnProperty?.call(formState, fieldRules)) {
 
         const fieldValidator = objValidations[fieldRules];
 
@@ -98,7 +100,7 @@ export function formValidator ():ValidatorReturn {
       });
       return validator;
     },
-    notBlankSpace(): typeof validator{
+    notBlankSpace(): typeof validator {
       const defaultMessage = 'El campo no debe llevar espacios en blanco'
       validator.rules.push({
         test: (value) => {
@@ -120,7 +122,7 @@ export function formValidator ():ValidatorReturn {
             // @ts-ignore
             return value.length > 0;
           }
-          return false; 
+          return false;
         },
 
         message,
@@ -130,7 +132,7 @@ export function formValidator ():ValidatorReturn {
     positiveNumber(message: string): typeof validator {
       validator.rules.push({
         test: (value) => {
-          
+
           const numberValue = parseFloat(value);
           return !isNaN(numberValue) && numberValue > 0;
         },
@@ -165,6 +167,17 @@ export function formValidator ():ValidatorReturn {
       });
       return validator;
     },
+    zero(message: string): typeof validator {
+      validator.rules.push({
+        test: (value) => {
+
+          const numberValue = parseFloat(value);
+          return !isNaN(numberValue) && numberValue >= 0;
+        },
+        message,
+      });
+      return validator;
+    },
     validate(value: string, formState: InitialForm): string[] {
       const errors = [];
 
@@ -188,9 +201,9 @@ export function formValidator ():ValidatorReturn {
     number: validator.number.bind(validator),
     password: validator.password.bind(validator),
     positiveNumber: validator.positiveNumber.bind(validator),
+    zero: validator.zero.bind(validator),
     required: validator.required.bind(validator),
     string: validator.string.bind(validator),
-
     getErrors
   };
 };

@@ -2,15 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
-  },
+    domains: ['lh3.googleusercontent.com', 'books.google.com', 'www.googleapis.com/books/v1']
+  }
 }
 
 module.exports = nextConfig

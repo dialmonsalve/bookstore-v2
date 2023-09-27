@@ -1,8 +1,8 @@
 import { formValidator } from "@/helpers"
 
-export const CONST_PURCHASE_ORDER = {
 
-  nitOrder: [
+export const CONST_FORM_ORDER = {
+  infoProvider: [
     {
       _id: 0,
       label: 'Nit',
@@ -30,12 +30,7 @@ export const CONST_PURCHASE_ORDER = {
       type: 'text',
       name: 'name',
     },
-    {
-      _id: 5,
-      label: 'Cantidad',
-      type: 'number',
-      name: 'quantity',
-    },
+
   ],
   bookForm: [
     {
@@ -43,6 +38,18 @@ export const CONST_PURCHASE_ORDER = {
       label: 'Autor',
       type: 'text',
       name: 'author',
+    },
+    {
+      _id: 5,
+      label: 'Editorial',
+      type: 'text',
+      name: 'editorial',
+    },
+    {
+      _id: 7,
+      label: 'Cantidad',
+      type: 'number',
+      name: 'quantity',
     },
   ],
   fashionForm: [
@@ -52,19 +59,45 @@ export const CONST_PURCHASE_ORDER = {
       type: 'text',
       name: 'size',
     },
+    {
+      _id: 7,
+      label: 'Cantidad',
+      type: 'number',
+      name: 'quantity',
+    },
+  ],
+  others:[
+    {
+      _id: 7,
+      label: 'Cantidad',
+      type: 'number',
+      name: 'quantity',
+    },
   ]
 }
 
+export const INVENTORY_ENTRIES = {
+  infoProvider: [
+    {
+      _id: 2,
+      label: 'Número de orden',
+      type: 'number',
+      name: 'numberOrder',
+    },
+    ...CONST_FORM_ORDER.infoProvider,
+  ],
+  baseForm: CONST_FORM_ORDER.baseForm
+}
 export const TRANSACTION_VALIDATION_SCHEMA = {
   newOrder: {
     code: formValidator()
-    .string()
-    .required('Campo código es requerido')
-    .min(3, 'El nombre debe tener al menos de 3 caracteres'),
+      .string()
+      .required('Campo código es requerido')
+      .min(3, 'El nombre debe tener al menos de 3 caracteres'),
     quantity: formValidator()
-    .number()
-    .required('Campo código es requerido')
-    .positiveNumber('La cantidad debe ser mayor a 1'),
+      .number()
+      .required('Campo código es requerido')
+      .positiveNumber('La cantidad debe ser mayor a 1'),
     provider: formValidator()
       .string()
       .required('Campo proveedor es requerido')

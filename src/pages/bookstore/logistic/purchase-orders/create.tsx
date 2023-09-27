@@ -1,114 +1,103 @@
 import { FormEvent } from "react";
 
-import { useForm } from "@/hooks/useForm";
-import { useUITransactionStore } from "@/store";
-
 import { Layout } from "@/components/layouts/app";
-import { Button, ErrorMessage, FormControl, Table } from "@/components/ui/client";
-import { FooterTransaction, HeaderTransaction } from "@/components/ui/client";
+import { ErrorMessage, FormControl } from "@/components/ui/client";
 
-import { CONST_PURCHASE_ORDER, TRANSACTION_VALIDATION_SCHEMA } from "@/constants";
-import { useFormStore } from "@/store/form";
-import { formValidator } from "@/helpers";
+import { Transactions } from "@/components/ui/services/Transactions";
+import { usePurchaseOrders } from "@/hooks/transactions";
+import { useBooksStore, useEmployeesStore, useUITransactionStore } from "@/store";
 
-const titles = ['código', 'Nombre', 'Autor', 'Cantidad', 'Talla']
-const nameTableFields = ['code', 'name', 'author', 'quantity', 'size']
+import { CONST_FORM_ORDER } from "@/constants";
+import { useSearchBook } from "@/hooks/books";
 
-interface ItemsOrder {
-  item: number,
-  code: string,
-  name: string,
-  quantity: number,
-  author: string,
-  size: string,
-  productType: string,
-  nit: string,
-  provider: string,
-  observations: string,
-}
-
-const itemsOrder: ItemsOrder = {
-  item: 1,
-  code: '',
-  name: '',
-  quantity: 1,
-  author: '',
-  size: '',
-  productType: '',
-  nit: '',
-  provider: '',
-  observations: '',
-}
 
 export default function CreatePurchaseOrdersPage() {
 
-  const { handleFieldChange } = useForm(itemsOrder);
-  const formState = useFormStore<ItemsOrder>(state => state.formState);
-  const handleResetForm = useFormStore(state => state.handleResetForm);
-  const handleBlur = useFormStore(state => state.handleBlur);
-  const isTouched = useFormStore(state => state.isTouched);
+  const {
+    disabled,
+    errors,
+    formState,
+    isTouched,
+    itemsOrder,
+    setNewFieldsForm,
+    handleBlur,
+    handleFieldChange,
+  } = usePurchaseOrders()
 
-  const uiTransaction = useUITransactionStore();
-  const items = useUITransactionStore(state => state.formItems);
-  const disabled = useUITransactionStore(state => state.disabled);
-  const clearAllItems = useUITransactionStore(state => state.clearAllItems);
 
-  const errors = formValidator().getErrors(formState, TRANSACTION_VALIDATION_SCHEMA.newOrder)
+  const { titles, formTable, nameTableFields } = setNewFieldsForm()
 
+  const session = useEmployeesStore(state => state.session);
+  const formItems = useUITransactionStore(state => state.formItems);
   const { nit, productType, provider, observations, ...mainForm } = formState;
 
-  const setNewFieldsForm = () => {
-
-    switch (formState.productType) {
-      case 'book':
-        return [...CONST_PURCHASE_ORDER.baseForm, ...CONST_PURCHASE_ORDER.bookForm];
-      case 'fashion':
-        return [...CONST_PURCHASE_ORDER.baseForm, ...CONST_PURCHASE_ORDER.fashionForm];
-      case 'stationery' || 'fashion':
-        return [...CONST_PURCHASE_ORDER.baseForm];
-      case 'toy':
-        return [...CONST_PURCHASE_ORDER.baseForm];
-      default:
-        return [];
-    }
-  }
-
-  const newFieldForm = setNewFieldsForm()
+  const searchBooks = useSearchBook()
+  const findBooks = useBooksStore(state=>state.findBooks)
 
   const handleCreateOrder = (e: FormEvent) => {
     e.preventDefault();
 
-    const newItems = items.map(({ item, _id, ...rest }) => rest);
+    const newItems = formItems.map(({ item, _id, ...rest }) => rest);
 
     const newPurchaseOrder = {
       nit,
       productType,
       provider,
       observations,
-      newItems: [...newItems]
+      newItems: [...newItems],
+      employee: session?._id
     }
-    console.log(newPurchaseOrder);
+    console.log(formTable);
   }
+
+  // const slug = (value: string) => {
+
+  //   if (formTable[1].name === "name") {
+
+  //     const newSlug = value.trim()
+  //       .replaceAll(' ', '-')
+  //       .replaceAll("'", '')
+  //       .toLocaleLowerCase() || ''
+  //     return newSlug;
+  //   }
+  // }
+  // const  newSlug  = slug(formState.name)
+
+
+  const searchBook = async () => {
+    if (formState.code.length <= 3) return
+
+    searchBooks.mutate(formState.code)
+
+    // console.log(searchBooks.data);
+  }
+
 
   return (
     <Layout title="Crear Ordenes de compra" >
-
       <div className="transactions" >
-
         <form className="form-transactions" action="POST" onSubmit={handleCreateOrder} >
+          <Transactions
+            initialForm={itemsOrder}
+            formReset={{ ...formState, code: '', name: '', quantity: 1, author: '', size: '', editorial: '' }}
+            mainForm={mainForm}
+            nameTableFields={nameTableFields}
+            newFieldForm={formTable}
+            tableTitles={titles}
+            errors={errors}
+            isEditable={false}
+            productType={formState.productType}
+            onClick={searchBook}
+          >
+            <div>
+              <div className="transactions-body__info--control" >
+                <label
+                  htmlFor='productType'
+                  className="transactions-body__info--label"
+                >
+                  Producto
+                </label>
 
-          <HeaderTransaction />
-
-          <div className="transactions-body" >
-
-            <div className="transactions-body__inputs" >
-
-              <label
-                htmlFor='productType'
-              >
-                Producto
-              </label>
-              <div className="transactions-body__select" >
                 <select
                   disabled={disabled}
                   name="productType"
@@ -116,6 +105,7 @@ export default function CreatePurchaseOrdersPage() {
                   id="productType"
                   value={formState.productType}
                   onBlur={handleBlur}
+                  className={`transactions-body__info--input ${disabled ? 'input-disabled' : ''}`}
                 >
                   <option value=""></option>
                   <option value="book">libro</option>
@@ -123,78 +113,34 @@ export default function CreatePurchaseOrdersPage() {
                   <option value="toy">juguetes</option>
                   <option value="fashion">Ropa</option>
                 </select>
-                <ErrorMessage
-                  fieldName={errors?.productType}
-                  isTouched={isTouched?.productType}
-                  isFormSubmitted={false}
-                />
               </div>
-              <FormControl
-                formFields={CONST_PURCHASE_ORDER.nitOrder}
-                handleFieldChange={handleFieldChange}
-                className="transactions-body__inputs--inputs"
-                disabled={disabled}
-                errors={errors}
+              <ErrorMessage
+                fieldName={errors?.productType}
+                isTouched={isTouched?.productType}
+                isFormSubmitted={false}
               />
             </div>
 
-            <div className="transactions-body__info" >
-              <FormControl
-                formFields={newFieldForm}
-                handleFieldChange={handleFieldChange}
-                className="transactions-body__info--inputs"
-                errors={errors}
-              />
-            </div>
-            <Button
-              buttonStyle="square"
-              backgroundColor="green"
-              borderRadius=".8rem"
-              onClick={() => {
-                uiTransaction.handleAddItem(mainForm)
-                handleResetForm({ ...formState, code: '', name: '', quantity: 1, author: '', size: '' })
-              }}
-              disabled={!!errors}
-            >
-              add
-            </Button>
-
-            <Table
-              data={uiTransaction.formItems}
-              tableTitles={titles}
-              nameTableFields={nameTableFields}
-              handleDelete={uiTransaction.handleRemoveItem}
-              isEditable={false}
+            <FormControl
+              formFields={CONST_FORM_ORDER.infoProvider}
+              initialForm={itemsOrder}
+              disabled={disabled}
+              errors={errors}
+              className="transactions-body__info--control"
+              classNameInput="transactions-body__info--input"
+              classNameLabel="transactions-body__info--label"
             />
-          </div>
-
-          <FooterTransaction
-            length={uiTransaction.formItems.length}
-            handleFieldChange={handleFieldChange} />
-
-          <div className="transactions-button__left" >
-
-            <Button
-              disabled={items.length === 0}
-              backgroundColor="green" type="submit" >
-              Crear
-            </Button>
-          </div>
-          <div className="transactions-button__right" >
-
-            <Button
-              onClick={() => {
-                clearAllItems()
-                handleResetForm(itemsOrder)
-              }}
-              backgroundColor="red" type="button"
-              disabled={!disabled}
-              >
-              Limpiar
-            </Button>
-          </div>
+          </Transactions>
         </form>
       </div>
+
+      {
+        findBooks?.map(book=>(
+          <div key={book.id} >
+            {book.volumeInfo.title}
+          </div>
+        ))
+      }
     </Layout>
   )
 }

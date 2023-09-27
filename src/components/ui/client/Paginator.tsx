@@ -2,6 +2,8 @@ import { useEmployees } from "@/hooks/employee"
 import { Button } from "./"
 import { useUisStore } from "@/store/ui"
 import { URL_CONSTANTS } from "@/constants";
+import { useSearchBook } from "@/hooks/books";
+
 
 export const Paginator = () => {
 
@@ -13,7 +15,9 @@ export const Paginator = () => {
 
   const totalEmployees = queryEmployees?.data?.totalEmployees
 
+
   const totalPages = queryEmployees?.data !== undefined && Math.ceil(Number(totalEmployees) / ( URL_CONSTANTS.limit)) 
+
 
   return (
     <div className="paginator" >

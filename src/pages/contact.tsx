@@ -3,8 +3,36 @@ import { Layout } from "@/components/layouts/e-commerce"
 
 import { Button, FormControl, ErrorMessage } from "@/components/ui/client";
 
-import { formValidator, newMessageValidationSchema } from "@/helpers";
-import { useForm } from "../../form/useFormOld";
+import { formValidator } from "@/helpers";
+import { useFormStore } from "@/store";
+import { LOGIN_VALIDATION_SCHEMA } from "@/constants";
+
+const formFields = [
+  {
+    _id: 0,
+    name: 'name',
+    type: 'text',
+    label: 'nombre',
+  },
+  {
+    _id: 1,
+    name: 'lastName',
+    type: 'text',
+    label: 'Apellido(s)',
+  },
+  {
+    _id: 2,
+    name: 'email',
+    type: 'text',
+    label: 'email',
+  },
+  {
+    _id: 3,
+    name: 'phone',
+    type: 'text',
+    label: 'teléfono',
+  }
+]
 
 const newMessage = {
   name: '',
@@ -16,29 +44,23 @@ const newMessage = {
 
 function Contact() {
 
-  const {
-    formState,
-    isFormSubmitted,
-    isTouched,
-    handleBlur,
-    handleFieldChange,
-    hasErrors,
-    handleResetForm
-  } = useForm(newMessage)
+  const formState = useFormStore<typeof newMessage>(state => state.formState)
+  const checkFormErrors = useFormStore(state => state.checkFormErrors)
+  const handleResetForm = useFormStore(state => state.handleResetForm)
 
-  const { email, lastName, name, phone, message } = formState;
-
-  const errors = formValidator().getErrors(formState, newMessageValidationSchema);
+  const errors = formValidator().getErrors(formState, LOGIN_VALIDATION_SCHEMA.newMessage);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!hasErrors(errors)) {
+    const hasErrors = checkFormErrors(errors)
+
+    if (!hasErrors) {
       console.log({ formState });
 
       // TODO implement validation vs backend
 
-      handleResetForm()
+      handleResetForm(newMessage)
     }
   }
   return (
@@ -48,78 +70,27 @@ function Contact() {
       <h1 >Cuéntanos, ¿Qué quieres saber?</h1>
 
       <form style={{ width: "50rem" }} className="form" >
-        <ErrorMessage
-          fieldName={errors?.name}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.name}
-        />
         <FormControl
-          label="name"
-          name="name"
-          type="text"
-          placeholder="Your name"
-          value={name}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
+          initialForm={newMessage}
+          formFields={formFields}
+          errors={errors}
+          className="form-control"
+          classNameInput="form-control__input"
+          classNameLabel="form-control__label"
         />
-        <ErrorMessage
-          fieldName={errors?.lastName}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.lastName}
-        />
-        <FormControl
-          label="last Name"
-          name="lastName"
-          type="text"
-          placeholder="Your last name"
-          value={lastName}
-          onChange={handleFieldChange}
-        />
-        <ErrorMessage
-          fieldName={errors?.email}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.email}
-        />
-
-        <FormControl
-          label="email"
-          name="email"
-          type="email"
-          placeholder="your email"
-          value={email}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        />
-        <ErrorMessage
-          fieldName={errors?.phone}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.phone}
-        />
-        <FormControl
-          label="phone"
-          name="phone"
-          type="phone"
-          placeholder="your phone"
-          value={phone}
-          onChange={handleFieldChange}
-        />
-        <ErrorMessage
-          fieldName={errors?.message}
-          isFormSubmitted={isFormSubmitted}
-          isTouched={isTouched?.message}
-        />
+{/* 
         <textarea
           className="text-area"
           placeholder="Haz tus preguntas, o sugíerenos algo"
           style={{ height: '10rem', marginTop: '1rem' }}
           name="message"
-          value={message}
+          value={formState.message}
           onChange={handleFieldChange}
           onBlur={handleBlur}
-        />
+        /> */}
 
         <Button type="submit" width='50%' backgroundColor="blue" disabled={!!errors} >
-          send
+          Enviar
         </Button>
       </form>
 

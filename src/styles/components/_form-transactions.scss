@@ -13,44 +13,49 @@
   }
 }
 
-.transactions {
-  width: 80%;
-
-  @include m.responsive(tab-port){
-    width: 100%;
-  }
-}
-
 .form-transactions {
   display: grid;
   grid-template-areas:
     "transactions-header__left transactions-header__right"
     "transactions-body transactions-body"
     "transactions-footer__left transactions-footer__right"
-    "transactions-button__left transactions-button__right";
+    "transactions-footer__buttons transactions-footer__buttons";
   grid-template-columns: 1fr 1fr;
   gap: .5rem 1rem;
   padding: 3rem;
 
   &> :nth-child(3n) {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
-  @include m.responsive(phone){
+  &> :nth-child(6n),
+  &> :nth-child(7n) {
+    margin-top: 1rem;
+  }
+
+  @include m.responsive(phone) {
     display: flex;
     flex-direction: column;
     padding: 2rem 0;
   }
 }
 
+.transactions {
+  width: 80%;
+
+  @include m.responsive(tab-port) {
+    width: 100%;
+  }
+}
+
 .transactions-header {
-  
+
   &__left {
     grid-area: transactions-header__left;
     padding: 2rem 0;
     font-size: v.$font-size;
 
-    @include m.responsive(phone){
+    @include m.responsive(phone) {
       padding: 0rem;
       font-size: v.$font-size - .5rem;
     }
@@ -60,7 +65,8 @@
     grid-area: transactions-header__right;
     padding: 2rem 0;
     font-size: v.$font-size;
-    @include m.responsive(phone){
+
+    @include m.responsive(phone) {
       padding: 0rem;
       font-size: v.$font-size - .5rem;
     }
@@ -71,106 +77,79 @@
   grid-area: transactions-body;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-
-  &__select {
-    width: 25%;
-  }
-
-  &__inputs {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: space-between;
-
-    @include m.responsive(phone){
-      flex-direction: column;
-    }
-
-    &--inputs {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      align-content: space-between;
-      // flex-grow: 1;
-
-      @include m.responsive(phone){
-        flex-direction: column;
-        gap: .1rem;
-      }
-    }
-
-    & label {
-      font-size: 1.6rem;
-      text-transform: uppercase;
-    }
-
-    & input {
-      flex-grow: 1;
-      @include input();
-      @include m.responsive(tab-port){
-        width: 50%;
-      }
-      @include m.responsive(phone){
-        width: 100%;
-      }
-    }
-
-    & select {
-      // width: 15%;
-      background-color: v.$color-white;
-      height: 95%;
-      @include input();
-
-      @include m.responsive(tab-port){
-        width: 30%;
-      }
-      @include m.responsive(phone){
-        width: 60%;
-      }
-    }
-  }
+  gap: 3rem;
 
   &__info {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 2rem;
 
+    @include m.responsive(big-desktop) {
+      grid-template-columns: repeat(4, 1fr);
+    }
 
-    &--inputs {
+    @include m.responsive(tab-land) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include m.responsive(phone) {
+      grid-template-columns: repeat(1, 1fr);
+      padding: 0 5rem;
+    }
+
+    &--control {
       display: flex;
+      gap: 1rem;
       align-items: center;
+      width: 100%;
       justify-content: space-between;
-      @include m.responsive(phone){
-       flex-direction: column;
-       gap: 1.5rem;
+
+      & select {
+        width:60%;
+
+        @include m.responsive(tab-land) {
+          width: 55%;
+        }
+        @include m.responsive(tab-port) {
+          width: 52%;
+        }
+        @include m.responsive(phone) {
+          width: 58%;
+        }
       }
     }
 
-    & label {
-      font-size: 1.6rem;
-      text-transform: uppercase;
+    &--label {
+      font-size: v.$font-size;
     }
 
-    & input {
-      width: 80%;
-      @include input();
+    &--input {
+      padding: 1rem;
+      border: none;
+      outline: .5px solid v.$color-gray-2;
+      border-radius: 1.3rem;
+      font-size: v.$font-size;
+
+      &:focus {
+        outline: 3px solid v.$color-green-3;
+      }
     }
   }
 }
 
 .transactions-footer {
+  grid-area: transactions-footer__buttons;
+  display: flex;
+  justify-content: space-around;
+  gap: 3rem;
 
   &__left {
-    grid-area: transactions-footer__left;
     padding: 1rem;
     resize: none;
     @include input();
   }
 
   &__right {
-    grid-area: transactions-footer__right;
     background-color: white;
     border-radius: 1.3rem;
     display: flex;
@@ -183,12 +162,16 @@
     text-transform: uppercase;
     font-size: v.$font-size;
 
-    @include m.responsive(phone){
-      width: 60%;
+    @include m.responsive(phone) {
+      margin-top: 1rem;
       align-items: flex-start;
       gap: 1.5rem;
       font-size: v.$font-size - .5rem;
     }
   }
+}
 
+.input-disabled {
+  color: v.$color-gray-3;
+  background-color: v.$color-gray-1;
 }

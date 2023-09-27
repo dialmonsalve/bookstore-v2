@@ -1,7 +1,7 @@
 export interface IBook {
   _id?: string;
-  author: string[];
-  category: string[];
+  authors: string[];
+  categories: string[] | undefined ;
   createdAt?: string;
   createdFor?: string;
   discount?: number;
@@ -11,14 +11,14 @@ export interface IBook {
   isAvailable?: boolean;
   isbn: string;
   language?: string;
-  name: string;
+  title: string;
   pageCount?: number;
-  price: number;
+  price?: number;
   publishedDate?: string;
   ratings?: string;
   review?: string;
-  stock: number;
-  summary?: string;
+  stock?: number;
+  description?: string;
   updatedAt?: string;
   updatedFor?: string;
   slug: string;

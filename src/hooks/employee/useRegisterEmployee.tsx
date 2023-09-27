@@ -33,7 +33,7 @@ export function useRegisterEmployee() {
         }
         queryClient.setQueriesData(["credential-employee"], employee);
         queryClient.invalidateQueries(["employees"])
-        handleResetForm()
+        handleResetForm({})
         router.push('/admin/users');
         setAlert(true, "Usuario Creado con éxito")
       },

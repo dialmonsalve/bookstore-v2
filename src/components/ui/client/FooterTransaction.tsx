@@ -1,16 +1,17 @@
-import { useFormStore } from '@/store'
+import { useForm } from '@/hooks/useForm'
+import { useFormStore, useUITransactionStore } from '@/store'
 import { useEmployeesStore } from '@/store/employee'
-import { ReactChangeEvent } from '@/types'
 
 interface FooterTransaction {
-  handleFieldChange: (e: ReactChangeEvent) => void
-  length:number
+  initialForm: Record<string, any>
 }
 
-export const FooterTransaction = ({handleFieldChange, length}:FooterTransaction) => {
+export const FooterTransaction = ({ initialForm }: FooterTransaction) => {
 
-  const session = useEmployeesStore(state => state.session)
-  const formState = useFormStore(state=>state.formState)
+  const { handleFieldChange } = useForm(initialForm);
+  const formState = useFormStore(state => state.formState);
+  const session = useEmployeesStore(state => state.session);
+  const formItems = useUITransactionStore(state=>state.formItems);
 
   return (
     <>
@@ -26,7 +27,7 @@ export const FooterTransaction = ({handleFieldChange, length}:FooterTransaction)
       </textarea>
 
       <div className="transactions-footer__right">
-        <p >Total Items: {length || 0}</p>
+        <p >Total Items: {formItems.length || 0}</p>
         <p >Realizado por: {session?.name} {session?.lastName}</p>
       </div>
     </>

@@ -5,9 +5,7 @@ import { employeeApi } from '../';
 import { IEmployee } from '@/types';
 import { URL_CONSTANTS } from '@/constants';
 
-
 interface Data {hasError: boolean, employees: IEmployee[] | null, message?: string, totalEmployees: number} 
-
 
 //! Get all employees
 export async function getEmployees(page: number): Promise<Data | null> {

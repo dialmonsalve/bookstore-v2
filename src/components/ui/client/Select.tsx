@@ -1,26 +1,30 @@
-import { TypeRole } from "@/types";
+
 import { useEffect, useRef, useState } from "react";
 
 type SingleSelectProps = {
   multiple?: false
-  value?: TypeRole
+  value?: string
   name:string
+  label:string
+  className?:string
 
-  onChange: (value: TypeRole | undefined) => void
+  onChange: (value: string | undefined) => void
 }
 type MultipleSelectProps = {
   multiple: true
-  value: TypeRole[]
+  value: string[]
   name:string
+  label:string
+  className?:string
 
-  onChange: (value: TypeRole[]) => void
+  onChange: (value: string[]) => void
 }
 type SelectProps = {
-  options: TypeRole[]
+  options: string[]
 } & (SingleSelectProps | MultipleSelectProps)
 
 
-export const Select = ({ multiple, value, onChange, options, name }: SelectProps) => {
+export const Select = ({ multiple, value, onChange, options, name, label, className }: SelectProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
@@ -91,7 +95,7 @@ export const Select = ({ multiple, value, onChange, options, name }: SelectProps
     multiple ? onChange([]) : onChange(undefined)
   }
 
-  const selectOption = (option: TypeRole) => {   
+  const selectOption = (option: string) => {   
 
     if (multiple) {
       if (value.includes(option)) {
@@ -104,18 +108,18 @@ export const Select = ({ multiple, value, onChange, options, name }: SelectProps
     }    
   }
 
-  const isOptionSelected = (option: TypeRole) => {
+  const isOptionSelected = (option: string) => {
     return multiple ? value?.includes(option) : option === value
   }
 
   return (
-    <div  >
-    <label className="form-control__label" style={{marginLeft:'.5rem'}}>ROLE</label>
+    <div className={`${className || ''}`}  >
+    <label className="form-control__label" style={{marginLeft:'.5rem'}}>{label}</label>
     <div
       onBlur={() => setIsOpen(false)}
       onClick={() => setIsOpen(prev => !prev)}
       tabIndex={0}
-      className="select-container"
+      className={`select-container`}
       ref={containerRef} 
       
     >

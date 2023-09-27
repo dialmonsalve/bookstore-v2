@@ -41,4 +41,4 @@ export const useEmployeesStore = create<State & Actions>()(devtools((set, get) =
       }), false, "employees")
     }
   }
-},{name:"employees"}))
+},{name:"Employees"}))

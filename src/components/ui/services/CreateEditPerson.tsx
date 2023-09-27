@@ -1,12 +1,12 @@
 import { FormControl } from "../client"
 
-import { ErrorMessages, InitialForm, ReactChangeEvent } from "@/types"
+import { ErrorMessages, InitialForm } from "@/types"
 
 interface Props {
   isCreate: boolean
   isEmployee: boolean
   errors: ErrorMessages<InitialForm | undefined>
-  handleFieldChange: (e: ReactChangeEvent) => void
+  initialForm: Record<string, any>
 }
 
 const options = [
@@ -62,7 +62,7 @@ export const CreateEditPerson = ({
   errors,
   isCreate,
   isEmployee,
-  handleFieldChange,
+  initialForm
 }: Props) => {
 
   let formFields = [];
@@ -77,12 +77,11 @@ export const CreateEditPerson = ({
     formFields = formFields.filter(option => option.name !== 'username');
   }
 
-
   return (
     <FormControl
       formFields={formFields}
       errors={errors}
-      handleFieldChange={handleFieldChange}
+      initialForm={initialForm}
       className="form-control"
       classNameInput="form-control__input"
       classNameLabel="form-control__label"

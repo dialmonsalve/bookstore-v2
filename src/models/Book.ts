@@ -15,16 +15,14 @@ const BookSchema = new Schema<IBook>({
   },
   price: {
     type: Number,
-    required: true,
-    default:0
+    default: 0
   },
   discount: {
     type: Number,
-    default:0
+    default: 0
   },
   stock: {
     type: Number,
-    required: true,
     default: 0
   },
   summary: {
@@ -48,37 +46,24 @@ const BookSchema = new Schema<IBook>({
     type: String,
     trim: true
   },
-  review: {
-    type: String,
-    trim: true
-  },
-  ratings: {
-    type: String,
-    trim: true
-  },
   format: {
     type: String,
-    required:true,
     enum: {
       values: ['eBook', 'audioBook', 'printedBook', 'PDF', 'EPUB', 'MOBI'],
       message: `{VALUE no es un tipo válido}`
     },
-    default:'printedBook'
+    default: 'printedBook'
   },
   author: [{
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
-    ref: 'Author'
   }],
   category: [{
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
-    ref: 'Category'
   }],
-  editorial:{
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Editorial'
+  editorial: {
+    type: String,
   },
   createdFor: {
     type: Schema.Types.ObjectId,
@@ -93,14 +78,14 @@ const BookSchema = new Schema<IBook>({
   isAvailable: {
     type: Boolean,
     default: true
-  }, 
-  slug:{
-    type:String,
-    required:true,
-    unique:true
   },
-  tags:[{
-    type:String,
+  slug: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  tags: [{
+    type: String,
   }]
 
 }, {

@@ -71,7 +71,7 @@ function CreateEmployeePage() {
         onSubmit={handleRegisterEmployee}
       >
         <CreateEditPerson
-          handleFieldChange={handleFieldChange}
+          initialForm={newEmployee}
           errors={errors}
           isCreate
           isEmployee

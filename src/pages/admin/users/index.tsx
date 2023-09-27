@@ -23,6 +23,7 @@ function UsersPage() {
   const router = useRouter();
   const deleteEmployee = useDeleteEmployee();
   const setShowModal = useUisStore(state => state.setShowModal);
+  const { data, isLoading } = useEmployees();
 
   //! Handler functions
   const handleEditEmployee = (employeeId: string | number): void => {
@@ -40,7 +41,6 @@ function UsersPage() {
   }
 
   // ! Constants
-  const { data, isLoading } = useEmployees();
   if (isLoading) return <Spinner />
   
   if (!data) return;

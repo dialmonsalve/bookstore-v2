@@ -1,10 +1,12 @@
-import React from 'react'
+
+const today = new Date().toLocaleDateString();
 
 export const HeaderTransaction = () => {
+  
   return (
     <>
       <div className="transactions-header__left" >
-        <p className="transactions-header__left--p" >Fecha: 17/09/2023</p>
+        <p className="transactions-header__left--p" >Fecha: {today}</p>
         <p className="transactions-header__left--p" >Dirección</p>
 
       </div>

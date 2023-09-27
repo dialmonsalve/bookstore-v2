@@ -3,7 +3,7 @@ export interface ITransaction {
   type: string
   products: string[]
   total: number
-  employ: string
+  employee: string
   createAt: string
   updateAt: string
 }

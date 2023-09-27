@@ -46,7 +46,7 @@ function PrivateLoginPage() {
     const hasErrors = checkFormErrors(errors);
 
     if (!hasErrors) {
-      handleResetForm()
+      handleResetForm(login)
       loginUser.mutate({ username: formState?.username, password: formState?.password });
     }
   }
@@ -59,7 +59,7 @@ function PrivateLoginPage() {
       <form className="form" onSubmit={handleSubmit} noValidate >
 
         <FormControl 
-          handleFieldChange={handleFieldChange}
+          initialForm={login}
           errors={errors}
           formFields={options}
           className="form-control"

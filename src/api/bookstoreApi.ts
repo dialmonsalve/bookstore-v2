@@ -11,3 +11,12 @@ export const userApi = axios.create({
 export const employeeApi = axios.create({
   baseURL:'http://localhost:3000/api/employees'
 });
+
+export const bookApi = axios.create({
+  baseURL:'http://localhost:3000/api/books'
+});
+
+export const searchBooksApi = axios.create({
+  baseURL:'https://www.googleapis.com/books/v1'
+});
+
