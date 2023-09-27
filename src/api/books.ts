@@ -5,10 +5,6 @@ import { URL_CONSTANTS } from "@/constants"
 import axios from "axios"
 
 // export const searchBooks = async (term: string) => {
-
-//   const url = `https://www.googleapis.com/books/v1/volumes?q=${term}&key=AIzaSyD_mQW2Xfc7NSJs6Kiu03zjfd9qNkk1_C8`
-
-
 //   try {
 //     const { data } = await axios.get(url)
 //     return data;
