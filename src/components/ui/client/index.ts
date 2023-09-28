@@ -14,3 +14,4 @@ export * from './Select';
 export * from './SingleFormControl';
 export * from './Spinner';
 export * from './Table';
+export * from './TextArea';

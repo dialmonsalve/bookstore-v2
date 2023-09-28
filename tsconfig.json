@@ -17,6 +17,11 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/ui/LoginAuthentication.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/ui/LoginAuthentication.tsx"
+  ],
   "exclude": ["node_modules"]
 }

@@ -32,7 +32,6 @@ function CreateEmployeePage() {
   const setErrorApiMessage = useUisStore(state => state.setErrorMessage);
   const registerEmployee = useRegisterEmployee();
 
-  const { handleFieldChange } = useForm(newEmployee)
   const formState = useFormStore(state => state.formState)
   const checkFormErrors = useFormStore(state => state.checkFormErrors)
 

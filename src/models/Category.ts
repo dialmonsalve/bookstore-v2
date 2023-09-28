@@ -6,7 +6,8 @@ const CategorySchema = new Schema<ICategory>({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    unique:true
   },
   createdFor: {
     type: Schema.Types.ObjectId,

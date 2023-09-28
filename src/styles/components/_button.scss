@@ -80,7 +80,7 @@
   }
 
   &--medium {
-    font-size: v.$font-size;
+    font-size: v.$font-size - .2rem;
     padding: 1.1rem;
 
     @include m.responsive(phone) {

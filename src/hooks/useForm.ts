@@ -13,7 +13,7 @@ export function useForm(initialForm: Record<string, any>) {
 
 
   const handleFieldChange = (e: ReactChangeEvent) => {
-    const { name, value } = e.target; 
+    const { name, value } = e.target;   
     const newForm = {[name]: value}
     setFormState(newForm)
   };

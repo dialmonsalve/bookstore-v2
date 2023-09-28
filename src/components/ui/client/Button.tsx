@@ -67,7 +67,7 @@ export const Button = ({
       <button
         type={type}
         className={`btn btn--${backgroundColor} btn--${size} ${isDisabled} ${className || ""}`}
-        style={{ width, borderRadius:'2.5rem', height }}
+        style={{ width, borderRadius:'1rem', height }}
         disabled={disabled}
         {...props}
       >

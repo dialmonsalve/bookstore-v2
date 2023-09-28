@@ -27,7 +27,6 @@ const newClient = {
 
 function CreateCLientPage() {
   
-  const { handleFieldChange } = useForm(newClient)
   const formState = useFormStore<IClient>(state => state.formState)
   const checkFormErrors = useFormStore(state => state.checkFormErrors)
   const errors = formValidator().getErrors(formState, USER_VALIDATION_SCHEMA.newClient);
@@ -46,39 +45,48 @@ function CreateCLientPage() {
 
   return (
     <Layout
-      title={'Crea tu cuenta y comienza a volar'}
-      pageDescription={'Creación de cuenta en diaBbooks para comenzar a usar nuestros servicios'}
+      title={"Crea tu cuenta y comienza a volar"}
+      pageDescription={
+        "Creación de cuenta en diaBbooks para comenzar a usar nuestros servicios"
+      }
     >
-      <h1 >Crea tu cuenta y comienza a volar</h1>
+      <h1>Crea tu cuenta y comienza a volar</h1>
 
       <ApiMessageError />
-      <form method="POST" style={{ width: "60rem" }} className="form" onSubmit={handleRegisterClient}
+      <form
+        method="POST"
+        style={{ width: "50rem" }}
+        className="form"
+        onSubmit={handleRegisterClient}
       >
         <CreateEditPerson
-          handleFieldChange={handleFieldChange}
+          initialForm={newClient}
           errors={errors}
           isCreate
           isEmployee={false}
         />
 
-        <div style={{ display: 'flex' }}>
-          <Button
-            type="submit"
-            backgroundColor="green"
-          >
+        <div style={{ display: "flex" }}>
+          <Button type="submit" backgroundColor="green">
             Crear Cuenta
           </Button>
 
-          <Link href='login' style={{ textAlign: 'center', lineHeight: 1, letterSpacing: "0px", fontSize: "1.2rem", marginTop: '1.7rem' }} >
+          <Link
+            href="login"
+            style={{
+              textAlign: "center",
+              lineHeight: 1,
+              letterSpacing: "0px",
+              fontSize: "1.2rem",
+              marginTop: "1.7rem",
+            }}
+          >
             Ya tienes cuenta?, Inicia sesión
           </Link>
-
         </div>
-
       </form>
-
     </Layout>
-  )
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {

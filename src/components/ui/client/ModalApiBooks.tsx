@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Button } from "."
 
-import { FoundBooks, } from "@/types/book"
+import { FoundBooks } from "@/types/googleBooks";
 import { useBooksStore, useUisStore } from "@/store"
 import { IBook } from "@/types"
 

@@ -34,34 +34,33 @@ export const FormControl = ({
 
   if (formState === 'undefined') return
 
-  return (
-    formFields.map(option => (
-      <div key={option._id} >
-        <div className={className ? className : ''} >
-          <label
-            className={classNameLabel ? classNameLabel : ''}
-            htmlFor={`${option.name}`}
-          >{option.label}
-          </label>
-          <input
-            className={`${classNameInput ? classNameInput : ''} ${disabled ? 'input-disabled' : ''} `}
-            type={`${option.type}`}
-            name={`${option.name}`}
-            value={formState[option.name] || ''}
-            placeholder={`${option.label}`}
-            id={`${option.name}`}
-            onChange={handleFieldChange}
-            onBlur={handleBlur}
-            autoComplete={`${option.type === 'password' ? 'off' : 'on'}`}
-            disabled={disabled}
-          />
-        </div>
-        <ErrorMessage
-          fieldName={errors?.[option.name]}
-          isTouched={isTouched?.[option.name]}
-          isFormSubmitted={isFormSubmitted}
-        />
-      </div>
-    ))
-  )
+  return formFields.map((option) => (
+    <div key={option._id} className="form-control">
+      <label
+        className={classNameLabel ? classNameLabel : ""}
+        htmlFor={`${option.name}`}
+      >
+        {option.label}
+      </label>
+      <input
+        className={`${classNameInput ? classNameInput : ""} ${
+          disabled ? "input-disabled" : ""
+        } `}
+        type={`${option.type}`}
+        name={`${option.name}`}
+        value={formState[option.name] || ""}
+        placeholder={`${option.label}`}
+        id={`${option.name}`}
+        onChange={handleFieldChange}
+        onBlur={handleBlur}
+        autoComplete={`${option.type === "password" ? "off" : "on"}`}
+        disabled={disabled}
+      />
+      <ErrorMessage
+        fieldName={errors?.[option.name]}
+        isTouched={isTouched?.[option.name]}
+        isFormSubmitted={isFormSubmitted}
+      />
+    </div>
+  ));
 }
