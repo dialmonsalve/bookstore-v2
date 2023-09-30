@@ -2,32 +2,28 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useUisStore } from "@/store/ui";
 
-import { deleteEmployee } from "@/api/employee/employee";
+import { apiEmployee } from "@/api/";
 
 const useDeleteEmployee = () => {
+  const queryClient = useQueryClient();
 
-  const queryClient = useQueryClient()
-  
-  const setAlert = useUisStore(state => state.setAlert)
-  const setErrorApiMessage = useUisStore(state => state.setErrorMessage)  
-  const setShowModal = useUisStore(state => state.setShowModal);
+  const setAlert = useUisStore((state) => state.setAlert);
+  const setShowModal = useUisStore((state) => state.setShowModal);
 
-  return useMutation(
-    async (id: string) =>deleteEmployee(id),
-    {
-      onSuccess({hasError, message}) {
-        if (hasError) {
-          setErrorApiMessage(true, message!)
-          setTimeout(() => setErrorApiMessage(false), 3000);
-          return;
-        }
-        queryClient.invalidateQueries(["employees"])
-        setShowModal(false)
-        
-        setAlert(true, "Usuario eliminado con éxito")
+  return useMutation({
+    mutationFn: (id: string) => apiEmployee.deleteEmployee(id),
+
+    onSuccess: ({ hasError, message }) => {
+      if (hasError) {
+        setAlert("error", true, message);
+
+        return;
       }
-    }
-  )
-}
+      queryClient.invalidateQueries(["employees"]);
+      setShowModal(false);
+      setAlert("success", true, "Usuario eliminado con éxito");
+    },
+  });
+};
 
-export default useDeleteEmployee
+export default useDeleteEmployee;

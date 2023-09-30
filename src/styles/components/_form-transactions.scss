@@ -1,18 +1,6 @@
 @use '../abstract/variables' as v;
 @use '../abstract/mixins' as m;
 
-@mixin input() {
-  border-radius: 1.3rem;
-  border: none;
-  font-size: v.$font-size;
-  outline: 1px solid v.$color-gray-2;
-  padding: 1rem;
-
-  &:focus {
-    outline: 3px solid v.$color-green-3;
-  }
-}
-
 .form-transactions {
   display: grid;
   grid-template-areas:
@@ -65,6 +53,7 @@
     grid-area: transactions-header__right;
     padding: 2rem 0;
     font-size: v.$font-size;
+    
 
     @include m.responsive(phone) {
       padding: 0rem;
@@ -96,44 +85,6 @@
       grid-template-columns: repeat(1, 1fr);
       padding: 0 5rem;
     }
-
-    &--control {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      width: 100%;
-      justify-content: space-between;
-
-      & select {
-        width:60%;
-
-        @include m.responsive(tab-land) {
-          width: 55%;
-        }
-        @include m.responsive(tab-port) {
-          width: 52%;
-        }
-        @include m.responsive(phone) {
-          width: 58%;
-        }
-      }
-    }
-
-    &--label {
-      font-size: v.$font-size;
-    }
-
-    &--input {
-      padding: 1rem;
-      border: none;
-      outline: .5px solid v.$color-gray-2;
-      border-radius: 1.3rem;
-      font-size: v.$font-size;
-
-      &:focus {
-        outline: 3px solid v.$color-green-3;
-      }
-    }
   }
 }
 
@@ -144,9 +95,7 @@
   gap: 3rem;
 
   &__left {
-    padding: 1rem;
     resize: none;
-    @include input();
   }
 
   &__right {
@@ -160,7 +109,9 @@
     align-items: flex-end;
     outline: 1px solid v.$color-gray-2;
     text-transform: uppercase;
-    font-size: v.$font-size;
+    font-size: v.$font-size - .4rem;
+    height: 10vh;
+    align-self: flex-end;
 
     @include m.responsive(phone) {
       margin-top: 1rem;
@@ -169,9 +120,4 @@
       font-size: v.$font-size - .5rem;
     }
   }
-}
-
-.input-disabled {
-  color: v.$color-gray-3;
-  background-color: v.$color-gray-1;
 }

@@ -5,7 +5,6 @@ import { INVENTORY_ENTRIES } from "@/constants";
 import { useInventoryEntries } from "@/hooks/transactions";
 
 export default function CreateInventoryEntriesPage() {
-
   const {
     disabled,
     errors,
@@ -19,16 +18,27 @@ export default function CreateInventoryEntriesPage() {
     handleFieldChange,
   } = useInventoryEntries();
 
-  const { titles, formTable,  nameTableFields } = setNewFieldsForm()
+  const { titles, formTable, nameTableFields } = setNewFieldsForm();
 
   return (
-    <Layout title="Ingresar Productos" >
-
-      <div className="transactions" >
-        <form className="form-transactions" action="POST" onSubmit={handleCreateOrder} >
+    <Layout title="Ingresar Productos">
+      <div className="transactions">
+        <form
+          className="form-transactions"
+          action="POST"
+          onSubmit={handleCreateOrder}
+        >
           <Transactions
             initialForm={itemsOrder}
-            formReset={{ ...formState, code: '', name: '', quantity: 1, author: '', size: '', editorial: '' }}
+            formReset={{
+              ...formState,
+              code: "",
+              name: "",
+              quantity: 1,
+              author: "",
+              size: "",
+              editorial: "",
+            }}
             mainForm={mainForm}
             nameTableFields={nameTableFields}
             newFieldForm={formTable}
@@ -37,10 +47,10 @@ export default function CreateInventoryEntriesPage() {
             isEditable={false}
             productType={formState.productType}
           >
-            <div className="transactions-body__info--control" >
+            <div className="form-control">
               <label
-                htmlFor='typeEntry'
-                className="transactions-body__info--label"
+                htmlFor="typeEntry"
+                className="form-control__label"
               >
                 Desde
               </label>
@@ -51,7 +61,9 @@ export default function CreateInventoryEntriesPage() {
                 id="typeEntry"
                 value={formState.typeEntry}
                 onBlur={handleBlur}
-                className={`transactions-body__info--input ${disabled ? 'input-disabled' : ''}`}
+                className={`form-control__input ${
+                  disabled ? "input-disabled" : ""
+                }`}
               >
                 <option value=""></option>
                 <option value="purchaseOrder">OC</option>
@@ -61,19 +73,18 @@ export default function CreateInventoryEntriesPage() {
             <FormControl
               formFields={INVENTORY_ENTRIES.infoProvider}
               initialForm={itemsOrder}
-              className="transactions-body__info--control"
-              classNameInput="transactions-body__info--input"
-              classNameLabel="transactions-body__info--label"
+              className="form-control"
+              classNameInput="form-control__input"
+              classNameLabel="form-control__label"
               disabled={disabled}
               errors={errors}
             />
 
-            <div>
-
-              <div className="transactions-body__info--control" >
+            <div className="form-control" >
+              
                 <label
-                  htmlFor='productType'
-                  className="transactions-body__info--label"
+                  htmlFor="productType"
+                  className="form-control__label"
                 >
                   Producto
                 </label>
@@ -84,7 +95,9 @@ export default function CreateInventoryEntriesPage() {
                   id="productType"
                   value={formState.productType}
                   onBlur={handleBlur}
-                  className={`transactions-body__info--input ${disabled ? 'input-disabled' : ''}`}
+                  className={`form-control__input ${
+                    disabled ? "input-disabled" : ""
+                  }`}
                 >
                   <option value=""></option>
                   <option value="book">libro</option>
@@ -92,17 +105,15 @@ export default function CreateInventoryEntriesPage() {
                   <option value="toy">juguetes</option>
                   <option value="fashion">Ropa</option>
                 </select>
-              </div>
-
-              <ErrorMessage
-                fieldName={errors?.productType}
-                isTouched={isTouched?.productType}
-                isFormSubmitted={false}
-              />
+                <ErrorMessage
+                  fieldName={errors?.productType}
+                  isTouched={isTouched?.productType}
+                  isFormSubmitted={false}
+                />
             </div>
           </Transactions>
         </form>
       </div>
     </Layout>
-  )
+  );
 }

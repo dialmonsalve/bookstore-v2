@@ -1,54 +1,49 @@
 import { FormEvent, useState } from "react";
-import Image from "next/image";
 
-import { useForm } from "@/hooks/useForm";
-import { useRegisterEmployee } from "@/hooks/employee";
 import { useUisStore } from "@/store/ui";
 import { useFormStore } from "@/store/form";
 
 import { Layout } from "@/components/layouts/app";
 import {
-  AlertSuccess,
-  ApiMessageError,
+  Alert,
   Button,
   ModalApiBooks,
   InputSearch,
-  Select,
-  SingleFormControl,
   Spinner,
 } from "@/components/ui/client";
-import { CreateEditBook, CreateEditPerson } from "@/components/ui/services";
+import { CreateEditBook } from "@/components/ui/services";
 
 import { formValidator } from "@/helpers";
-import { USER_VALIDATION_SCHEMA } from "@/constants";
-import { IEmployee, TypeRole } from "@/types";
+
 import { BOOK_VALIDATION_SCHEMA } from "@/constants/bookValidations";
-import { useSearchBook } from "@/hooks/books";
+import { useCategories, useSearchBook } from "@/hooks/books";
 import { useBooksStore } from "@/store";
 
 const newBook = {
-  search: "",
-  isbn: "",
-  title: "",
   authors: "",
-  author2: "",
-  author3: "",
-  editorial: "",
   categories: [""],
+  cost: 0,
   description: "",
-  publishedDate: "",
-  pageCount: 0,
-  language: "",
-  imageLinks: "",
-  price: 0,
   discount: 0,
-  stock: 0,
-  format: [""],
+  editorial: "",
+  format: "",
+  imageLinks: "",
+  isbn: "",
+  language: "",
+  pageCount: 0,
+  price: 0,
+  publishedDate: "",
+  slug: "",
+  tags: "",
+  title: "",
+  utility: 0,
 };
 
 function CreateBooksPage() {
-  const formState = useFormStore((state) => state.formState);
-  const findBooks = useBooksStore((state) => state.findBooks);
+  const queryCategories = useCategories();
+
+  const formState = useFormStore<typeof newBook>((state) => state.formState);
+  const foundBooks = useBooksStore((state) => state.foundBooks);
 
   const errors = formValidator().getErrors(
     formState,
@@ -57,20 +52,46 @@ function CreateBooksPage() {
   const [search, setSearch] = useState("");
   const setShowModal = useUisStore((state) => state.setShowModal);
   const showModal = useUisStore((state) => state.showModal);
+  const setAlert = useUisStore((state) => state.setAlert);
 
   const searchBookQuery = useSearchBook();
 
+  console.log(formState);
+  
+
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (search.length <= 3) return;
+    if (search.length <= 3) {
+      setAlert(
+        "error",
+        true,
+        "El campo de búsqueda debe tener al menos 3 caracteres"
+      );
+      return;
+    }
     searchBookQuery.mutate(search);
   };
-  if (findBooks === null || findBooks === undefined) return;
+
+  const handleCreateBook = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+  
+    const authors = typeof formState.authors === 'string' ? formState.authors.replaceAll(" ", "").split(",") : formState.authors
+
+    const newBook = {
+      ...formState,
+      authors,
+    };
+
+    console.log(newBook);
+  };
+
+  if (foundBooks === null || foundBooks === undefined) return;
 
   return (
     <Layout title="Crea Libros">
-      <ApiMessageError />
-      <AlertSuccess />
+      {queryCategories.isLoading || (searchBookQuery.isLoading && <Spinner />)}
+      <Alert />
       <InputSearch
         search={search}
         setSearch={setSearch}
@@ -79,7 +100,7 @@ function CreateBooksPage() {
       <form
         method="POST"
         className="form-create-books"
-        // onSubmit={handleRegisterEmployee}
+        onSubmit={handleCreateBook}
       >
         <CreateEditBook errors={errors} initialForm={newBook} />
 
@@ -88,36 +109,34 @@ function CreateBooksPage() {
             type="submit"
             backgroundColor="green"
             // disabled={!!errors || registerEmployee.isLoading}
-            disabled={!!errors}
+            // disabled={!!errors}
           >
             Crear libro
           </Button>
         </div>
       </form>
-      {(searchBookQuery.isLoading && <Spinner />) ||
-        (showModal && (
+      {showModal && (
+        <div
+          className="modal-search-books"
+          onClick={(e) => {
+            setShowModal(false);
+            e.stopPropagation();
+          }}
+        >
           <div
-            className="modal-search-books"
+            className="modal-search-books__books"
             onClick={(e) => {
-              setShowModal(false);
               e.stopPropagation();
-              console.log(showModal);
             }}
           >
-            <div
-              className="modal-search-books__books"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              {findBooks.map((book) => (
-                <div key={book.id} className="modal-search-books__cards">
-                  <ModalApiBooks book={book} />
-                </div>
-              ))}
-            </div>
+            {foundBooks.map((book) => (
+              <div key={book.id} className="modal-search-books__cards">
+                <ModalApiBooks book={book} />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+      )}
     </Layout>
   );
 }

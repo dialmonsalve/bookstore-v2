@@ -4,29 +4,29 @@ import { useQuery } from "@tanstack/react-query";
 import { userAuth } from "@/api";
 import { useEmployeesStore } from "@/store/employee";
 
-export default function useAuthentication () {
+export function useAuthentication() {
+  const { data: nextSession, status } = useSession();
 
-  const { data: nextSession, status } = useSession(); 
+  const employee = nextSession?.user.username
+    ? "credential-employee"
+    : "credential-client";
 
-  const employee = nextSession?.user.username ?"credential-employee" : 'credential-client';
-
-  const sessionQuery = useQuery({   
+  const sessionQuery = useQuery({
+    queryKey: [employee],
 
     queryFn: async () => {
-
-      if (status === 'authenticated') {
-        const data = await userAuth.searchUser()
-        useEmployeesStore.getState().setSession(data)
+      if (status === "authenticated") {
+        const data = await userAuth.searchUser();
+        useEmployeesStore.getState().setSession(data);
         return data;
       }
       return null;
     },
-    queryKey: [employee],
+
     enabled: !!nextSession?.user?.email!,
     staleTime: Infinity,
     refetchOnMount: true,
-  })
+  });
 
-  return {sessionQuery, status, nextSession}
-  
+  return { sessionQuery, status, nextSession };
 }

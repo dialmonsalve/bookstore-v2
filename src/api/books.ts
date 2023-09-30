@@ -4,6 +4,25 @@ import { FoundBooks, GoogleBooks } from "@/types/googleBooks";
 import { URL_CONSTANTS } from "@/constants";
 import axios from "axios";
 
+interface DataBooks {
+  hasError: boolean;
+  books: IBook[] | null;
+  message?: string;
+  totalBooks: number;
+}
+
+interface DataCategories {
+  hasError: boolean;
+  categories: ICategory[] | null;
+  message?: string;
+}
+
+interface DataCategory {
+  hasError: boolean;
+  category?: ICategory | null;
+  message?: string;
+}
+
 // export const searchBooks = async (term: string) => {
 //   try {
 //     const { data } = await axios.get(url)
@@ -19,9 +38,10 @@ import axios from "axios";
 //   }
 // }
 
-export const getSearchBooks = async (
+//! Search books on google books
+export async function getSearchBooks(
   term: string
-): Promise<FoundBooks[] | undefined | null> => {
+): Promise<FoundBooks[] | undefined | null> {
   const apiKey = process.env.NEXT_PUBLIC_API_GOOGLE_BOOK_kEY;
 
   const params = new URLSearchParams();
@@ -45,7 +65,7 @@ export const getSearchBooks = async (
         : "No hay ISB disponible";
       const subtitle = volumeInfo.subtitle || "No hay subtitulo disponible";
       const authors = volumeInfo.authors || "sin definir";
-      const categories = volumeInfo.categories || ["Sin definir"];
+      const googleCategories = volumeInfo.categories || ["Sin definir"];
 
       const editorial = volumeInfo.publisher || "Sin definir";
       const language = volumeInfo.language || "";
@@ -64,7 +84,7 @@ export const getSearchBooks = async (
         subtitle,
         authors,
         description,
-        categories: categories,
+        googleCategories,
         editorial,
         language,
         pageCount,
@@ -81,19 +101,11 @@ export const getSearchBooks = async (
     console.log(error);
   }
   return null;
-};
-
-interface DataBooks {
-  hasError: boolean;
-  books: IBook[] | null;
-  message?: string;
-  totalBooks: number;
 }
 
 //! Get all employees
 export async function getBooks(page: number): Promise<DataBooks | null> {
   const params = new URLSearchParams();
-
   params.append("page", page?.toString());
   params.append("limit", `${URL_CONSTANTS.limit}`);
 
@@ -108,13 +120,8 @@ export async function getBooks(page: number): Promise<DataBooks | null> {
   return null;
 }
 
-interface DataCategories {
-  hasError: boolean;
-  categories: ICategory[] | null;
-  message?: string;
-}
-
-export const getCategories = async (): Promise<DataCategories | null> => {
+//! Get all categories
+export async function getCategories(): Promise<DataCategories | null> {
   try {
     const { data } = await bookApi.get<DataCategories>("/categories");
     return data;
@@ -124,18 +131,13 @@ export const getCategories = async (): Promise<DataCategories | null> => {
     }
   }
   return null;
-};
-
-interface DataCategory {
-  hasError: boolean;
-  category?: ICategory | null;
-  message?: string;
 }
 
-export const createCategory = async (
+//! Create a category
+export async function createCategory(
   name: string,
   username?: string
-): Promise<DataCategory> => {
+): Promise<DataCategory> {
   if (!username) {
     return {
       hasError: true,
@@ -162,4 +164,4 @@ export const createCategory = async (
     hasError: true,
     message: "No pudo iniciar sesión - intente nuevamente",
   };
-};
+}

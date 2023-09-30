@@ -1,35 +1,29 @@
-import { useForm } from '@/hooks/useForm'
-import { useFormStore, useUITransactionStore } from '@/store'
-import { useEmployeesStore } from '@/store/employee'
+import { useUITransactionStore, useEmployeesStore } from "@/store";
+import { TextArea } from "./";
 
 interface FooterTransaction {
-  initialForm: Record<string, any>
+  initialForm: Record<string, any>;
 }
 
 export const FooterTransaction = ({ initialForm }: FooterTransaction) => {
-
-  const { handleFieldChange } = useForm(initialForm);
-  const formState = useFormStore(state => state.formState);
-  const session = useEmployeesStore(state => state.session);
-  const formItems = useUITransactionStore(state=>state.formItems);
+  const session = useEmployeesStore((state) => state.session);
+  const formItems = useUITransactionStore((state) => state.formItems);
 
   return (
     <>
-      <textarea
-        className="transactions-footer__left"
+      <TextArea
+        className="transactions-footer__left form-control__input"
+        initialForm={initialForm}
         name="observations"
-        cols={60}
-        rows={3}
-        onChange={handleFieldChange}
-        value={formState.observations}
         placeholder="observaciones"
-      >
-      </textarea>
-
+        label="Observaciones"
+      />
       <div className="transactions-footer__right">
-        <p >Total Items: {formItems.length || 0}</p>
-        <p >Realizado por: {session?.name} {session?.lastName}</p>
+        <p>Total Items: {formItems.length || 0}</p>
+        <p>
+          Realizado por: {session?.name} {session?.lastName}
+        </p>
       </div>
     </>
-  )
-}
+  );
+};

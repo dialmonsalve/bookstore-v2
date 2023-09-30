@@ -1,5 +1,5 @@
-@use '../abstract/variables' as v;
-@use '../abstract/mixins' as m;
+@use "../abstract/variables" as v;
+@use "../abstract/mixins" as m;
 
 .nav {
   display: flex;
@@ -10,25 +10,22 @@
     align-self: center;
 
     &--input {
-      padding: 1rem;
-      text-transform: uppercase;
-      border-radius: 2.5rem;
-      border: none;
-      background-color: v.$color-white;
+      transition: width 0.3s;
       width: 30rem;
-      outline: 2px solid v.$color-white;
-      transition: width 0.3s ;      
+      border-radius: 2.5rem;
+      text-transform: uppercase;
+      @include m.input();
 
       &:focus {
-        outline:  2px solid v.$color-blue-2;
+        outline: 2px solid v.$color-blue-2;
         width: 32rem;
       }
     }
 
-    form {      
-        position: relative;
-        top: 0;
-        right: 0;      
+    form {
+      position: relative;
+      top: 0;
+      right: 0;
     }
 
     &--image {
@@ -42,22 +39,20 @@
   &__menu {
     display: flex;
     align-items: center;
-    padding: 1.8rem;    
+    padding: 1.8rem;
     justify-content: center;
     margin: 3rem auto;
     width: 90%;
-    border-top: 1px solid v.$color-blue-1 ;
-    border-bottom: 1px solid v.$color-blue-1 ;
+    border-top: 1px solid v.$color-blue-1;
+    border-bottom: 1px solid v.$color-blue-1;
 
-    &--container{
+    &--container {
       display: flex;
       gap: 2rem;
-  
     }
     &--link {
       @include m.link-nav();
       font-size: v.$font-size;
     }
   }
-
 }

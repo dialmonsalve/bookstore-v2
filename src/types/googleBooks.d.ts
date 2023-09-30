@@ -1,24 +1,24 @@
 export interface GoogleBooks {
-  items:      Item[];
+  items: Item[];
 }
 
 export interface Item {
-  id:          string
-  volumeInfo:  VolumeInfo;
+  id: string;
+  volumeInfo: VolumeInfo;
 }
 
 interface VolumeInfo {
-  title:               string;
-  authors:             string[];
-  publisher?:          string;
-  publishedDate:       string;
-  description?:        string;
+  title: string;
+  authors: string[];
+  publisher?: string;
+  publishedDate: string;
+  description?: string;
   industryIdentifiers: IndustryIdentifier[];
-  pageCount:           number;
-  categories?:         string[];
-  imageLinks?:         ImageLinks;
-  language:            string;
-  subtitle?:           string;
+  pageCount: number;
+  categories?: string[];
+  imageLinks?: ImageLinks;
+  language: string;
+  subtitle?: string;
 }
 
 interface ImageLinks {
@@ -26,7 +26,7 @@ interface ImageLinks {
 }
 
 interface IndustryIdentifier {
-  type:       Type;
+  type: Type;
   identifier: string;
 }
 
@@ -35,18 +35,18 @@ enum Type {
 }
 
 export interface FoundBooks {
-  id:         string
-  isbn:          string;
-  title:         string;
-  authors:       string[];
-  categories?:    string[];
-  subtitle:      string;
-  description:   string;
-  editorial:     string;
-  language:      string;
-  pageCount:     number;
+  id: string;
+  isbn: string;
+  title: string;
+  authors: string[];
+  googleCategories?: string[];
+  subtitle: string;
+  description: string;
+  editorial: string;
+  language: string;
+  pageCount: number;
   publishedDate: string;
-  format:        string;
-  slug:          string;
-  imageLinks:    string;
+  format: string;
+  slug: string;
+  imageLinks: string;
 }

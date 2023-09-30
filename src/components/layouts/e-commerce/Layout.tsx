@@ -1,42 +1,39 @@
-import React, { ReactNode } from 'react';
-import Head from 'next/head';
+import React, { ReactNode } from "react";
+import Head from "next/head";
 
-import { Navbar, Header, Footer } from '.';
+import { Navbar, Header, Footer } from ".";
 
 interface Props {
   title: string;
   children: ReactNode | ReactNode[];
   pageDescription: string;
-  imageUrl?: string
+  imageUrl?: string;
 }
 
-export const Layout = ({ title, children, pageDescription, imageUrl }: Props) => {
-
+export const Layout = ({
+  title,
+  children,
+  pageDescription,
+  imageUrl,
+}: Props) => {
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta name='description' content={pageDescription} />
-        <meta name='og:title' content={title} />
-        <meta name='og:description' content={pageDescription} />
+        <meta name="description" content={pageDescription} />
+        <meta name="og:title" content={title} />
+        <meta name="og:description" content={pageDescription} />
 
-        {
-          imageUrl && <meta name='og:image' content={imageUrl} />
-        }
-
+        {imageUrl && <meta name="og:image" content={imageUrl} />}
       </Head>
-      <div className='body-public' >
-      <Header />
-      <Navbar />
+      <div className="body-public">
+        <Header />
+        <Navbar />
 
-      <main className='public-main' >
-        {children}
-      </main>
+        <main className="public-main">{children}</main>
 
-      <Footer />
-
+        <Footer />
       </div>
-
     </>
-  )
-}
+  );
+};

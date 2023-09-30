@@ -7,7 +7,7 @@ export type IsTouched = { [key: string]: boolean } | null
 
 export type ReactChangeEvent = React.ChangeEvent<Elements>
 
-export type ReactFocusEvent = React.FocusEvent<Elements > 
+export type ReactFocusEvent = React.FocusEvent<Elements | HTMLDivElement > 
 
 // export type ReactReact.FocusEventHandler<HTMLSelectElement> | undefined
 

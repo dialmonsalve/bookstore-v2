@@ -1,26 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getCategories } from "@/api/books";
+import { apiBook } from "@/api";
 
 import { useBooksStore } from "@/store";
 
 export function useCategories() {
   const setCategories = useBooksStore((state) => state.setCategories);
 
+  return useQuery({
+    queryKey: ["categories"],
 
-  const queryCategories = useQuery(
-    ["categories" ],
-    async () => {
-      const data = await getCategories();
+    queryFn: async () => {
+      const data = await apiBook.getCategories();
       setCategories(data?.categories!);
 
       return data;
     },
-    {
-      // staleTime: Infinity,
-      // initialData: Categories,
-    }
-  );
-
-  return queryCategories;
+  });
 }

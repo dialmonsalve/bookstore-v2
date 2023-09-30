@@ -1,5 +1,5 @@
-import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
+import { SessionProvider } from 'next-auth/react';
 
 export interface Props {
   children: ReactNode;

@@ -1,20 +1,26 @@
-import { Button, FooterTransaction, FormControl, HeaderTransaction, Table } from "../client"
+import {
+  Button,
+  FooterTransaction,
+  FormControl,
+  HeaderTransaction,
+  Table,
+} from "../client";
 import { formOptions, useFormStore, useUITransactionStore } from "@/store";
 import { ErrorMessages, InitialForm } from "@/types";
 import { ReactNode } from "react";
 
 interface TransactionsProps {
-  children: ReactNode
-  errors?: ErrorMessages<InitialForm | undefined>
-  formReset: Record<string, any>
-  isEditable: boolean
-  initialForm: Record<string, any>
-  mainForm: Record<string, any>
-  nameTableFields: string[]
-  newFieldForm: formOptions[]
-  productType?: string
-  tableTitles: string[]
-  onClick?: () => void
+  children: ReactNode;
+  errors?: ErrorMessages<InitialForm | undefined>;
+  formReset: Record<string, any>;
+  isEditable: boolean;
+  initialForm: Record<string, any>;
+  mainForm: Record<string, any>;
+  nameTableFields: string[];
+  newFieldForm: formOptions[];
+  productType?: string;
+  tableTitles: string[];
+  onClick?: () => void;
 }
 
 export const Transactions = ({
@@ -28,52 +34,53 @@ export const Transactions = ({
   newFieldForm,
   productType,
   tableTitles,
-  onClick
+  onClick,
 }: TransactionsProps) => {
-
-  const handleResetForm = useFormStore(state => state.handleResetForm);
+  const handleResetForm = useFormStore((state) => state.handleResetForm);
 
   const {
-    disabled, formItems,
-    clearAllItems, handleAddItem, handleRemoveItem
+    disabled,
+    formItems,
+    clearAllItems,
+    handleAddItem,
+    handleRemoveItem,
   } = useUITransactionStore();
 
   return (
     <>
       <HeaderTransaction />
 
-      <div className="transactions-body" >
-
-        <div className="transactions-body__info" >
-
+      <div className="transactions-body">
+        <div className="transactions-body__info">
           {children}
 
           <FormControl
             formFields={newFieldForm}
             initialForm={initialForm}
-            className="transactions-body__info--control"
-            classNameInput="transactions-body__info--input"
-            classNameLabel="transactions-body__info--label"
+            className="form-control"
+            classNameInput="form-control__input"
+            classNameLabel="form-control__label"
             errors={errors}
           />
-          {
-            productType === 'book' &&
+          {productType === "book" && (
             <Button
-              disabled={mainForm.code === ''}
-              size="small" buttonStyle="square" borderRadius="1rem"
+              disabled={mainForm.code === ""}
+              size="small"
+              buttonStyle="square"
+              borderRadius="1rem"
               onClick={onClick}
             >
               buscar
             </Button>
-          }
+          )}
         </div>
         <Button
           buttonStyle="square"
           backgroundColor="green"
           borderRadius=".8rem"
           onClick={() => {
-            handleAddItem(mainForm)
-            handleResetForm(formReset)
+            handleAddItem(mainForm);
+            handleResetForm(formReset);
           }}
           disabled={!!errors}
         >
@@ -89,36 +96,32 @@ export const Transactions = ({
         />
       </div>
 
-      <FooterTransaction
-        initialForm={initialForm}
-      />
+      <FooterTransaction initialForm={initialForm} />
 
-      <div className="transactions-footer" >
-
-        <div className="transactions-button__left" >
-
+      <div className="transactions-footer">
+        <div className="transactions-button__left">
           <Button
             disabled={formItems.length === 0}
-            backgroundColor="green" type="submit" >
+            backgroundColor="green"
+            type="submit"
+          >
             Crear
           </Button>
         </div>
-        <div className="transactions-button__right" >
-
+        <div className="transactions-button__right">
           <Button
             onClick={() => {
-              clearAllItems()
-              handleResetForm(initialForm)
+              clearAllItems();
+              handleResetForm(initialForm);
             }}
-            backgroundColor="red" type="button"
+            backgroundColor="red"
+            type="button"
             disabled={!disabled}
           >
             Limpiar
           </Button>
         </div>
       </div>
-
-
     </>
-  )
-}
+  );
+};

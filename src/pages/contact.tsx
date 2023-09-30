@@ -1,7 +1,11 @@
 import { FormEvent } from "react";
-import { Layout } from "@/components/layouts/e-commerce"
+import { Layout } from "@/components/layouts/e-commerce";
 
-import { Button, FormControl, ErrorMessage } from "@/components/ui/client";
+import {
+  Button,
+  FormControl,
+  TextArea,
+} from "@/components/ui/client";
 
 import { formValidator } from "@/helpers";
 import { useFormStore } from "@/store";
@@ -10,66 +14,74 @@ import { LOGIN_VALIDATION_SCHEMA } from "@/constants";
 const formFields = [
   {
     _id: 0,
-    name: 'name',
-    type: 'text',
-    label: 'nombre',
+    name: "name",
+    type: "text",
+    label: "nombre",
   },
   {
     _id: 1,
-    name: 'lastName',
-    type: 'text',
-    label: 'Apellido(s)',
+    name: "lastName",
+    type: "text",
+    label: "Apellido(s)",
   },
   {
     _id: 2,
-    name: 'email',
-    type: 'text',
-    label: 'email',
+    name: "email",
+    type: "text",
+    label: "email",
   },
   {
     _id: 3,
-    name: 'phone',
-    type: 'text',
-    label: 'teléfono',
-  }
-]
+    name: "phone",
+    type: "text",
+    label: "teléfono",
+  },
+];
 
 const newMessage = {
-  name: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  message: '',
+  name: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  message: "",
 };
 
 function Contact() {
+  const formState = useFormStore<typeof newMessage>((state) => state.formState);
+  const checkFormErrors = useFormStore((state) => state.checkFormErrors);
+  const handleResetForm = useFormStore((state) => state.handleResetForm);
 
-  const formState = useFormStore<typeof newMessage>(state => state.formState)
-  const checkFormErrors = useFormStore(state => state.checkFormErrors)
-  const handleResetForm = useFormStore(state => state.handleResetForm)
-
-  const errors = formValidator().getErrors(formState, LOGIN_VALIDATION_SCHEMA.newMessage);
+  const errors = formValidator().getErrors(
+    formState,
+    LOGIN_VALIDATION_SCHEMA.newMessage
+  );
+ 
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const hasErrors = checkFormErrors(errors)
+    const hasErrors = checkFormErrors(errors);
 
     if (!hasErrors) {
       console.log({ formState });
 
       // TODO implement validation vs backend
 
-      handleResetForm(newMessage)
+      handleResetForm(newMessage);
     }
-  }
+  };
   return (
     <Layout
-      title={'DIABOOKS | Escríbenos y cuéntanos que piensas acerca de nosotros, o si necesitas ayuda en tu proceso'}
-      pageDescription={'Esta página le permite a nuestros usuarios contactarnos y que nos pregunten acerca de todas sus dudas'}>
-      <h1 >Cuéntanos, ¿Qué quieres saber?</h1>
+      title={
+        "DIABOOKS | Escríbenos y cuéntanos que piensas acerca de nosotros, o si necesitas ayuda en tu proceso"
+      }
+      pageDescription={
+        "Esta página le permite a nuestros usuarios contactarnos y que nos pregunten acerca de todas sus dudas"
+      }
+    >
+      <h1>Cuéntanos, ¿Qué quieres saber?</h1>
 
-      <form style={{ width: "50rem" }} className="form" >
+      <form style={{ width: "50rem" }} className="form" onSubmit={handleSubmit} >
         <FormControl
           initialForm={newMessage}
           formFields={formFields}
@@ -78,24 +90,26 @@ function Contact() {
           classNameInput="form-control__input"
           classNameLabel="form-control__label"
         />
-{/* 
-        <textarea
-          className="text-area"
-          placeholder="Haz tus preguntas, o sugíerenos algo"
-          style={{ height: '10rem', marginTop: '1rem' }}
+        <TextArea
+          className="form-control__input"
           name="message"
-          value={formState.message}
-          onChange={handleFieldChange}
-          onBlur={handleBlur}
-        /> */}
+          initialForm={newMessage}
+          placeholder="Queremos saber tu opinión"
+          errors={errors}
+          label="Mensaje"
 
-        <Button type="submit" width='50%' backgroundColor="blue" disabled={!!errors} >
+        />
+        <Button
+          type="submit"
+          width="50%"
+          backgroundColor="blue"
+          disabled={!!errors}
+        >
           Enviar
         </Button>
       </form>
-
     </Layout>
-  )
+  );
 }
 
-export default Contact
+export default Contact;

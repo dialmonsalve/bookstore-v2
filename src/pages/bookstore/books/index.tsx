@@ -14,6 +14,12 @@ function AdminBooks() {
   const { data, isLoading } = useBooks();
   const router = useRouter();
 
+const handleDeleteBook = ()=>{
+
+}  
+const handleEditBook = ()=>{
+
+}
 
   if (isLoading) return <Spinner />
   if (!data) return;
@@ -40,8 +46,8 @@ function AdminBooks() {
               tableTitles={titles}
               nameTableFields={nameTableFields}
               data={data.books}
-              // handleDelete={handleDeleteEmployee}
-              // handleEdit={handleEditEmployee}
+              handleDelete={handleDeleteBook}
+              handleEdit={handleEditBook}
               isEditable
             />
             <Paginator />

@@ -31,6 +31,7 @@ const getCategories = async (
 
     const categories: ICategory[] = await Category.find()
       .select("-createdAt -updatedAt -__v")
+      .sort({ name: 1 })
       .lean();
 
     return res.status(200).json({ categories });

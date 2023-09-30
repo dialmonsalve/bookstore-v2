@@ -9,7 +9,7 @@ import { useFormStore } from "@/store/form";
 
 import { CreateEditPerson } from "@/components/ui/services/CreateEditPerson";
 import { Layout } from "@/components/layouts/e-commerce";
-import { ApiMessageError, Button } from "@/components/ui/client";
+import { Alert, Button } from "@/components/ui/client";
 
 import { formValidator } from "@/helpers";
 import { USER_VALIDATION_SCHEMA } from "@/constants";
@@ -52,7 +52,7 @@ function CreateCLientPage() {
     >
       <h1>Crea tu cuenta y comienza a volar</h1>
 
-      <ApiMessageError />
+      <Alert />
       <form
         method="POST"
         style={{ width: "50rem" }}

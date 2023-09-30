@@ -5,14 +5,16 @@ import { ErrorMessage, FormControl } from "@/components/ui/client";
 
 import { Transactions } from "@/components/ui/services/Transactions";
 import { usePurchaseOrders } from "@/hooks/transactions";
-import { useBooksStore, useEmployeesStore, useUITransactionStore } from "@/store";
+import {
+  useBooksStore,
+  useEmployeesStore,
+  useUITransactionStore,
+} from "@/store";
 
 import { CONST_FORM_ORDER } from "@/constants";
 import { useSearchBook } from "@/hooks/books";
 
-
 export default function CreatePurchaseOrdersPage() {
-
   const {
     disabled,
     errors,
@@ -22,17 +24,16 @@ export default function CreatePurchaseOrdersPage() {
     setNewFieldsForm,
     handleBlur,
     handleFieldChange,
-  } = usePurchaseOrders()
+  } = usePurchaseOrders();
 
+  const { titles, formTable, nameTableFields } = setNewFieldsForm();
 
-  const { titles, formTable, nameTableFields } = setNewFieldsForm()
-
-  const session = useEmployeesStore(state => state.session);
-  const formItems = useUITransactionStore(state => state.formItems);
+  const session = useEmployeesStore((state) => state.session);
+  const formItems = useUITransactionStore((state) => state.formItems);
   const { nit, productType, provider, observations, ...mainForm } = formState;
 
-  const searchBooks = useSearchBook()
-  const findBooks = useBooksStore(state=>state.findBooks)
+  const searchBooks = useSearchBook();
+  const foundBooks = useBooksStore((state) => state.foundBooks);
 
   const handleCreateOrder = (e: FormEvent) => {
     e.preventDefault();
@@ -45,10 +46,10 @@ export default function CreatePurchaseOrdersPage() {
       provider,
       observations,
       newItems: [...newItems],
-      employee: session?._id
-    }
+      employee: session?._id,
+    };
     console.log(formTable);
-  }
+  };
 
   // const slug = (value: string) => {
 
@@ -63,23 +64,33 @@ export default function CreatePurchaseOrdersPage() {
   // }
   // const  newSlug  = slug(formState.name)
 
-
   const searchBook = async () => {
-    if (formState.code.length <= 3) return
+    if (formState.code.length <= 3) return;
 
-    searchBooks.mutate(formState.code)
+    searchBooks.mutate(formState.code);
 
     // console.log(searchBooks.data);
-  }
-
+  };
 
   return (
-    <Layout title="Crear Ordenes de compra" >
-      <div className="transactions" >
-        <form className="form-transactions" action="POST" onSubmit={handleCreateOrder} >
+    <Layout title="Crear Ordenes de compra">
+      <div className="transactions">
+        <form
+          className="form-transactions"
+          action="POST"
+          onSubmit={handleCreateOrder}
+        >
           <Transactions
             initialForm={itemsOrder}
-            formReset={{ ...formState, code: '', name: '', quantity: 1, author: '', size: '', editorial: '' }}
+            formReset={{
+              ...formState,
+              code: "",
+              name: "",
+              quantity: 1,
+              author: "",
+              size: "",
+              editorial: "",
+            }}
             mainForm={mainForm}
             nameTableFields={nameTableFields}
             newFieldForm={formTable}
@@ -89,31 +100,28 @@ export default function CreatePurchaseOrdersPage() {
             productType={formState.productType}
             onClick={searchBook}
           >
-            <div>
-              <div className="transactions-body__info--control" >
-                <label
-                  htmlFor='productType'
-                  className="transactions-body__info--label"
-                >
-                  Producto
-                </label>
+            <div className="form-control">
+              <label htmlFor="productType" className="form-control__label">
+                Producto
+              </label>
 
-                <select
-                  disabled={disabled}
-                  name="productType"
-                  onChange={handleFieldChange}
-                  id="productType"
-                  value={formState.productType}
-                  onBlur={handleBlur}
-                  className={`transactions-body__info--input ${disabled ? 'input-disabled' : ''}`}
-                >
-                  <option value=""></option>
-                  <option value="book">libro</option>
-                  <option value="stationery">papelería</option>
-                  <option value="toy">juguetes</option>
-                  <option value="fashion">Ropa</option>
-                </select>
-              </div>
+              <select
+                disabled={disabled}
+                name="productType"
+                onChange={handleFieldChange}
+                id="productType"
+                value={formState.productType}
+                onBlur={handleBlur}
+                className={`form-control__input ${
+                  disabled ? "input-disabled" : ""
+                }`}
+              >
+                <option value=""></option>
+                <option value="book">libro</option>
+                <option value="stationery">papelería</option>
+                <option value="toy">juguetes</option>
+                <option value="fashion">Ropa</option>
+              </select>
               <ErrorMessage
                 fieldName={errors?.productType}
                 isTouched={isTouched?.productType}
@@ -126,21 +134,17 @@ export default function CreatePurchaseOrdersPage() {
               initialForm={itemsOrder}
               disabled={disabled}
               errors={errors}
-              className="transactions-body__info--control"
-              classNameInput="transactions-body__info--input"
-              classNameLabel="transactions-body__info--label"
+              className="form-control"
+              classNameInput="form-control__input"
+              classNameLabel="form-control__label"
             />
           </Transactions>
         </form>
       </div>
 
-      {
-        findBooks?.map(book=>(
-          <div key={book.id} >
-            {book.volumeInfo.title}
-          </div>
-        ))
-      }
+      {foundBooks?.map((book) => (
+        <div key={book.id}>{book.title}</div>
+      ))}
     </Layout>
-  )
+  );
 }

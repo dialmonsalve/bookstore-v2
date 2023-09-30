@@ -5,19 +5,19 @@ type Color =
   | 'outline-blue' | 'outline-red' | 'outline-green' | 'outline-purple' | 'outline-yellow' | 'transparent' |'black' | 'outline-black';
 
 interface ButtonProps {
-  buttonStyle?: 'normal' | 'iconButton' | 'square'
   backgroundColor?: Color;
   borderRadius?:string;
+  buttonStyle?: 'normal' | 'iconButton' | 'square'
   children?: string | ReactNode;
+  color?: string
+  disabled?: boolean
+  height?: string;
   ico?: string;
   margin?: string
   size?: 'small' | 'medium' | 'large';
   type?: 'button' | 'submit';
-  color?: string
-  disabled?: boolean
-  onClick?: () => void;
   width?: string;
-  height?: string;
+  onClick?: () => void;
 
   style?: CSSProperties;
   className?: string
@@ -32,20 +32,20 @@ interface ButtonProps {
 export const Button = ({
   backgroundColor = 'blue',
   borderRadius,
-  buttonStyle = 'normal',
-  className,
-  children,
-  size = 'medium',
-  type = 'button',
-  disabled,
-  width,
-  height,
-  top,
   bottom,
-  left,
-  right,
-  position,
+  buttonStyle = 'normal',
+  children,
+  className,
+  disabled,
+  height,
   ico,
+  left,
+  position,
+  right,
+  size = 'medium',
+  top,
+  type = 'button',
+  width,
   ...props
 }: ButtonProps) => {
 

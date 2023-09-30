@@ -1,4 +1,4 @@
-@use '../abstract/variables' as v;
+@use "../abstract/variables" as v;
 
 .alert {
   position: fixed;
@@ -9,23 +9,29 @@
   z-index: 4;
   border-radius: 2.8rem;
   box-shadow: 1px 1px 3px rgba(v.$color-black-4, 0.8);
-  transition: all .3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  color: white;
+  font-weight: 700;
 
   &__messenger {
     color: v.$color-white;
-    font-size: v.$font-size - .2rem;
+    font-size: v.$font-size - 0.2rem;
   }
-
 }
 
 .show-alert {
   opacity: 1;
   transform: translateX(0);
-
 }
 
 .hide-alert {
   opacity: 0;
   transform: translateX(110%);
+}
+
+.success {
+  background-color: v.$color-green-3;
+}
+.error {
+  background-color: v.$color-red-3;
 }

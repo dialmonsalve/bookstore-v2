@@ -1,72 +1,56 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent } from "react";
 
-import { useForm } from '@/hooks/useForm';
-import { useRegisterEmployee } from '@/hooks/employee';
-import { useUisStore } from '@/store/ui';
-import { useFormStore } from '@/store/form';
+import { useRegisterEmployee } from "@/hooks/employee";
+import { useFormStore } from "@/store/form";
 
-import { Layout } from '@/components/layouts/app';
-import { AlertSuccess, ApiMessageError, Button,  Select, Spinner, } from '@/components/ui/client';
-import { CreateEditPerson } from '@/components/ui/services';
+import { Layout } from "@/components/layouts/app";
+import { Alert, Button, Select, Spinner } from "@/components/ui/client";
+import { CreateEditPerson } from "@/components/ui/services";
 
-import {  formValidator } from '@/helpers';
+import { formValidator } from "@/helpers";
 import { USER_VALIDATION_SCHEMA } from "@/constants";
-import { IEmployee, TypeRole } from '@/types';
 
 const newEmployee = {
-  name: '',
-  lastName: '',
-  username: '',
-  email: '',
-  phone: '',
-  password: '',
-  repitePassword: '',
-  role: ''
-}
-
+  name: "",
+  lastName: "",
+  username: "",
+  email: "",
+  phone: "",
+  password: "",
+  repitePassword: "",
+  role: "",
+};
 
 function CreateEmployeePage() {
-
-  const [option, setOption] = useState<TypeRole[]>([USER_VALIDATION_SCHEMA.ROLES[0]] as TypeRole[]);
-
-  const setErrorApiMessage = useUisStore(state => state.setErrorMessage);
   const registerEmployee = useRegisterEmployee();
 
-  const formState = useFormStore(state => state.formState)
-  const checkFormErrors = useFormStore(state => state.checkFormErrors)
+  const formState = useFormStore((state) => state.formState);
+  const checkFormErrors = useFormStore((state) => state.checkFormErrors);
+  const options = useFormStore((state) => state.options);
 
-  const errors = formValidator().getErrors(formState, USER_VALIDATION_SCHEMA.newEmployee);
+  const errors = formValidator().getErrors(
+    formState,
+    USER_VALIDATION_SCHEMA.newEmployee
+  );
 
   const handleRegisterEmployee = (e: FormEvent) => {
     e.preventDefault();
-    const hasErrors = checkFormErrors(errors);
+    const hasFormErrors = checkFormErrors(errors);
 
-    const newRoles = option.map(opt => {
-      return opt
-    })
-
-    if (newRoles.length === 0) {
-      setErrorApiMessage(true, 'El usuario debe tener al menos 1 rol');
-      setTimeout(() => setErrorApiMessage(false), 3000);
-      return;
+    if (!hasFormErrors) {
+      const { repitePassword, ...newEmployee } = formState;
+      registerEmployee.mutate(newEmployee);
     }
-    if (!hasErrors) {
-      const { repitePassword, ...rest } = formState
-      const newEmployee = { ...rest, role: newRoles }
-      registerEmployee.mutate(newEmployee as IEmployee);
-    }
-  }
-
+  };
   return (
-    <Layout title='Usuarios' >
-      <ApiMessageError />
-      <AlertSuccess />
+    <Layout title="Usuarios">
+      <Alert />
       {registerEmployee.isLoading && <Spinner />}
 
       <form
-        method='POST'
-        style={{ width: '60rem' }}
-        className='form'
+        method="POST"
+        style={{ width: "60rem" }}
+        className="form"
         onSubmit={handleRegisterEmployee}
       >
         <CreateEditPerson
@@ -76,26 +60,26 @@ function CreateEmployeePage() {
           isEmployee
         />
         <Select
-          options={USER_VALIDATION_SCHEMA.ROLES || []}
-          value={option}
-          onChange={o => setOption(o)}
-          name={'role'}
+          options={USER_VALIDATION_SCHEMA.ROLES}
+          name={"role"}
+          value={options}
           multiple
+          label="roles"
+          errors={errors}
         />
 
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: "flex" }}>
           <Button
-            type='submit'
-            backgroundColor='green'
+            type="submit"
+            backgroundColor="green"
             disabled={!!errors || registerEmployee.isLoading}
           >
-            {`${registerEmployee.isLoading ? 'Espere' : 'Crear Cuenta'} `}
+            {`${registerEmployee.isLoading ? "Espere" : "Crear Cuenta"} `}
           </Button>
-
         </div>
       </form>
     </Layout>
-  )
+  );
 }
 
-export default CreateEmployeePage
+export default CreateEmployeePage;

@@ -101,3 +101,18 @@
   background-size: 100%;
   background-image: url($url);
 }
+
+@mixin input(){
+  border: none;
+  letter-spacing: 1px;
+  padding: .7rem 1rem;
+
+  &::placeholder {
+    color: v.$color-gray-2;
+    font-weight: 200;
+  }
+
+  &:focus {
+    outline: 2px solid v.$color-green-3;
+  }
+}

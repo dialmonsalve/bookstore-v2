@@ -1,29 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getEmployees } from "@/api/employee/employee";
-import { useEmployeesStore } from "@/store/employee";
+import { useUisStore, useEmployeesStore } from "@/store";
 
-import { useUisStore } from "@/store/ui";
+import { apiEmployee } from "@/api";
 
 export function useEmployees() {
+  const setEmployees = useEmployeesStore((state) => state.setEmployees);
 
-  const setEmployees = useEmployeesStore(state => state.setEmployees);
+  const page = useUisStore((state) => state.page);
 
-  const page = useUisStore(state => state.page)
+  const queryEmployees = useQuery({
+    queryKey: ["employees", { page }],
+    queryFn: async () => {
+      const data = await apiEmployee.getEmployees(page);
+      setEmployees(data?.employees!);
 
-  const queryEmployees = useQuery(
-    ["employees", { page }],
-    async () => {
-      const data = await getEmployees(page)
-      setEmployees(data?.employees!)
-  
-      return data
-    }
-    , {
-      staleTime: Infinity,
-      // initialData: employees,  
-    }
-  )
+      return data;
+    },
+    staleTime: Infinity,
+    // initialData: employees,
+  });
 
-  return queryEmployees
+  return queryEmployees;
 }

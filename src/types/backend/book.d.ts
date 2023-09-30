@@ -1,12 +1,13 @@
 export interface IBook {
   _id?: string;
   authors: string[];
-  categories: string[] | undefined ;
+  categories: string[] | undefined;
+  cost?: number;
   createdAt?: string;
   createdFor?: string;
   discount?: number;
   editorial: string | undefined;
-  format: TypeFormat;
+  format?: TypeFormat;
   imageLinks?: string;
   isAvailable?: boolean;
   isbn: string;
@@ -21,22 +22,23 @@ export interface IBook {
   description?: string;
   updatedAt?: string;
   updatedFor?: string;
-  slug: string;
-  tags?: string[]
+  utility?: number;
+  slug?: string;
+  tags?: string[];
 }
 
 interface IAuthor {
   _id?: string;
-  biography: ?string
-  birth?: string
+  biography: ?string;
+  birth?: string;
   createdAt?: string;
   createdFor?: string;
   isAvailable?: boolean;
-  fullName: string
-  nationality?: string
+  fullName: string;
+  nationality?: string;
   updatedAt?: string;
   updatedFor?: string;
-  web?: string
+  web?: string;
 }
 
 interface ICategory {
@@ -61,7 +63,7 @@ interface IEditorial {
   updatedAt?: string;
   updatedFor?: string;
   web?: string;
-  distributor: string
+  distributor: string;
   name: string;
   nit: string;
 }
@@ -83,5 +85,10 @@ interface IDistributor {
 }
 
 type TypeFormat =
-  | 'eBook' | 'audioBook' | 'printedBook' | 'PDF' | 'EPUB' | 'MOBI'
-
+  | ""
+  | "eBook"
+  | "audioBook"
+  | "printedBook"
+  | "PDF"
+  | "EPUB"
+  | "MOBI";

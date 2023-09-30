@@ -1,45 +1,44 @@
-import { useEmployees } from "@/hooks/employee"
-import { Button } from "./"
-import { useUisStore } from "@/store/ui"
+import { useEmployees } from "@/hooks/employee";
+import { Button } from "./";
+import { useUisStore } from "@/store/ui";
 import { URL_CONSTANTS } from "@/constants";
-import { useSearchBook } from "@/hooks/books";
-
 
 export const Paginator = () => {
-
   const queryEmployees = useEmployees();
+  const prevPage = useUisStore((state) => state.prevPage);
+  const nextPage = useUisStore((state) => state.nextPage);
+  const page = useUisStore((state) => state.page);
 
-  const prevPage = useUisStore(state => state.prevPage)
-  const nextPage = useUisStore(state => state.nextPage)
-  const page = useUisStore(state => state.page)
+  const totalEmployees = queryEmployees?.data?.totalEmployees;
 
-  const totalEmployees = queryEmployees?.data?.totalEmployees
-
-
-  const totalPages = queryEmployees?.data !== undefined && Math.ceil(Number(totalEmployees) / ( URL_CONSTANTS.limit)) 
-
+  const totalPages =
+    queryEmployees?.data !== undefined &&
+    Math.ceil(Number(totalEmployees) / URL_CONSTANTS.limit);
 
   return (
-    <div className="paginator" >
-
+    <div className="paginator">
       <Button
         backgroundColor="outline-blue"
         onClick={prevPage}
         size="small"
-        disabled={queryEmployees.isFetching || page === 1} >
+        disabled={queryEmployees.isFetching || page === 1}
+      >
         Anterior
       </Button>
-      <span className="paginator__span" >
+      <span className="paginator__span">
         Página {page} de {Number(totalPages)}
-        </span>
+      </span>
       <Button
         backgroundColor="outline-blue"
         size="small"
         onClick={nextPage}
-        disabled={queryEmployees.isFetching || page * URL_CONSTANTS.limit >= Number(totalEmployees) } >
+        disabled={
+          queryEmployees.isFetching ||
+          page * URL_CONSTANTS.limit >= Number(totalEmployees)
+        }
+      >
         Siguiente
       </Button>
-
     </div>
-  )
-}
+  );
+};

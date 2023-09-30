@@ -3,8 +3,8 @@ import {
   Button,
   ErrorMessage,
   FormControl,
+  InputTags,
   Select,
-  Spinner,
   TextArea,
 } from "../client";
 import Image from "next/image";
@@ -31,85 +31,90 @@ const options = [
     _id: 2,
     name: "title",
     type: "text",
-    label: "title",
+    label: "título",
   },
   {
     _id: 3,
-    name: "authors",
+    name: "slug",
     type: "text",
-    label: "Autor 1",
+    label: "slug",
   },
   {
     _id: 4,
-    name: "author2",
+    name: "authors",
     type: "text",
-    label: "Autor 2",
+    label: "Autores",
   },
   {
     _id: 5,
-    name: "author3",
-    type: "text",
-    label: "Autor 3",
-  },
-  {
-    _id: 6,
     name: "editorial",
     type: "text",
     label: "Editorial",
   },
   {
-    _id: 8,
+    _id: 6,
     name: "publishedDate",
     type: "text",
     label: "publicación",
   },
   {
-    _id: 9,
+    _id: 7,
     name: "pageCount",
     type: "number",
     label: "páginas",
   },
   {
-    _id: 10,
+    _id: 8,
     name: "language",
     type: "text",
     label: "Idioma",
   },
 
   {
+    _id: 9,
+    name: "format",
+    type: "text",
+    label: "Formato",
+  },
+  {
+    _id: 10,
+    name: "cost",
+    type: "number",
+    label: "costo",
+  },
+  {
     _id: 11,
+    name: "utility",
+    type: "number",
+    label: "Utilidad",
+  },
+  {
+    _id: 12,
     name: "price",
     type: "number",
     label: "Precio",
   },
   {
-    _id: 12,
+    _id: 13,
     name: "discount",
     type: "number",
     label: "descuento",
   },
-  {
-    _id: 13,
-    name: "stock",
-    type: "number",
-    label: "existencia",
-  },
 ];
 
 export const CreateEditBook = ({ errors, initialForm }: Props) => {
-  const [option, setOption] = useState([BOOK_VALIDATION_SCHEMA.options[0]]);
+  const formState = useFormStore((state) => state.formState);
+  const value = useFormStore((state) => state.options);
   const [createCategory, setCreateCategory] = useState("");
   const [erroMessage, setErroMessage] = useState("");
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-  const queryCategories = useCategories();
-
   const selectedBook = useBooksStore((state) => state.selectedBook);
-  const categories = useBooksStore(state => state.categories)
-  
-  const categoryMutation = useCreateCategory()
-  const session =useEmployeesStore(state=>state.session)
-  
+  const categories = useBooksStore((state) => state.categories);
+
+  const categoryMutation = useCreateCategory();
+  const session = useEmployeesStore((state) => state.session);
+
   const book = selectedBook?.hasOwnProperty("title")
     ? selectedBook
     : initialForm;
@@ -123,7 +128,10 @@ export const CreateEditBook = ({ errors, initialForm }: Props) => {
 
     setIsFormSubmitted(false);
 
-    categoryMutation.mutate({name:createCategory, username:session?.username})
+    categoryMutation.mutate({
+      name: createCategory.toLocaleLowerCase(),
+      username: session?.username,
+    });
     setCreateCategory("");
   };
 
@@ -150,13 +158,15 @@ export const CreateEditBook = ({ errors, initialForm }: Props) => {
         <input type="file" />
       </div>
 
-      <TextArea
-        className="form-create-books__inputs--description"
-        initialForm={book}
-        name="description"
-        placeholder="Descripción"
+      <Select
+        multiple
+        options={categories || []}
+        name={"categories"}
+        label="categorías"
+        className="form-create-books__inputs--select"
+        value={value}
+        errors={errors}
       />
-      {queryCategories.isLoading && <Spinner />}
       <div className="form-create-books__inputs--new-category">
         <div className="form-control">
           <label className="form-control__label" htmlFor="createCategory">
@@ -178,18 +188,20 @@ export const CreateEditBook = ({ errors, initialForm }: Props) => {
             isFormSubmitted={isFormSubmitted}
           />
         </div>
-
-        <Button onClick={handleCreateCategory}>Crear</Button>
+        <Button onClick={handleCreateCategory}>Crear categoría</Button>
       </div>
+      <TextArea
+        className="form-create-books__inputs--textarea"
+        initialForm={book}
+        name="description"
+        placeholder="Descripción"
+        label="Descripción"
+      />
+      <InputTags
+        name="tags"
+        optionTags={formState.tags || []}
+        errors={errors}
 
-      <Select
-        multiple
-        options={categories || []}
-        value={option}
-        onChange={(o) => setOption(o)}
-        name={"categories"}
-        label="categorías"
-        className="form-create-books__inputs--select"
       />
     </>
   );

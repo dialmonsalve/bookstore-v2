@@ -1,4 +1,5 @@
-export { bookstoreApi } from "./bookstoreApi";
-export { userApi } from "./bookstoreApi";
-export { employeeApi } from "./bookstoreApi";
+export * from "./bookstoreApi";
+
 export * as userAuth from "./authentication";
+export * as apiBook from "./books";
+export * as apiEmployee from "./employee";

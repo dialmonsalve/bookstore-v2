@@ -1,46 +1,41 @@
 import { useFormStore } from "@/store";
 import { useEffect, useRef, useState } from "react";
-import { ErrorMessage } from ".";
-import { ErrorMessages, InitialForm } from "@/types";
 
 type SingleSelectProps = {
   multiple?: false;
+  value?: string;
   name: string;
   label: string;
   className?: string;
-  value: string[] | string;
-  errors?: ErrorMessages<InitialForm | undefined>;
+
+  onChange: (value: string | undefined) => void;
 };
 type MultipleSelectProps = {
   multiple: true;
+  value: string[];
   name: string;
   label: string;
   className?: string;
-  value: string[] | string;
-  errors?: ErrorMessages<InitialForm | undefined>;
+
+  onChange: (value: string[]) => void;
 };
 type SelectProps = {
   options: string[];
 } & (SingleSelectProps | MultipleSelectProps);
 
 export const Select = ({
-  errors,
   multiple,
+  value,
   options,
+  onChange,
   name,
   label,
   className,
-  value,
 }: SelectProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
-  const setOption = useFormStore((state) => state.setOption);
-  const isFormSubmitted = useFormStore((state) => state.isFormSubmitted);
-  const isTouched = useFormStore((state) => state.isTouched);
-  const handleBlur = useFormStore((state) => state.handleBlur);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) setHighlightedIndex(0);
@@ -107,21 +102,18 @@ export const Select = ({
   }, [isOpen, highlightedIndex, options]);
 
   const clearOptions = () => {
-    multiple ? setOption(name, []) : setOption("", undefined);
+    multiple ? onChange([]) : onChange(undefined);
   };
 
   const selectOption = (option: string) => {
-    if (multiple && Array.isArray(value)) {
-      if (value?.includes(option)) {
-        setOption(
-          name,
-          value?.filter((o) => o !== option)
-        );
+    if (multiple) {
+      if (value.includes(option)) {
+        onChange(value.filter((o) => o !== option));
       } else {
-        setOption(name, [...value, option]);
+        onChange([...value, option]);
       }
     } else {
-      if (option !== value) setOption(option);
+      if (option !== value) onChange(option);
     }
   };
 
@@ -130,23 +122,19 @@ export const Select = ({
   };
 
   return (
-    <div className={`${className || ""} form-control `}>
-      <span className="form-control__label">
+    <div className={`${className || ""}`}>
+      <label className="form-control__label" style={{ marginLeft: ".5rem" }}>
         {label}
-      </span>
+      </label>
       <div
-        id={name}
-        onBlur={(e) => {
-          setIsOpen(false);
-          handleBlur(e);
-        }}
+        onBlur={() => setIsOpen(false)}
         onClick={() => setIsOpen((prev) => !prev)}
         tabIndex={0}
         className={`select-container`}
         ref={containerRef}
       >
         <span className="select-container__span">
-          {multiple && Array.isArray(value)
+          {multiple
             ? value?.map((v) => (
                 <button
                   key={v}
@@ -204,12 +192,6 @@ export const Select = ({
           ))}
         </ul>
       </div>
-
-      <ErrorMessage
-        fieldName={errors?.[name]}
-        isFormSubmitted={isFormSubmitted}
-        isTouched={isTouched?.[name]}
-      />
     </div>
   );
 };

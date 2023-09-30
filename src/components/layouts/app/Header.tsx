@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import useAuthentication from "@/hooks/auth/useAuthentication";
-import useLoginProviderOrLogout from "@/hooks/auth/useLoginProviderOrLogout";
+import {useAuthentication} from "@/hooks/auth";
+import {useLoginProviderOrLogout} from "@/hooks/auth/useLoginProviderOrLogout";
 
 export const Header = () => {
 

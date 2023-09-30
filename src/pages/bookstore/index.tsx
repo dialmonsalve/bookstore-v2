@@ -1,6 +1,4 @@
 import { Layout } from "@/components/layouts/app"
-import { Spinner } from "@/components/ui/client";
-
 
 function AdminPage() {
 
