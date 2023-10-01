@@ -4,7 +4,8 @@
 .table {
   border-collapse: collapse;
   // flex-grow: 1;
-  min-width: 100%;
+  // min-width: 100%;
+  max-width: 100%;
 
   @include m.responsive(tab-port) {
     align-self: flex-start;
@@ -12,7 +13,7 @@
 
   &__header {
     background-color: v.$color-primary;
-    font-size: v.$font-size - .2rem;
+    font-size: v.$font-size - .6rem;
     position: sticky;
     text-transform: uppercase;
     top: 0;
@@ -31,7 +32,7 @@
   }
 
   &__row {
-    font-size: v.$font-size - .2rem;
+    font-size: v.$font-size - .6rem;
     text-transform: uppercase;
     border: 1px solid v.$color-gray-1;
     color: v.$color-primary;

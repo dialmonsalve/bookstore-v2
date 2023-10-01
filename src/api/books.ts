@@ -22,6 +22,11 @@ interface DataCategory {
   category?: ICategory | null;
   message?: string;
 }
+interface DataBook {
+  hasError: boolean;
+  book?: IBook | null;
+  message?: string;
+}
 
 // export const searchBooks = async (term: string) => {
 //   try {
@@ -37,6 +42,99 @@ interface DataCategory {
 //     }
 //   }
 // }
+
+//! Get all books
+export async function getBooks(page: number): Promise<DataBooks | null> {
+  const params = new URLSearchParams();
+  params.append("page", page?.toString());
+  params.append("limit", `${URL_CONSTANTS.limit}`);
+
+  try {
+    const { data } = await bookApi.get<DataBooks>("", { params });
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    }
+  }
+  return null;
+}
+
+//! Create a book
+export async function createBook(
+  book: IBook,
+  username: string
+): Promise<DataBook> {
+  if (!username) {
+    return {
+      hasError: true,
+      message: "Usuario no autorizado para esta acción",
+    };
+  }
+
+  try {
+    const { data } = await bookApi.post("", { book, username });
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return {
+        hasError: true,
+        message: error.response?.data.message,
+      };
+    }
+  }
+  return {
+    hasError: true,
+    message: "No pudo iniciar sesión - intente nuevamente",
+  };
+}
+
+//! Get all categories
+export async function getCategories(): Promise<DataCategories | null> {
+  try {
+    const { data } = await bookApi.get<DataCategories>("/categories");
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    }
+  }
+  return null;
+}
+
+//! Create a category
+export async function createCategory(
+  name: string,
+  username?: string
+): Promise<DataCategory> {
+  if (!username) {
+    return {
+      hasError: true,
+      message: "Usuario no autorizado para esta acción",
+    };
+  }
+
+  try {
+    const { data } = await bookApi.post("/categories", { name, username });
+
+    return {
+      hasError: false,
+      category: data,
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return {
+        hasError: true,
+        message: error.response?.data.message,
+      };
+    }
+  }
+  return {
+    hasError: true,
+    message: "No pudo iniciar sesión - intente nuevamente",
+  };
+}
 
 //! Search books on google books
 export async function getSearchBooks(
@@ -101,67 +199,4 @@ export async function getSearchBooks(
     console.log(error);
   }
   return null;
-}
-
-//! Get all employees
-export async function getBooks(page: number): Promise<DataBooks | null> {
-  const params = new URLSearchParams();
-  params.append("page", page?.toString());
-  params.append("limit", `${URL_CONSTANTS.limit}`);
-
-  try {
-    const { data } = await bookApi.get<DataBooks>("", { params });
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message);
-    }
-  }
-  return null;
-}
-
-//! Get all categories
-export async function getCategories(): Promise<DataCategories | null> {
-  try {
-    const { data } = await bookApi.get<DataCategories>("/categories");
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message);
-    }
-  }
-  return null;
-}
-
-//! Create a category
-export async function createCategory(
-  name: string,
-  username?: string
-): Promise<DataCategory> {
-  if (!username) {
-    return {
-      hasError: true,
-      message: "Usuario no autorizado para esta acción",
-    };
-  }
-
-  try {
-    const { data } = await bookApi.post("/categories", { name, username });
-
-    return {
-      hasError: false,
-      category: data,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return {
-        hasError: true,
-        message: error.response?.data.message,
-      };
-    }
-  }
-  return {
-    hasError: true,
-    message: "No pudo iniciar sesión - intente nuevamente",
-  };
 }

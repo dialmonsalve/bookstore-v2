@@ -5,9 +5,9 @@ import { useBooks } from "@/hooks/books";
 import { Layout } from "@/components/layouts/app";
 import { Button, Paginator, Spinner, Table } from "@/components/ui/client";
 
-const titles = ['imagen', 'ISBN', 'nombre', 'autor(es)', 'editorial', 'categoría(s)', 'precio', 'descuento', 'existencia']
+const titles = ['imagen', 'ISBN', 'título', 'autor(es)', 'editorial', 'categoría(s)', 'precio', 'descuento', 'existencia']
 
-const nameTableFields = ['imageLinks', 'isbn', 'name', 'author', 'editorial', 'category', 'price', 'discount', 'stock']
+const nameTableFields = ['imageLinks', 'isbn', 'title', 'authors', 'editorial', 'categories', 'price', 'discount', 'stock']
 
 function AdminBooks() {
 
@@ -50,7 +50,9 @@ const handleEditBook = ()=>{
               handleEdit={handleEditBook}
               isEditable
             />
-            <Paginator />
+            <Paginator
+            totalItems={data?.totalBooks}
+            />
           </>
       }
 

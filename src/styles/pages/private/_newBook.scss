@@ -1,53 +1,65 @@
 @use "../../abstract/mixins" as m;
 @use "../../abstract/variables" as v;
 
+@mixin appearance(){
+  border: none;
+  outline: 1px solid v.$color-gray-3;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
 .form-create-books {
   display: grid;
-  grid-template-columns: 1fr 0.2fr;
-  grid-template-rows: 1fr 0.5fr 1fr;
+  grid-template-columns: 2fr 0.5fr;
+  grid-template-rows: 1fr 0.5fr 0.5fr;
   padding: 1rem;
-  max-width: 75%;
-  gap: 1rem;
+  max-width: 70%;
+  gap: 2rem 3rem;
 
+  &__inputs {
+    @include appearance()
+
+  }
   &__image {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    @include appearance();
 
     & img {
       border-radius: 1rem;
       outline: 1px solid v.$color-primary;
     }
+
+    & input {
+      width: 80%;
+    }
   }
 
-  &__inputs {
+  &__new-category {
+    align-self: flex-start;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    @include appearance()
+  }
+  &__categories {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2rem;
+    @include appearance();
 
-    &--textarea {
-      grid-column: 1/ 2;
-      grid-row: 3 / 4;
+    &--button {
+      grid-column: 1 / 3;
     }
 
-    &--new-category {
-      grid-column: 2/ 3;
-      grid-row: 2 / 3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      &-container {
-        display: flex;
-        align-items: center;
-        width: 60%;
-        gap: 2rem;
-      }
+    &--select {
     }
   }
 
   &__button-book {
+    justify-self: center;
     align-self: center;
   }
 }

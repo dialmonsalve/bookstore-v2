@@ -12,7 +12,7 @@ export const useCreateCategory = () => {
     mutationFn: ({ name, username }: { name: string; username?: string }) =>
     apiBook.createCategory(name, username),
 
-    onSuccess: async ({ hasError, message, category }) => {
+    onSuccess:({ hasError, message, category }) => {
       if (hasError) {
         setAlert("error", true, message!);
         return;

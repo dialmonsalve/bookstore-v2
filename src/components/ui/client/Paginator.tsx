@@ -3,17 +3,19 @@ import { Button } from "./";
 import { useUisStore } from "@/store/ui";
 import { URL_CONSTANTS } from "@/constants";
 
-export const Paginator = () => {
+interface PaginatorProps {
+  totalItems :number
+}
+
+export const Paginator = ({ totalItems}:PaginatorProps) => {
   const queryEmployees = useEmployees();
   const prevPage = useUisStore((state) => state.prevPage);
   const nextPage = useUisStore((state) => state.nextPage);
   const page = useUisStore((state) => state.page);
 
-  const totalEmployees = queryEmployees?.data?.totalEmployees;
-
-  const totalPages =
+    const totalPages =
     queryEmployees?.data !== undefined &&
-    Math.ceil(Number(totalEmployees) / URL_CONSTANTS.limit);
+    Math.ceil(Number(totalItems) / URL_CONSTANTS.limit);
 
   return (
     <div className="paginator">
@@ -34,7 +36,7 @@ export const Paginator = () => {
         onClick={nextPage}
         disabled={
           queryEmployees.isFetching ||
-          page * URL_CONSTANTS.limit >= Number(totalEmployees)
+          page * URL_CONSTANTS.limit >= Number(totalItems)
         }
       >
         Siguiente

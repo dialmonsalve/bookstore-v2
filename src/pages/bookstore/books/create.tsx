@@ -16,8 +16,9 @@ import { CreateEditBook } from "@/components/ui/services";
 import { formValidator } from "@/helpers";
 
 import { BOOK_VALIDATION_SCHEMA } from "@/constants/bookValidations";
-import { useCategories, useSearchBook } from "@/hooks/books";
-import { useBooksStore } from "@/store";
+import { useCategories, useCreateBook, useSearchBook } from "@/hooks/books";
+import { useBooksStore, useEmployeesStore } from "@/store";
+import { IBook, TypeFormat } from "@/types";
 
 const newBook = {
   authors: "",
@@ -42,8 +43,10 @@ const newBook = {
 function CreateBooksPage() {
   const queryCategories = useCategories();
 
-  const formState = useFormStore<typeof newBook>((state) => state.formState);
+  const formState = useFormStore<IBook>((state) => state.formState);
   const foundBooks = useBooksStore((state) => state.foundBooks);
+
+  const session = useEmployeesStore((state) => state.session);
 
   const errors = formValidator().getErrors(
     formState,
@@ -54,10 +57,9 @@ function CreateBooksPage() {
   const showModal = useUisStore((state) => state.showModal);
   const setAlert = useUisStore((state) => state.setAlert);
 
-  const searchBookQuery = useSearchBook();
+  const queryBook = useCreateBook();
 
-  console.log(formState);
-  
+  const searchBookQuery = useSearchBook();
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,15 +77,21 @@ function CreateBooksPage() {
   const handleCreateBook = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-  
-    const authors = typeof formState.authors === 'string' ? formState.authors.replaceAll(" ", "").split(",") : formState.authors
+    const authors =
+      typeof formState.authors === "string"
+        ? formState.authors.replaceAll(" ", "").split(",")
+        : formState.authors;
 
-    const newBook = {
+    const createBook = {
       ...formState,
-      authors,
+      createdFor: session?._id,
+      updatedFor: session?._id,
+      authors
     };
+    if (!session?.username) return;
 
-    console.log(newBook);
+    queryBook.mutate({ book: createBook, username: session.username });
+    
   };
 
   if (foundBooks === null || foundBooks === undefined) return;

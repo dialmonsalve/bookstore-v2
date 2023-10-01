@@ -1,7 +1,7 @@
 export interface IBook {
   _id?: string;
-  authors: string[];
-  categories: string[] | undefined;
+  authors: string[] | string;
+  categories: string[];
   cost?: number;
   createdAt?: string;
   createdFor?: string;
@@ -23,8 +23,8 @@ export interface IBook {
   updatedAt?: string;
   updatedFor?: string;
   utility?: number;
-  slug?: string;
-  tags?: string[];
+  slug: string;
+  tags: string[];
 }
 
 interface IAuthor {

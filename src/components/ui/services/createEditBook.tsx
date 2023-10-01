@@ -11,8 +11,6 @@ import Image from "next/image";
 
 import { ErrorMessages, InitialForm } from "@/types";
 import { useState } from "react";
-import { BOOK_VALIDATION_SCHEMA } from "@/constants/bookValidations";
-import { useCategories } from "@/hooks/books";
 import { useCreateCategory } from "@/hooks/books/useCreateCategory";
 
 interface Props {
@@ -147,6 +145,7 @@ export const CreateEditBook = ({ errors, initialForm }: Props) => {
           classNameLabel="form-control__label"
         />
       </div>
+
       <div className="form-create-books__image">
         <Image
           width={180}
@@ -157,51 +156,56 @@ export const CreateEditBook = ({ errors, initialForm }: Props) => {
         />
         <input type="file" />
       </div>
-
-      <Select
-        multiple
-        options={categories || []}
-        name={"categories"}
-        label="categorías"
-        className="form-create-books__inputs--select"
-        value={value}
-        errors={errors}
-      />
-      <div className="form-create-books__inputs--new-category">
-        <div className="form-control">
-          <label className="form-control__label" htmlFor="createCategory">
-            Crear categoría
-          </label>
-          <input
-            className="form-control__input"
-            value={createCategory}
-            type="text"
-            name="createCategory"
-            id="createCategory"
-            onChange={(e) => setCreateCategory(e.target.value)}
-            onKeyDown={(e) => {
-              e.key === "Enter" && handleCreateCategory();
-            }}
+      <div className="form-create-books__categories">
+        <InputTags
+          name="tags"
+          optionTags={formState.tags || []}
+          errors={errors}
           />
-          <ErrorMessage
-            fieldName={[erroMessage]}
-            isFormSubmitted={isFormSubmitted}
-          />
-        </div>
-        <Button onClick={handleCreateCategory}>Crear categoría</Button>
+        <Select
+          multiple
+          options={categories || []}
+          name={"categories"}
+          label="categorías"
+          className="form-create-books__categories--select"
+          value={value}
+          errors={errors}
+        />
       </div>
+
+      <div className="form-create-books__new-category">
+        <label className="form-control__label" htmlFor="createCategory">
+          Nueva categoría
+        </label>
+        <input
+          className="form-control__input"
+          value={createCategory}
+          type="text"
+          name="createCategory"
+          id="createCategory"
+          onChange={(e) => setCreateCategory(e.target.value)}
+          onKeyDown={(e) => {
+            e.key === "Enter" && handleCreateCategory();
+          }}
+        />
+        <ErrorMessage
+          fieldName={[erroMessage]}
+          isFormSubmitted={isFormSubmitted}
+        />
+        <Button
+          className="form-create-books__categories--button"
+          onClick={handleCreateCategory}
+        >
+          Crear categoría
+        </Button>
+      </div>
+
       <TextArea
         className="form-create-books__inputs--textarea"
         initialForm={book}
         name="description"
         placeholder="Descripción"
         label="Descripción"
-      />
-      <InputTags
-        name="tags"
-        optionTags={formState.tags || []}
-        errors={errors}
-
       />
     </>
   );

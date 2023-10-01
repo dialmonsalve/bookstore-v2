@@ -60,7 +60,7 @@ const BookSchema = new Schema<IBook>(
         values: ["", "eBook", "audio libro", "impreso", "PDF", "EPUB", "MOBI", "cartone"],
         message: `{VALUE no es un tipo válido}`,
       },
-      default: "printedBook",
+      default: "impreso",
     },
     authors: [
       {

@@ -42,6 +42,7 @@ export const ModalApiBooks = ({ book }: GoogleApiBooksProps) => {
       publishedDate: book.publishedDate,
       slug,
       title: book.title,
+      tags:[""]
     };
 
     setBook(searchedBook);

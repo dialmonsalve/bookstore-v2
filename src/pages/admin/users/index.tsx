@@ -90,7 +90,9 @@ function UsersPage() {
               handleEdit={handleEditEmployee}
               isEditable
             />
-            <Paginator />
+              <Paginator
+              totalItems={data?.totalEmployees}
+              />
           </>
         )}
       </Layout>

@@ -1,5 +1,7 @@
 import { Button } from "./";
 
+import Image from "next/image";
+
 interface Props {
   data: Record<string, any>[] | null;
   tableTitles: string[];
@@ -36,9 +38,28 @@ export const Table = ({
         {data?.map((tableRow) => (
           <tr className="table__row" key={tableRow._id}>
             <td className="table__td">{tableRow.item}</td>
-            {nameTableFields?.map((field) => (
-              <td className="table__td" key={field}>{`${tableRow[field]}`}</td>
-            ))}
+            {nameTableFields?.map((field) => {
+              const image = `${tableRow["imageLinks"]}`.replaceAll(
+                "http",
+                "https"
+              );
+
+              return (
+                <td className="table__td" key={field}>
+                  {field === "imageLinks" ? (
+                    <Image
+                      width={50}
+                      height={70}
+                      src={image || "/media/no-image.svg"}
+                      alt=""
+                      priority
+                    />
+                  ) : (
+                    `${tableRow[field]}`
+                  )}
+                </td>
+              );
+            })}
             {!tableRow.role?.includes("admin") ? (
               <>
                 {isEditable && (
