@@ -103,6 +103,8 @@ export const useFormStore = create<State<any> & Actions>()(
               formState: initialState,
               isTouched: null,
               isFormSubmitted: false,
+              options: [],
+              optionTags:[]
             },
             false,
             "initialForm"

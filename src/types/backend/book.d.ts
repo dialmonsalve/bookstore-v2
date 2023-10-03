@@ -24,7 +24,7 @@ export interface IBook {
   updatedFor?: string;
   utility?: number;
   slug: string;
-  tags: string[];
+  tags: string[] ;
 }
 
 interface IAuthor {

@@ -29,7 +29,7 @@ export const useUITransactionStore = create<State<any> & Actions>()(devtools((se
 
       set(state => {
         const updatedItems = state.formItems.map(item => {
-          if (item.code === newFormState.code) {
+          if (item.isbn === newFormState.isbn) {
             return {
               ...item,
               quantity: item.quantity + Number(newFormState.quantity)
@@ -37,9 +37,9 @@ export const useUITransactionStore = create<State<any> & Actions>()(devtools((se
           }
           return item;
         });
-        const isCodeExisting = updatedItems.some(item => item.code === newFormState.code);
+        const isISBNExisting = updatedItems.some(item => item.isbn === newFormState.isbn);
 
-        if (!isCodeExisting) {
+        if (!isISBNExisting) {
           updatedItems.push({
             ...newFormState,
             quantity: Number(newFormState.quantity),

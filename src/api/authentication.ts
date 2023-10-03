@@ -1,14 +1,7 @@
-import axios from "axios";
-
 import { userApi } from "@/api/bookstoreApi";
 
 import { IClient, IEmployee, TypeRole } from "@/types";
 
-interface AuthResult {
-  hasError: boolean;
-  user?: IEmployee | IClient;
-  message?: string;
-}
 interface Admin {
   adminRole: TypeRole[] | undefined;
   userAdmin: string | undefined;
@@ -18,17 +11,14 @@ export async function registerUser(
   employee: IEmployee | IClient,
   admin: Admin | null,
   isClient: boolean
-): Promise<AuthResult> {
+): Promise<IEmployee | IClient | null> {
   const endpoint = isClient ? "client" : "employee";
 
   if (!isClient) {
     const isAdmin = admin?.adminRole?.includes("admin");
 
     if (!isAdmin) {
-      return {
-        hasError: true,
-        message: "No está autorizado para esta operación",
-      };
+      throw new Error("Usuario no autorizado para esta acción");
     }
   }
 
@@ -37,28 +27,16 @@ export async function registerUser(
       ...employee,
       ...admin,
     });
-    return {
-      hasError: false,
-      user: data,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return {
-        hasError: true,
-        message: error.response?.data.message,
-      };
-    }
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return {
-    hasError: true,
-    message: "No se pudo crear el usuario - intente nuevamente",
-  };
 }
 
 export async function handleLogin(fieldForm: {
   [key: string]: string;
   password: string;
-}): Promise<AuthResult> {
+}): Promise<IEmployee | IClient | null> {
   const { email, password, username } = fieldForm;
 
   const formData = {
@@ -70,22 +48,10 @@ export async function handleLogin(fieldForm: {
   try {
     const { data } = await userApi.post(`/login`, formData);
 
-    return {
-      hasError: false,
-      user: data,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return {
-        hasError: true,
-        message: error.response?.data.message,
-      };
-    }
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return {
-    hasError: true,
-    message: "No pudo iniciar sesión - intente nuevamente",
-  };
 }
 
 export async function searchUser(): Promise<IEmployee | null> {
@@ -93,10 +59,7 @@ export async function searchUser(): Promise<IEmployee | null> {
     const { data } = await userApi.get(`/search-user`);
 
     return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message);
-    }
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return null;
 }

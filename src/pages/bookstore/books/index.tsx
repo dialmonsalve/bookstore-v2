@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 
-import { useBooks } from "@/hooks/books";
+import { useBookQuery } from "@/hooks/books";
 
 import { Layout } from "@/components/layouts/app";
-import { Button, Paginator, Spinner, Table } from "@/components/ui/client";
+import { Alert, Button, Paginator, Spinner, Table } from "@/components/ui/client";
 
 const titles = ['imagen', 'ISBN', 'título', 'autor(es)', 'editorial', 'categoría(s)', 'precio', 'descuento', 'existencia']
 
@@ -11,7 +11,9 @@ const nameTableFields = ['imageLinks', 'isbn', 'title', 'authors', 'editorial', 
 
 function AdminBooks() {
 
-  const { data, isLoading } = useBooks();
+  const { getBooksQuery } = useBookQuery();
+  
+  const{data, isLoading } = getBooksQuery
   const router = useRouter();
 
 const handleDeleteBook = ()=>{
@@ -27,6 +29,7 @@ const handleEditBook = ()=>{
 
   return (
     <Layout title="libros" >
+      <Alert />
 
       <Button
         buttonStyle="iconButton"

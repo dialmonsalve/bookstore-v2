@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import { useUisStore } from "@/store/ui";
-
-import useDeleteEmployee from "@/hooks/employee/useDeleteEmployee";
-import { useEmployees } from "@/hooks/employee";
+import { useEmployeeQuery, useEmployeeMutation } from "@/hooks/employee";
 
 import { Layout } from "@/components/layouts/app";
 import {
@@ -31,9 +29,11 @@ function UsersPage() {
   //! Sates
   const [employeeId, setEmployeeId] = useState("");
   const router = useRouter();
-  const deleteEmployee = useDeleteEmployee();
+  const {deleteEmployeeMutation} = useEmployeeMutation();
   const setShowModal = useUisStore((state) => state.setShowModal);
-  const { data, isLoading } = useEmployees();
+  const { getEmployeesQuery } = useEmployeeQuery();
+  
+  const{data, isLoading } = getEmployeesQuery
 
   //! Handler functions
   const handleEditEmployee = (employeeId: string | number): void => {
@@ -50,7 +50,7 @@ function UsersPage() {
 
   const handleAcceptAction = () => {
     setShowModal(false);
-    deleteEmployee.mutate(employeeId);
+    deleteEmployeeMutation.mutate(employeeId);
   };
 
   // ! Constants

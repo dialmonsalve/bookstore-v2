@@ -4,12 +4,13 @@ import { useUisStore, useEmployeesStore } from "@/store";
 
 import { apiEmployee } from "@/api";
 
-export function useEmployees() {
+export function useEmployeeQuery() {
   const setEmployees = useEmployeesStore((state) => state.setEmployees);
+  
 
   const page = useUisStore((state) => state.page);
 
-  const queryEmployees = useQuery({
+  const getEmployeesQuery = useQuery({
     queryKey: ["employees", { page }],
     queryFn: async () => {
       const data = await apiEmployee.getEmployees(page);
@@ -21,5 +22,7 @@ export function useEmployees() {
     // initialData: employees,
   });
 
-  return queryEmployees;
+  return {
+    getEmployeesQuery,
+  };
 }

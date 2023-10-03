@@ -14,21 +14,13 @@ export function useRegisterCLient() {
       return userAuth.registerUser(data, null, true);
     },
 
-    onSuccess: async (
-      { hasError, message, user: client },
-      { email, password, name }
-    ) => {
-      if (hasError) {
-        setAlert("error", true, message);
-        return;
-      }
-
+    onSuccess: async (client, { email, password, name }) => {
       queryClient.setQueriesData(["credential-client"], client);
       await signIn("credentials", { email, password, name });
-      setTimeout(
-        () => setAlert("success", true, "Usuario Creado con éxito"),
-        500
-      );
+      setAlert("success", true, "Usuario Creado con éxito");
+    },
+    onError: (error: any) => {
+      setAlert("error", true, error.message);
     },
   });
 }

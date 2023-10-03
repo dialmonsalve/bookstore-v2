@@ -1,4 +1,4 @@
-import { useEmployees } from "@/hooks/employee";
+import { useEmployeeQuery } from "@/hooks/employee";
 import { Button } from "./";
 import { useUisStore } from "@/store/ui";
 import { URL_CONSTANTS } from "@/constants";
@@ -8,13 +8,13 @@ interface PaginatorProps {
 }
 
 export const Paginator = ({ totalItems}:PaginatorProps) => {
-  const queryEmployees = useEmployees();
+  const {getEmployeesQuery} = useEmployeeQuery();
   const prevPage = useUisStore((state) => state.prevPage);
   const nextPage = useUisStore((state) => state.nextPage);
   const page = useUisStore((state) => state.page);
 
     const totalPages =
-    queryEmployees?.data !== undefined &&
+    getEmployeesQuery?.data !== undefined &&
     Math.ceil(Number(totalItems) / URL_CONSTANTS.limit);
 
   return (
@@ -23,7 +23,7 @@ export const Paginator = ({ totalItems}:PaginatorProps) => {
         backgroundColor="outline-blue"
         onClick={prevPage}
         size="small"
-        disabled={queryEmployees.isFetching || page === 1}
+        disabled={getEmployeesQuery.isFetching || page === 1}
       >
         Anterior
       </Button>
@@ -35,7 +35,7 @@ export const Paginator = ({ totalItems}:PaginatorProps) => {
         size="small"
         onClick={nextPage}
         disabled={
-          queryEmployees.isFetching ||
+          getEmployeesQuery.isFetching ||
           page * URL_CONSTANTS.limit >= Number(totalItems)
         }
       >

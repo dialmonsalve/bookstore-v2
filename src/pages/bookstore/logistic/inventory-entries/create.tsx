@@ -22,6 +22,7 @@ export default function CreateInventoryEntriesPage() {
 
   return (
     <Layout title="Ingresar Productos">
+
       <div className="transactions">
         <form
           className="form-transactions"

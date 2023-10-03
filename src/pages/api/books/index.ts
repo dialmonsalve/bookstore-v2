@@ -27,8 +27,8 @@ export default function handler(
 async function getBooks(req: NextApiRequest, res: NextApiResponse<Data>) {
   const { limit, page } = req.query;
 
+  await db.connect();
   try {
-    await db.connect();
 
     const books: IBook[] = await Book.find()
       .select("-createdAt -updatedAt -__v")
@@ -54,17 +54,17 @@ async function createBook(req: NextApiRequest, res: NextApiResponse<Data>) {
 
   const { title, authors, categories, isbn, slug } = book as IBook;
 
-  if (title.length <= 0) {
+  if (!title) {
     return res.status(400).json({
       message: "El titulo es requerido",
     });
   }
-  if (isbn.length <= 0) {
+  if (!isbn) {
     return res.status(400).json({
       message: "El isbn es requerido",
     });
   }
-  if (slug.length <= 0) {
+  if (!slug) {
     return res.status(400).json({
       message: "El slug es requerido",
     });
@@ -107,8 +107,8 @@ async function createBook(req: NextApiRequest, res: NextApiResponse<Data>) {
       _id,
       ...newBook,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (error:any) {
+    console.log(error.message);
     return res.status(500).json({
       message: "Revisar logs del servidor",
     });

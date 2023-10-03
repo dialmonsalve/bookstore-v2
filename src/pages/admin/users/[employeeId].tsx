@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { GetServerSideProps } from "next";
 
-import { useEmployee, useUpdateEmployee } from "@/hooks/employee";
+import {  useEmployeeMutation, useEmployee } from "@/hooks/employee";
 import { useFormStore } from "@/store/form";
 
 import { Layout } from "@/components/layouts/app";
@@ -19,12 +19,12 @@ interface Props {
 }
 
 function UpdateEmployeePage({ employeeId, employee }: Props) {
-  const employeeQuery = useEmployee(employeeId, employee);
+  const {getEmployeeByIdQuery} = useEmployee(employeeId);
 
   const formState = useFormStore<IEmployee>((state) => state.formState);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
 
-  const updateEmployee = useUpdateEmployee(employeeId);
+  const {updateEmployeeMutation} = useEmployeeMutation();
 
   const errors = formValidator().getErrors(
     formState,
@@ -38,16 +38,16 @@ function UpdateEmployeePage({ employeeId, employee }: Props) {
     if (!hasFormErrors) {
       console.log(formState);
 
-      updateEmployee.mutate(formState);
+      updateEmployeeMutation.mutate({_id:employeeId, employee:formState});
     }
   };
 
   return (
     <Layout
-      title={`${employeeQuery.data?.name} ${employeeQuery.data?.lastName}`}
+      title={`${getEmployeeByIdQuery.data?.name} ${getEmployeeByIdQuery.data?.lastName}`}
     >
       <Alert />
-      {updateEmployee.isLoading && <Spinner />}
+      {updateEmployeeMutation.isLoading && <Spinner />}
 
       <form
         className="form"
@@ -55,7 +55,7 @@ function UpdateEmployeePage({ employeeId, employee }: Props) {
         onSubmit={handleUpdateEmployee}
       >
         <CreateEditPerson
-          initialForm={employeeQuery.data as Record<string, any>}
+          initialForm={getEmployeeByIdQuery.data as Record<string, any>}
           errors={errors}
           isCreate={false}
           isEmployee
@@ -72,9 +72,9 @@ function UpdateEmployeePage({ employeeId, employee }: Props) {
           <Button
             type="submit"
             backgroundColor="green"
-            disabled={!!errors || updateEmployee.isLoading}
+            disabled={!!errors || updateEmployeeMutation.isLoading}
           >
-            {`${updateEmployee.isLoading ? "Espere" : "Actualiza Usuario"} `}
+            {`${updateEmployeeMutation.isLoading ? "Espere" : "Actualiza Usuario"} `}
           </Button>
         </div>
       </form>

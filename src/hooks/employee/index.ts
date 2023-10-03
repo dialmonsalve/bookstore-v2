@@ -1,4 +1,3 @@
-export * from './useRegisterEmployee';
+export * from './useEmployeeQuery';
 export * from './useEmployee';
-export * from './useEmployees';
-export * from './useUpdateEmployee';
+export * from './useEmployeeMutation';

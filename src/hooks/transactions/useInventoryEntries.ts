@@ -1,7 +1,7 @@
 import { CONST_FORM_ORDER, TRANSACTION_VALIDATION_SCHEMA } from "@/constants";
 import { formValidator } from "@/helpers";
 import {
-  formOptions,
+  FormOptions,
   useEmployeesStore,
   useFormStore,
   useUITransactionStore,
@@ -61,7 +61,7 @@ export const useInventoryEntries = () => {
   const setNewFieldsForm = (): {
     titles: string[];
     nameTableFields: string[];
-    formTable: formOptions[];
+    formTable: FormOptions[];
   } => {
     switch (formState.productType) {
       case "book":

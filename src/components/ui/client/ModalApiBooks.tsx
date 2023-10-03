@@ -2,50 +2,51 @@ import Image from "next/image";
 import { Button } from ".";
 
 import { FoundBooks } from "@/types/googleBooks";
-import { useBooksStore, useFormStore, useUisStore } from "@/store";
+import {  useFormStore, useUisStore } from "@/store";
 import { IBook } from "@/types";
 
 interface GoogleApiBooksProps {
-  book: FoundBooks;
+  googleBook: FoundBooks;
 }
 
-export const ModalApiBooks = ({ book }: GoogleApiBooksProps) => {
-  const setBook = useBooksStore((state) => state.setBook);
+export const ModalApiBooks = ({ googleBook }: GoogleApiBooksProps) => {
+
   const setShowModal = useUisStore((state) => state.setShowModal);
 
   const formState = useFormStore((state) => state.formState);
-
+  const setFormState = useFormStore((state) => state.setFormState);
+  
   const resumeDescription =
-    book.description.length < 500
-      ? book.description
-      : `${book.description.substring(0, 500)}...`;
+  googleBook.description.length < 500
+      ? googleBook.description
+      : `${googleBook.description.substring(0, 500)}...`;
 
   const handleInsertBook = () => {
 
     const slug =
-    book.title
+    googleBook.title
       .trim()
       .replaceAll(" ", "-")
       .replaceAll("'", " ")
         .toLocaleLowerCase() || "";
     
-    const searchedBook: IBook = {
-      authors: book.authors,
+    const book: IBook = {
+      authors: googleBook.authors,
       categories: formState.categories,
-      description: book.description,
-      editorial: book.editorial,
-      format: "",
-      imageLinks: book.imageLinks,
-      isbn: book.isbn,
-      language: book.language,
-      pageCount: book.pageCount,
-      publishedDate: book.publishedDate,
+      description: googleBook.description,
+      editorial: googleBook.editorial,
+      format: formState.format,
+      imageLinks: googleBook.imageLinks,
+      isbn: googleBook.isbn,
+      language: googleBook.language,
+      pageCount: googleBook.pageCount,
+      publishedDate: googleBook.publishedDate,
       slug,
-      title: book.title,
-      tags:[""]
+      title: googleBook.title,
+      tags:formState.tags
     };
 
-    setBook(searchedBook);
+    setFormState(book);
     setShowModal(false);
   };
 
@@ -55,8 +56,8 @@ export const ModalApiBooks = ({ book }: GoogleApiBooksProps) => {
         <Image
           width={180}
           height={280}
-          alt={book.title}
-          src={book.imageLinks}
+          alt={googleBook.title}
+          src={googleBook.imageLinks}
         />
         <Button
           buttonStyle="square"
@@ -71,33 +72,33 @@ export const ModalApiBooks = ({ book }: GoogleApiBooksProps) => {
 
       <div className="modal-search-books__cards--content">
         <p>
-          <span>ISBN:</span> {book.isbn}{" "}
+          <span>ISBN:</span> {googleBook.isbn}{" "}
         </p>
         <p>
-          <span>Titulo:</span> {book.title}{" "}
+          <span>Titulo:</span> {googleBook.title}{" "}
         </p>
         <p style={{ textAlign: "justify" }}>
           <span>Descripción:</span>
           {resumeDescription}{" "}
         </p>
         <p>
-          <span>Autor(es):</span> {`${book.authors}`}{" "}
+          <span>Autor(es):</span> {`${googleBook.authors}`}{" "}
         </p>
         <p>
-          <span>Publicado:</span> {`${book.editorial}`}{" "}
+          <span>Publicado:</span> {`${googleBook.editorial}`}{" "}
         </p>
         <p>
-          <span>Categoría(s):</span> {`${book.googleCategories}`}{" "}
+          <span>Categoría(s):</span> {`${googleBook.googleCategories}`}{" "}
         </p>
         <p>
-          <span>Idioma:</span> {book.language}{" "}
+          <span>Idioma:</span> {googleBook.language}{" "}
         </p>
         <p>
           <span>Páginas </span>
-          {book.pageCount}{" "}
+          {googleBook.pageCount}{" "}
         </p>
         <p>
-          <span>Año:</span> {book.publishedDate}{" "}
+          <span>Año:</span> {googleBook.publishedDate}{" "}
         </p>
       </div>
     </div>

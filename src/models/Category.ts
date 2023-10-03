@@ -11,7 +11,6 @@ const CategorySchema = new Schema<ICategory>({
   },
   createdFor: {
     type: Schema.Types.ObjectId,
-    required: true,
     ref: 'Employee'
   },
   updatedFor: {

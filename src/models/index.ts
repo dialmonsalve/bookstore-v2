@@ -6,4 +6,4 @@ export { default as Distributor } from './Distributor';
 // export {default as Editorial} from './Editorial';
 export { default as Employee } from './Employee';
 export { default as Transaction } from './Transaction';
-export { default as OrderPurchase } from './OrderPurchase';
+export { default as PurchaseOrder } from './PurchaseOrder';

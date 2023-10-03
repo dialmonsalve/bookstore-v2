@@ -91,7 +91,6 @@ function Contact() {
           classNameLabel="form-control__label"
         />
         <TextArea
-          className="form-control__input"
           name="message"
           initialForm={newMessage}
           placeholder="Queremos saber tu opinión"

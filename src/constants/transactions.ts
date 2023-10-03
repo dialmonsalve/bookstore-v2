@@ -22,13 +22,13 @@ export const CONST_FORM_ORDER = {
       _id: 2,
       label: 'código',
       type: 'text',
-      name: 'code',
+      name: 'isbn',
     },
     {
       _id: 3,
       label: 'Nombre',
       type: 'text',
-      name: 'name',
+      name: 'title',
     },
 
   ],
@@ -37,7 +37,7 @@ export const CONST_FORM_ORDER = {
       _id: 4,
       label: 'Autor',
       type: 'text',
-      name: 'author',
+      name: 'authors',
     },
     {
       _id: 5,
@@ -90,13 +90,13 @@ export const INVENTORY_ENTRIES = {
 }
 export const TRANSACTION_VALIDATION_SCHEMA = {
   newOrder: {
-    code: formValidator()
+    isbn: formValidator()
       .string()
-      .required('Campo código es requerido')
+      .required('Campo ISBN es requerido')
       .min(3, 'El nombre debe tener al menos de 3 caracteres'),
     quantity: formValidator()
       .number()
-      .required('Campo código es requerido')
+      .required('Campo cantidad es requerido')
       .positiveNumber('La cantidad debe ser mayor a 1'),
     provider: formValidator()
       .string()

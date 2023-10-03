@@ -1,19 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useEmployeesStore } from "@/store/employee";
+import { useEmployeesStore } from "@/store";
 
 import { apiEmployee } from "@/api";
-import { IEmployee } from "@/types";
 
-export function useEmployee(employeeId: string, employee: IEmployee) {
+export const useEmployee = (employeeId?: string) => {
   const setEmployee = useEmployeesStore((state) => state.setEmployee);
 
-  return useQuery({
+  const getEmployeeByIdQuery = useQuery({
     queryKey: ["employee", employeeId],
     queryFn: async () => {
+      if (!employeeId) return;
       const data = await apiEmployee.getEmployeeById(employeeId);
       setEmployee(data);
       return data;
     },
   });
-}
+  return {
+    getEmployeeByIdQuery
+  }
+};

@@ -6,23 +6,23 @@ import { IBook, ICategory, FoundBooks } from "@/types";
 interface State {
   books: IBook[] | null;
   foundBooks: FoundBooks[] | null;
-  selectedBook: IBook | null;
-  categories: string[] |  null;
+  book: IBook | null | undefined;
+  categories: string[] | null;
 }
 
 interface Actions {
-  setBooks: (books: IBook[] | null) => void;
-  setBook: (book: IBook | null | undefined) => void;
-  setDeleteBook: (id: string) => void;
-  setFoundBooks: (foundBooks: FoundBooks[] | undefined | null) => void;
-  setCategories: (categories: ICategory[]  | null) => void;
+  setAllBooks: (books: IBook[] | null) => void;
+  setAllCategories: (categories: ICategory[] | null) => void;
+  setBookByISBN: (foundBook: IBook | null | undefined) => void;
+  setNewBook: (book: IBook | null | undefined) => void;
+  setFoundBooks: (foundBook: FoundBooks[] | undefined | null) => void;
 }
 
 const BOOK_INITIAL_STATE: State = {
   books: [],
   foundBooks: [],
-  selectedBook: {} as IBook,
   categories: [],
+  book: {} as IBook,
 };
 
 export const useBooksStore = create<State & Actions>()(
@@ -30,29 +30,36 @@ export const useBooksStore = create<State & Actions>()(
     (set, get) => {
       return {
         ...BOOK_INITIAL_STATE,
-        setBooks(newBooks) {
-          set({ books: newBooks }, false, "books");
+        setAllBooks(books) {
+          set({ books }, false, "books");
         },
-        setBook(selectedBook) {
-          set({ selectedBook }, false, "selectedBook");
+        setNewBook(book) {
+          set({ book }, false, "newBook");
         },
-        setDeleteBook(id) {
-          set(
-            (state) => ({
-              books: state.books?.filter((book) => {
-                return book._id !== id;
-              }),
-            }),
-            false,
-            "books"
-          );
+        setBookByISBN(foundBook) {
+          set({ book: foundBook }, false, "bookByISBN");
         },
+        // setDeleteBook(id) {
+        //   set(
+        //     (state) => ({
+        //       books: state.books?.filter((book) => {
+        //         return book._id !== id;
+        //       }),
+        //     }),
+        //     false,
+        //     "books"
+        //   );
+        // },
         setFoundBooks(foundBooks) {
           set({ foundBooks }, false, "foundBook");
         },
-        setCategories(categories) {
-          set({categories:categories?.map(category=>category.name)},  false, "categories")
-        }
+        setAllCategories(categories) {
+          set(
+            { categories: categories?.map((category) => category.name) },
+            false,
+            "categories"
+          );
+        },
       };
     },
     { name: "Books" }

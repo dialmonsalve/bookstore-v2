@@ -13,7 +13,7 @@
   grid-template-columns: 2fr 0.5fr;
   grid-template-rows: 1fr 0.5fr 0.5fr;
   padding: 1rem;
-  max-width: 70%;
+  width: 67%;
   gap: 2rem 3rem;
 
   &__inputs {
@@ -38,12 +38,12 @@
   }
 
   &__new-category {
-    align-self: flex-start;
     display: grid;
     gap: 1rem;
-    @include appearance()
+    @include appearance();
   }
   &__categories {
+    grid-column: 1 / 3;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -63,3 +63,4 @@
     align-self: center;
   }
 }
+

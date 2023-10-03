@@ -41,11 +41,12 @@ export const Modal = ({ typeModal, children }: ModalProps) => {
             alt={typeModal}
             width={200}
             height={200}
+            priority
           />
           <p className="modal__container--message">{messageModal}</p>
           <div className="modal__container--buttons">
             {children}
-            <Button onClick={handleCancelAction}>Cancelar</Button>
+            <Button backgroundColor="red"  onClick={handleCancelAction}>Cancelar</Button>
           </div>
         </div>
       </div>

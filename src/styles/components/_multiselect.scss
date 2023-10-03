@@ -5,14 +5,14 @@
   position: sticky;
   width: 100%;
   min-height: 4.2em;
-  border: 0.2em solid #777;
+  border: 0.2em solid white;
   display: flex;
   align-items: center;
   gap: .5em;
-  padding: 0.1em 3em 0.1em 1em;
+  padding: .3em 3em .3em .4em;
   border-radius: 1.5em;
   outline: none;
-  background-color: v.$color-white;
+  background-color: v.$color-gray-1;
 
   &:focus {
     border-color:v.$color-red-2;
@@ -23,6 +23,7 @@
     display: flex;
     gap: .5em;
     flex-wrap: wrap;
+    
 
     &--option-badge {
       display: flex;
@@ -35,6 +36,8 @@
       cursor: pointer;
       color: v.$color-white;
       outline: none;
+      font-size: v.$font-size - .3rem;
+      
 
       &:hover,
       &:focus {

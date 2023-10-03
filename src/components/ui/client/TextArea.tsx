@@ -4,7 +4,7 @@ import { ErrorMessage } from "./";
 import { ErrorMessages, InitialForm } from "@/types";
 
 interface TextAreaProps {
-  className: string;
+  className?: string;
   name: string;
   label: string;
   initialForm: Record<string, any>;

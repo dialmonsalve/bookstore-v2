@@ -18,11 +18,7 @@ export function useLogin(fieldForm: string) {
       return userAuth.handleLogin(data);
     },
 
-    onSuccess: async ({ hasError, message, user }, formData) => {
-      if (hasError) {
-        setAlert("error", true, message!);
-        return;
-      }
+    onSuccess: async (user, formData) => {
 
       queryClient.setQueriesData(
         [
@@ -35,5 +31,8 @@ export function useLogin(fieldForm: string) {
       setAlert("success", true, "Ingreso correcto");
       await signIn("credentials", formData);
     },
+    onError: (error:any) => {
+      setAlert("error", true, error.message!);
+    }
   });
 }

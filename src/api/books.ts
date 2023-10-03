@@ -2,30 +2,10 @@ import { IBook, ICategory } from "@/types";
 import { bookApi, searchBooksApi } from "./bookstoreApi";
 import { FoundBooks, GoogleBooks } from "@/types/googleBooks";
 import { URL_CONSTANTS } from "@/constants";
-import axios from "axios";
 
 interface DataBooks {
-  hasError: boolean;
-  books: IBook[] | null;
-  message?: string;
+  books: IBook[];
   totalBooks: number;
-}
-
-interface DataCategories {
-  hasError: boolean;
-  categories: ICategory[] | null;
-  message?: string;
-}
-
-interface DataCategory {
-  hasError: boolean;
-  category?: ICategory | null;
-  message?: string;
-}
-interface DataBook {
-  hasError: boolean;
-  book?: IBook | null;
-  message?: string;
 }
 
 // export const searchBooks = async (term: string) => {
@@ -52,88 +32,65 @@ export async function getBooks(page: number): Promise<DataBooks | null> {
   try {
     const { data } = await bookApi.get<DataBooks>("", { params });
     return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message);
-    }
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return null;
 }
 
 //! Create a book
 export async function createBook(
   book: IBook,
   username: string
-): Promise<DataBook> {
+): Promise<IBook | null> {
   if (!username) {
-    return {
-      hasError: true,
-      message: "Usuario no autorizado para esta acción",
-    };
+    throw new Error("Usuario no autorizado para esta acción");
   }
 
   try {
     const { data } = await bookApi.post("", { book, username });
 
     return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return {
-        hasError: true,
-        message: error.response?.data.message,
-      };
-    }
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return {
-    hasError: true,
-    message: "No pudo iniciar sesión - intente nuevamente",
-  };
+}
+
+//! Get book by ISBN
+export async function getBookByIsbn(isbn: string): Promise<IBook | null> {
+  try {
+    const { data } = await bookApi.get<IBook | null>(`/${isbn}`);
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
+  }
 }
 
 //! Get all categories
-export async function getCategories(): Promise<DataCategories | null> {
+export async function getCategories(): Promise<ICategory[] | null> {
   try {
-    const { data } = await bookApi.get<DataCategories>("/categories");
+    const { data } = await bookApi.get<ICategory[]>("/categories");  
     return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message);
-    }
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return null;
 }
 
 //! Create a category
 export async function createCategory(
   name: string,
   username?: string
-): Promise<DataCategory> {
+): Promise<ICategory | null> {
   if (!username) {
-    return {
-      hasError: true,
-      message: "Usuario no autorizado para esta acción",
-    };
+    throw new Error("Usuario no autorizado para esta acción");
   }
 
   try {
     const { data } = await bookApi.post("/categories", { name, username });
 
-    return {
-      hasError: false,
-      category: data,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return {
-        hasError: true,
-        message: error.response?.data.message,
-      };
-    }
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return {
-    hasError: true,
-    message: "No pudo iniciar sesión - intente nuevamente",
-  };
 }
 
 //! Search books on google books
@@ -187,7 +144,7 @@ export async function getSearchBooks(
         language,
         pageCount,
         publishedDate,
-        format: "printedBook",
+        format: "impreso",
         slug: "",
         imageLinks: thumbnail,
       };
@@ -195,8 +152,7 @@ export async function getSearchBooks(
     });
 
     return books;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    throw new Error(error.response?.data.message);
   }
-  return null;
 }

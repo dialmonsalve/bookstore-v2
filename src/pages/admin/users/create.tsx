@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 
-import { useRegisterEmployee } from "@/hooks/employee";
+import { useEmployeeMutation } from "@/hooks/employee";
 import { useFormStore } from "@/store/form";
 
 import { Layout } from "@/components/layouts/app";
@@ -22,7 +22,7 @@ const newEmployee = {
 };
 
 function CreateEmployeePage() {
-  const registerEmployee = useRegisterEmployee();
+  const {createEmployeeMutation} = useEmployeeMutation();
 
   const formState = useFormStore((state) => state.formState);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
@@ -39,13 +39,14 @@ function CreateEmployeePage() {
 
     if (!hasFormErrors) {
       const { repitePassword, ...newEmployee } = formState;
-      registerEmployee.mutate(newEmployee);
+      createEmployeeMutation.mutate(newEmployee);
     }
-  };
+  };  
+
   return (
     <Layout title="Usuarios">
       <Alert />
-      {registerEmployee.isLoading && <Spinner />}
+      {createEmployeeMutation.isLoading && <Spinner />}
 
       <form
         method="POST"
@@ -72,9 +73,9 @@ function CreateEmployeePage() {
           <Button
             type="submit"
             backgroundColor="green"
-            disabled={!!errors || registerEmployee.isLoading}
+            disabled={!!errors || createEmployeeMutation.isLoading}
           >
-            {`${registerEmployee.isLoading ? "Espere" : "Crear Cuenta"} `}
+            {`${createEmployeeMutation.isLoading ? "Espere" : "Crear Cuenta"} `}
           </Button>
         </div>
       </form>

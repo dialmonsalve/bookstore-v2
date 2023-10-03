@@ -5,7 +5,7 @@ import {
   HeaderTransaction,
   Table,
 } from "../client";
-import { formOptions, useFormStore, useUITransactionStore } from "@/store";
+import { FormOptions, useFormStore, useUITransactionStore } from "@/store";
 import { ErrorMessages, InitialForm } from "@/types";
 import { ReactNode } from "react";
 
@@ -17,7 +17,7 @@ interface TransactionsProps {
   initialForm: Record<string, any>;
   mainForm: Record<string, any>;
   nameTableFields: string[];
-  newFieldForm: formOptions[];
+  newFieldForm: FormOptions[];
   productType?: string;
   tableTitles: string[];
   onClick?: () => void;
@@ -62,9 +62,9 @@ export const Transactions = ({
             classNameLabel="form-control__label"
             errors={errors}
           />
-          {productType === "book" && (
+          {productType === "Book" && (
             <Button
-              disabled={mainForm.code === ""}
+              disabled={mainForm.isbn === ""}
               size="small"
               buttonStyle="square"
               borderRadius="1rem"
@@ -82,7 +82,7 @@ export const Transactions = ({
             handleAddItem(mainForm);
             handleResetForm(formReset);
           }}
-          disabled={!!errors}
+          disabled={!!errors  || mainForm.title === ''}
         >
           add
         </Button>

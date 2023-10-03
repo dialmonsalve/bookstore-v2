@@ -1,23 +1,24 @@
 import { IClient } from ".";
 
-interface IOrderPurchase {
-  nit?: string,
-  productType: string,
-  provider: string,
-  observations?: string,
-  employee: objectId | string,
-  consecutive: number
-  status: 'abierta' | 'cerrada' | 'anulada'
-  createAt: string
-  updateAt: string
-  items: IOrderItem[]
+interface IPurchaseOrder {
+  nit?: string;
+  productType: string;
+  provider: string;
+  observations?: string;
+  consecutive?: number;
+  status?: "open" | "close" | "annulled";
+  createAt?: string;
+  updateAt?: string;
+  items: IOrderItem[];
+  createdFor?: IUser;
+  updatedFor?: IUser;
 }
 export interface IOrderItem {
   _id: string;
-  isbn: string,
-  name?: string,
-  quantity: number,
-  author?: string,
-  editorial?: string,
-  size?: string,
+  isbn: string;
+  title?: string;
+  quantity: number;
+  authors?: string;
+  editorial?: string;
+  size?: string;
 }

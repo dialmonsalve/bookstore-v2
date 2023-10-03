@@ -4,10 +4,7 @@ import { db } from "@/database";
 import { Category, Employee } from "@/models";
 import { ICategory } from "@/types";
 
-type Data =
-  | { message: string }
-  | { categories: ICategory[] }
-  | { _id: string; name: string };
+type Data = { message: string } | ICategory[] | { _id: string; name: string };
 
 export default function handler(
   req: NextApiRequest,
@@ -34,7 +31,7 @@ async function getCategories(req: NextApiRequest, res: NextApiResponse<Data>) {
       .sort({ name: 1 })
       .lean();
 
-    return res.status(200).json({ categories });
+    return res.status(200).json(categories);
   } catch (error: any) {
     console.error(error.message);
 

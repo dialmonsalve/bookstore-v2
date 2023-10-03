@@ -57,8 +57,8 @@ const BookSchema = new Schema<IBook>(
     format: {
       type: String,
       enum: {
-        values: ["", "eBook", "audio libro", "impreso", "PDF", "EPUB", "MOBI", "cartone"],
-        message: `{VALUE no es un tipo válido}`,
+        values: [ "eBook", "audio libro", "impreso", "PDF", "EPUB", "MOBI", "cartone"],
+        message: `{VALUE} no es un tipo válido`,
       },
       default: "impreso",
     },
@@ -79,12 +79,10 @@ const BookSchema = new Schema<IBook>(
     },
     createdFor: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: "Employee",
     },
     updatedFor: {
       type: Schema.Types.ObjectId,
-      required: true,
       ref: "Employee",
     },
     isAvailable: {

@@ -12,7 +12,7 @@ export const FooterTransaction = ({ initialForm }: FooterTransaction) => {
   return (
     <>
       <TextArea
-        className="transactions-footer__left form-control__input"
+        className="transactions-footer__left"
         initialForm={initialForm}
         name="observations"
         placeholder="observaciones"
