@@ -6,7 +6,7 @@ import { getProviders, getSession } from "next-auth/react";
 
 import { useLogin } from "@/hooks/auth";
 import { useFormStore } from "@/store/form";
-import { useLoginProviderOrLogout } from "@/hooks/auth/useLoginProviderOrLogout";
+import { useLoginProvider } from "@/hooks/auth/useLoginProvider";
 
 import { Layout } from "@/components/layouts/e-commerce";
 import { Alert, Button, FormControl, Spinner } from "@/components/ui/client";
@@ -34,7 +34,7 @@ const options = [
 ];
 
 function Login() {
-  const { loginProvider } = useLoginProviderOrLogout();
+  const { loginProviderMutation } = useLoginProvider();
 
   const [providers, setProviders] = useState<any>({});
   const loginUser = useLogin("email");
@@ -90,7 +90,7 @@ function Login() {
           initialForm={login}
         />
 
-        <div className="form__buttons">
+        <div className="container-button">
           <Button type="submit" backgroundColor="blue" disabled={!!errors}>
             Login
           </Button>
@@ -110,7 +110,7 @@ function Login() {
               provider.name === "Google" ? "outline-red" : "outline-blue"
             }
             key={provider.id}
-            onClick={() => loginProvider.mutate(provider.id)}
+            onClick={() => loginProviderMutation.mutate(provider.id)}
             width="30rem"
           >
             {" "}

@@ -19,7 +19,7 @@ interface ItemsOrder {
   isbn: string;
   title: string;
   quantity: number;
-  authors: string;
+  authors: string[];
   editorial: string;
   size: string;
   productType: string;
@@ -33,7 +33,7 @@ const itemsOrder: ItemsOrder = {
   isbn: "",
   title: "",
   quantity: 1,
-  authors: "",
+  authors: [],
   editorial: "",
   size: "",
   productType: "",
@@ -49,9 +49,11 @@ export const usePurchaseOrders = () => {
   const formState = useFormStore<ItemsOrder>((state) => state.formState);
   const isTouched = useFormStore((state) => state.isTouched);
   const handleBlur = useFormStore((state) => state.handleBlur);
+  const handleResetForm = useFormStore(state => state.handleResetForm)
 
   const formItems = useUITransactionStore((state) => state.formItems);
   const disabled = useUITransactionStore((state) => state.disabled);
+  const clearAllItems = useUITransactionStore((state) => state.clearAllItems);
 
   const createPurchaseOrder = useCreatePurchaseOrder();
 
@@ -128,6 +130,8 @@ export const usePurchaseOrders = () => {
     setShowModal,
     handleFieldChange,
     handleBlur,
+    handleResetForm,
+    clearAllItems,
     setNewFieldsForm,
   };
 };

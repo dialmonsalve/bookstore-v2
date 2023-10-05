@@ -10,13 +10,9 @@ import {
 } from "@/components/ui/client";
 
 import { Transactions } from "@/components/ui/services/Transactions";
-import {
-  usePurchaseOrders,
-} from "@/hooks/transactions";
-
+import { usePurchaseOrders } from "@/hooks/transactions";
 
 import { CONST_FORM_ORDER } from "@/constants";
-
 
 export default function CreatePurchaseOrdersPage() {
   const {
@@ -33,7 +29,9 @@ export default function CreatePurchaseOrdersPage() {
     session,
     handleBlur,
     handleFieldChange,
+    handleResetForm,
     setNewFieldsForm,
+    clearAllItems,
     setShowModal,
   } = usePurchaseOrders();
 
@@ -44,8 +42,18 @@ export default function CreatePurchaseOrdersPage() {
   const handleCreateOrder = (e: FormEvent) => {
     e.preventDefault();
 
-    const newItems = formItems.map(({ _id, ...rest }) => rest);
+    const newItems = formItems.map(({ _id, authors, ...rest }) => {
+      const authorsArray =
+        typeof authors === "string"
+          ? authors.split(",").map(item => item.trim())
+          : authors;
 
+      return {
+        _id,
+        authors: authorsArray,
+        ...rest,
+      };
+    });
     const newPurchaseOrder = {
       nit,
       productType,
@@ -53,20 +61,29 @@ export default function CreatePurchaseOrdersPage() {
       observations,
       items: [...newItems],
     };
-    
     createPurchaseOrder.mutate({
       purchaseOrder: newPurchaseOrder,
       username: session?.username,
     });
+    if (createPurchaseOrder.isSuccess) {
+      handleResetForm(itemsOrder);
+      clearAllItems();
+    }
+  };
+
+  const handleSearchBook = () => {
+    getBookByISBNMutation.mutate(formState.isbn);
+  };
+
+  const handleBack = () => {
+    router.back();
+    clearAllItems();
+    handleResetForm(itemsOrder);
   };
 
   const handleNavigation = () => {
     setShowModal(false);
     router.push("/bookstore/books/create");
-  };
-
-  const handleSearchBook = () => {
-    getBookByISBNMutation.mutate(formState.isbn);
   };
 
   return (
@@ -75,6 +92,7 @@ export default function CreatePurchaseOrdersPage() {
         <Button onClick={handleNavigation}>Crear</Button>
       </Modal>
       <Layout title="Crear Ordenes de compra">
+        <Button buttonStyle="iconButton" ico="back" onClick={handleBack} />
         <Alert />
         <div className="transactions">
           <form

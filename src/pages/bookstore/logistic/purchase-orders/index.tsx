@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layouts/app";
-import { Button } from "@/components/ui/client";
+import { Alert, Button } from "@/components/ui/client";
 import { useRouter } from "next/router";
 
 export default function PurchaseOrdersPage() {
@@ -8,6 +8,7 @@ export default function PurchaseOrdersPage() {
 
   return (
     <Layout title="Ordenes de compra" >
+      <Alert />
       <Button
         buttonStyle="iconButton"
         ico="plus"

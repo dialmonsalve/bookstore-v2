@@ -63,21 +63,21 @@ export const Transactions = ({
             errors={errors}
           />
           {productType === "Book" && (
-            <Button
-              disabled={mainForm.isbn === ""}
-              size="small"
-              buttonStyle="square"
-              borderRadius="1rem"
-              onClick={onClick}
-            >
-              buscar
-            </Button>
-          )}
+            <div className="container-button" >
+
+              <Button
+                disabled={mainForm.isbn.length <= 3}
+                size="small"
+                onClick={onClick}
+              >
+                buscar
+              </Button>
+            </div>
+            )}
         </div>
+        <div className="container-button" >
         <Button
-          buttonStyle="square"
           backgroundColor="green"
-          borderRadius=".8rem"
           onClick={() => {
             handleAddItem(mainForm);
             handleResetForm(formReset);
@@ -86,6 +86,7 @@ export const Transactions = ({
         >
           add
         </Button>
+        </div>
 
         <Table
           data={formItems}

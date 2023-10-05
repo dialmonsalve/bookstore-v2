@@ -36,7 +36,7 @@ export const CONST_FORM_ORDER = {
     {
       _id: 4,
       label: 'Autor',
-      type: 'text',
+      type: 'array',
       name: 'authors',
     },
     {

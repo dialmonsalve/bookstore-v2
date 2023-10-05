@@ -1,106 +1,146 @@
-@use '../abstract/variables' as v;
-@use '../abstract/mixins' as m;
+@use "../abstract/variables" as v;
+@use "../abstract/mixins" as m;
+
+@mixin btn-color($color, $hover-color) {
+
+  background-color: $color;
+  color: v.$color-white;
+
+  &:hover {
+    background-color: $hover-color;
+  }
+}
+
+@mixin btn-outline($color, $hoverColor) {
+  background-color: transparent;
+  color: $color;
+  outline: 1px solid $color;
+
+  &:hover {
+    background-color: $hoverColor;
+    color: v.$color-white;
+  }
+}
+
+.container-button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+
+  @include m.responsive(phone) {
+    flex-direction: column;
+  }
+}
 
 .btn {
-  display: block;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin: 0 auto;
-  outline: 1px solid v.$color-white;
-  text-transform: uppercase;
+  overflow: hidden;
+  & span {
+    position: absolute;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 50%;
+    animation: animate .6s linear infinite;
+  }
+
+  @keyframes animate {
+    0% {
+      width: 0px;
+      height: 0px;
+      opacity: .5;
+    }
+    100% {
+      width: 500px;
+      height: 500px;
+      opacity: 0;
+    }
+  }
 
   &--transparent {
-    @include m.btn-color(transparent, v.$color-white);
-    outline: 1px solid  v.$color-black-3;
+    @include btn-color(transparent, v.$color-white);
+    outline: 1px solid v.$color-black-3;
   }
   &--blue {
-    @include m.btn-color(v.$color-blue-3, v.$color-primary);
+    @include btn-color(v.$color-blue-3, v.$color-primary);
   }
 
   &--green {
-    @include m.btn-color(v.$color-green-3, v.$color-secondary-dark);
+    @include btn-color(v.$color-green-3, v.$color-secondary-dark);
   }
 
   &--yellow {
-    @include m.btn-color(v.$color-yellow-2, v.$color-yellow-3);
+    @include btn-color(v.$color-yellow-2, v.$color-yellow-3);
   }
 
   &--red {
-    @include m.btn-color(v.$color-red-2, v.$color-red-3);
+    @include btn-color(v.$color-red-2, v.$color-red-3);
   }
 
   &--purple {
-    @include m.btn-color(v.$color-purple-2, v.$color-purple-3);
+    @include btn-color(v.$color-purple-2, v.$color-purple-3);
   }
 
   &--black {
-    @include m.btn-color(rgba(0, 0, 0, 1), rgba(0, 0, 0, .8));
+    @include btn-color(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8));
   }
 
   &--outline-blue {
-    @include m.btn-outline(v.$color-blue-3, v.$color-primary);
+    @include btn-outline(v.$color-blue-3, v.$color-primary);
   }
 
   &--outline-green {
-    @include m.btn-outline(v.$color-green-3, v.$color-secondary-dark);
+    @include btn-outline(v.$color-green-3, v.$color-secondary-dark);
   }
 
   &--outline-yellow {
-    @include m.btn-outline(v.$color-yellow-2, v.$color-yellow-3);
+    @include btn-outline(v.$color-yellow-2, v.$color-yellow-3);
   }
 
   &--outline-red {
-    @include m.btn-outline(v.$color-red-2, v.$color-red-3);
+    @include btn-outline(v.$color-red-2, v.$color-red-3);
   }
 
   &--outline-purple {
-    @include m.btn-outline(v.$color-purple-2, v.$color-purple-3);
+    @include btn-outline(v.$color-purple-2, v.$color-purple-3);
   }
 
   &--outline-black {
-    @include m.btn-outline(black, rgba(0, 0, 0, .8));
-  }
-
-  &--small,
-  &--medium,
-  &--large {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include btn-outline(black, rgba(0, 0, 0, 0.8));
   }
 
   &--small {
-    font-size: v.$font-size - .5rem;
-    padding: 1rem 1rem;
+    font-size: v.$font-size - 0.5rem;
+    padding: 0.8rem 1rem;
+    border-radius: .5rem;
 
     @include m.responsive(phone) {
-      padding: .6rem ;
-
+      padding: 0.6rem;
     }
   }
 
   &--medium {
-    font-size: v.$font-size - .2rem;
-    padding: 1.1rem;
+    font-size: v.$font-size - 0.2rem;
+    padding: 1.1rem 1.3rem;
+    border-radius: .8rem;
+
 
     @include m.responsive(phone) {
       font-size: v.$font-size;
       padding: 1.2rem 1rem;
-      text-align: center;
     }
   }
 
   &--large {
-    font-size: v.$font-size + .4rem;
-    padding: 1.3rem;
-    text-align: center;
-    width: 80%;
+    font-size: v.$font-size + 0.4rem;
+    padding: 1.3rem 1.5rem;
+    border-radius: .8rem;
+
 
     @include m.responsive(phone) {
       padding: 1.2rem 0rem;
     }
   }
-
 }
 
 .disabled {
@@ -112,84 +152,4 @@
     background-color: v.$color-gray-2;
     cursor: not-allowed;
   }
-}
-
-.ico-disabled {
-  filter: invert(22%) sepia(1) saturate(120%) hue-rotate(200deg) brightness(90%) contrast(119%);
-
-  &:hover {
-    cursor: not-allowed;
-  }
-}
-
-.btn-ico {
-  width: 4rem;
-  height: 4rem;
-  transition: all .3s;
-}
-
-.trash {
-  @include m.btn-ico('/icons/trash-normal.svg');
-  width: 2.5rem;
-
-  &:hover {
-    background-image: url('/icons/trash-full.svg');
-
-    @include m.responsive(phone) {
-      @include m.btn-ico('/icons/trash-normal.svg');
-    }
-  }
-}
-
-.plus {
-  @include m.btn-ico('/icons/plus.svg');
-  z-index: 4;
-
-  &:hover {
-    transform: scale(1.2);
-  }
-
-  @include m.responsive(phone) {
-    // top: 20vh;
-    // left: 80%;
-    // width: 4rem;
-  }
-}
-
-
-.edit {
-  @include m.btn-ico('/icons/edit.svg');
-  width: 2.5rem;
-
-  &:hover {
-    transform: rotate(5deg);
-
-    @include m.responsive(phone) {
-      transform: rotate(0);
-    }
-  }
-}
-
-.back {
-  @include m.btn-ico('/icons/back.svg');
-  width: 8rem;
-  height: 6rem;
-  top: 13vh;
-  left: 12%;
-  position: absolute;
-  z-index: 3;
-  
-  &:hover {
-    transform: scale(1.1);
-  }
-  @include m.responsive(phone) {
-    top: 18vh;
-    left: 6%;
-    width: 6rem;
-
-    &:hover {
-      transform: scale(1);
-    }
-  }
-
 }

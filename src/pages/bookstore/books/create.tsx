@@ -7,17 +7,15 @@ import { CreateEditBook } from "@/components/ui/services";
 import { useNewBook } from "@/hooks/transactions";
 
 function CreateBooksPage() {
-
   const {
     formState,
     foundBooks,
     session,
-    setShowModal,
     showModal,
     createBookMutation,
     getCategoriesQuery,
-    searchBookMutation
-
+    searchBookMutation,
+    setShowModal,
   } = useNewBook();
 
   const handleCreateBook = (e: FormEvent<HTMLFormElement>) => {
@@ -25,7 +23,7 @@ function CreateBooksPage() {
 
     const authors =
       typeof formState.authors === "string"
-        ? formState.authors.replaceAll(" ", "").split(",")
+        ? formState.authors.split(",").map((item) => item.trim())
         : formState.authors;
 
     const createBook = {
@@ -44,7 +42,8 @@ function CreateBooksPage() {
   return (
     <Layout title="Crea Libros">
       <Alert />
-      {getCategoriesQuery.isLoading || (searchBookMutation.isLoading && <Spinner />)}
+      {getCategoriesQuery.isLoading ||
+        (searchBookMutation.isLoading && <Spinner />)}
 
       <CreateEditBook onSubmit={handleCreateBook} />
 

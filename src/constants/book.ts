@@ -23,7 +23,7 @@ export const NEW_BOOK = {
     {
       _id: 4,
       name: "authors",
-      type: "text",
+      type: "array",
       label: "Autores",
     },
     {
@@ -83,7 +83,7 @@ export const NEW_BOOK = {
     },
   ],
   initialForm: {
-    authors: "",
+    authors: [],
     categories: null,
     cost: 0,
     description: "",

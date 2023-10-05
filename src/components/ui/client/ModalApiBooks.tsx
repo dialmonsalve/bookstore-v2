@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Button } from ".";
 
 import { FoundBooks } from "@/types/googleBooks";
-import {  useFormStore, useUisStore } from "@/store";
+import { useBooksStore, useFormStore, useUisStore } from "@/store";
 import { IBook } from "@/types";
 
 interface GoogleApiBooksProps {
@@ -10,26 +10,25 @@ interface GoogleApiBooksProps {
 }
 
 export const ModalApiBooks = ({ googleBook }: GoogleApiBooksProps) => {
-
   const setShowModal = useUisStore((state) => state.setShowModal);
 
   const formState = useFormStore((state) => state.formState);
   const setFormState = useFormStore((state) => state.setFormState);
-  
+  const setNewBook = useBooksStore((state) => state.setNewBook);
+
   const resumeDescription =
-  googleBook.description.length < 500
+    googleBook.description.length < 500
       ? googleBook.description
       : `${googleBook.description.substring(0, 500)}...`;
 
   const handleInsertBook = () => {
-
     const slug =
-    googleBook.title
-      .trim()
-      .replaceAll(" ", "-")
-      .replaceAll("'", " ")
+      googleBook.title
+        .trim()
+        .replaceAll(" ", "-")
+        .replaceAll("'", " ")
         .toLocaleLowerCase() || "";
-    
+
     const book: IBook = {
       authors: googleBook.authors,
       categories: formState.categories,
@@ -43,10 +42,11 @@ export const ModalApiBooks = ({ googleBook }: GoogleApiBooksProps) => {
       publishedDate: googleBook.publishedDate,
       slug,
       title: googleBook.title,
-      tags:formState.tags
+      tags: formState.tags,
     };
 
     setFormState(book);
+    setNewBook(book);
     setShowModal(false);
   };
 

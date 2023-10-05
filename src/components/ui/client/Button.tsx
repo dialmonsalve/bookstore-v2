@@ -1,55 +1,85 @@
-import { CSSProperties, ReactNode } from "react";
+import { CSSProperties, ReactNode, useEffect, useRef, MouseEvent } from "react";
 
 type Color =
-  | 'blue' | 'red' | 'green' | 'purple' | 'yellow'
-  | 'outline-blue' | 'outline-red' | 'outline-green' | 'outline-purple' | 'outline-yellow' | 'transparent' |'black' | 'outline-black';
+  | "blue"
+  | "red"
+  | "green"
+  | "purple"
+  | "yellow"
+  | "outline-blue"
+  | "outline-red"
+  | "outline-green"
+  | "outline-purple"
+  | "outline-yellow"
+  | "transparent"
+  | "black"
+  | "outline-black";
 
 interface ButtonProps {
   backgroundColor?: Color;
-  borderRadius?:string;
-  buttonStyle?: 'normal' | 'iconButton' | 'square'
+  buttonStyle?: "normal" | "iconButton" | "points" | "filled";
   children?: string | ReactNode;
-  color?: string
-  disabled?: boolean
-  height?: string;
+  disabled?: boolean;
   ico?: string;
-  margin?: string
-  size?: 'small' | 'medium' | 'large';
-  type?: 'button' | 'submit';
-  width?: string;
+  size?: "small" | "medium" | "large";
+  type?: "button" | "submit";
   onClick?: () => void;
 
   style?: CSSProperties;
-  className?: string
   top?: string;
   bottom?: string;
   left?: string;
   right?: string;
-  position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed'
-
+  position?: "static" | "relative" | "absolute" | "sticky" | "fixed";
 }
 
 export const Button = ({
-  backgroundColor = 'blue',
-  borderRadius,
+  backgroundColor = "blue",
   bottom,
-  buttonStyle = 'normal',
+  buttonStyle = "normal",
   children,
-  className,
   disabled,
-  height,
   ico,
   left,
   position,
   right,
-  size = 'medium',
+  size = "medium",
   top,
-  type = 'button',
-  width,
+  type = "button",
   ...props
 }: ButtonProps) => {
+  const isDisabled = disabled ? "disabled" : "";
 
-  const isDisabled = disabled ? 'disabled' : '';
+  const button = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const btnElement = button.current;
+
+    const ripple = (e: MouseEvent<HTMLButtonElement>) => {
+      if (button.current) {
+        const rect = button.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const ripples = document.createElement("span");
+        ripples.style.left = `${x}px`;
+        ripples.style.top = `${y}px`;
+
+        button.current.appendChild(ripples);
+        setTimeout(() => {
+          ripples.remove();
+        }, 600);
+      }
+    };
+    btnElement?.addEventListener("click", ripple as unknown as EventListener);
+
+    return () => {
+      btnElement?.removeEventListener(
+        "click",
+        ripple as unknown as EventListener
+      );
+    };
+  }, []);
 
   const stylePlus: CSSProperties = {
     top,
@@ -57,54 +87,59 @@ export const Button = ({
     left,
     right,
     position,
-    width,
-    height:width
-  }
+  };
 
-  if (buttonStyle === 'normal') {
-
+  if (buttonStyle === "normal") {
     return (
       <button
         type={type}
-        className={`btn btn--${backgroundColor} btn--${size} ${isDisabled} ${className || ""}`}
-        style={{ width, borderRadius:'1rem', height }}
+        className={`btn btn--${backgroundColor} btn--${size} ${isDisabled}`}
         disabled={disabled}
+        ref={button}
         {...props}
       >
         {children}
       </button>
-    )
+    );
   }
-
-  
-  if (buttonStyle === 'square') {
-
+  if (buttonStyle === "points") {
     return (
       <button
         type={type}
-        className={`btn btn--${backgroundColor} btn--${size} ${isDisabled} ${className || ""}`}
-        style={{ width, borderRadius }}
+        className={`btn-points points points--${backgroundColor}`}
         disabled={disabled}
+        {...props}
+      >
+        <span></span>
+        <span></span>
+        {children}
+      </button>
+    );
+  }
+
+  if (buttonStyle === "filled") {
+    return (
+      <button
+        type={type}
+        className={`btn-filled filled btn--${size} ${isDisabled}`}
+        disabled={disabled}
+        ref={button}
         {...props}
       >
         {children}
       </button>
-    )
+    );
   }
 
-  if (buttonStyle === 'iconButton') {
-
+  if (buttonStyle === "iconButton") {
     return (
       <button
         type={type}
-        className={`btn-ico ${ico} ${isDisabled ? 'ico-disabled' : ''}`}
+        className={`btn-ico ${ico} ${isDisabled ? "ico-disabled" : ""}`}
         style={stylePlus}
         disabled={disabled}
         {...props}
-      >
-      </button>
-    )
-
+      ></button>
+    );
   }
-
-}
+};

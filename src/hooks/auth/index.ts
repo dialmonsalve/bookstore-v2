@@ -1,4 +1,3 @@
-export * from './useLogin';
-export * from './useRegisterClient';
-export * from './useAuthentication';
-export * from './useLoginProviderOrLogout';
+export * from "./useLogin";
+export * from "./useAuthentication";
+export * from "./useLoginProvider";

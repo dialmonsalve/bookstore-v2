@@ -65,7 +65,7 @@ function PrivateLoginPage() {
           classNameInput="form-control__input"
           classNameLabel="form-control__label"
         />
-        <div className="form__buttons">
+        <div className="container-button">
           <Button type="submit" backgroundColor="blue" disabled={!!errors}>
             Login
           </Button>

@@ -69,7 +69,7 @@ function CreateEmployeePage() {
           errors={errors}
         />
 
-        <div style={{ display: "flex" }}>
+        <div className="container-button">
           <Button
             type="submit"
             backgroundColor="green"

@@ -1,0 +1,109 @@
+@use "../abstract/variables" as v;
+@use "../abstract/mixins" as m;
+
+@mixin btnPoints($color, $backgroundColor) {
+  color: $color;
+  &:hover {
+    color: v.$color-white;
+    background-color: $backgroundColor;
+    box-shadow: 0 0 20px $color;
+    border-color: $color;
+  }
+
+  &:hover span:nth-child(1) {
+    right: 80%;
+    transform: rotate(180deg);
+    color: $color;
+    background-color: $color;
+  }
+  &:hover span:nth-child(2) {
+    left: 80%;
+    transform: rotate(90deg);
+    color: $color;
+    background-color: $color;
+  }
+}
+
+.btn-points {
+  border: 2px solid;
+  padding: 1.5rem 3rem;
+}
+
+.points {
+  font-weight: 900;
+  border-radius: 0.7rem;
+
+  &--blue {
+    @include btnPoints(v.$color-blue-3, #001a2b);
+  }
+  &--red {
+    @include btnPoints(v.$color-red-3, v.$color-red-2);
+  }
+  &--green {
+    @include btnPoints(v.$color-green-3, v.$color-green-2);
+  }
+
+  & span:nth-child(n) {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: 2px solid;
+    transition: all 0.6s ease;
+  }
+  & span:nth-child(1) {
+    right: 10%;
+    top: -8px;
+    background-color: v.$color-white;
+  }
+  & span:nth-child(2) {
+    left: 10%;
+    bottom: -8px;
+    background-color: v.$color-white;
+  }
+}
+
+.btn-filled {
+  color: #fff;
+  z-index: 2;
+  border: 2px solid white;
+  padding: 1rem;
+}
+
+.filled {
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 120px;
+    left: 0;
+    bottom: -70%;
+    border-radius: 20%;
+    background-color: #151e3f;
+    z-index: -1;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgb(10, 157, 255);
+    z-index: -2;
+  }
+  &:hover::before {
+    animation: btn-animation 2s linear both;
+  }
+}
+
+@keyframes btn-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    bottom: 100px;
+    transform: rotate(45deg);
+  }
+}

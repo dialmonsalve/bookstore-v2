@@ -1,0 +1,88 @@
+@use "../abstract/variables" as v;
+@use "../abstract/mixins" as m;
+
+@mixin btn-ico($url){
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 100%;
+  background-image: url($url);
+}
+
+.ico-disabled {
+  filter: invert(22%) sepia(1) saturate(120%) hue-rotate(200deg) brightness(90%)
+    contrast(119%);
+
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
+.btn-ico {
+  width: 4rem;
+  height: 4rem;
+  transition: all 0.3s;
+}
+
+.trash {
+  @include btn-ico("/icons/trash-normal.svg");
+  width: 2.5rem;
+
+  &:hover {
+    background-image: url("/icons/trash-full.svg");
+
+    @include m.responsive(phone) {
+      @include btn-ico("/icons/trash-normal.svg");
+    }
+  }
+}
+
+.plus {
+  @include btn-ico("/icons/plus.svg");
+  z-index: 4;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  @include m.responsive(phone) {
+    // top: 20vh;
+    // left: 80%;
+    // width: 4rem;
+  }
+}
+
+.edit {
+  @include btn-ico("/icons/edit.svg");
+  width: 2.5rem;
+
+  &:hover {
+    transform: rotate(5deg);
+
+    @include m.responsive(phone) {
+      transform: rotate(0);
+    }
+  }
+}
+
+.back {
+  @include btn-ico("/icons/back.svg");
+  width: 8rem;
+  height: 6rem;
+  top: 13vh;
+  left: 12%;
+  position: absolute;
+  z-index: 3;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  @include m.responsive(phone) {
+    top: 18vh;
+    left: 6%;
+    width: 6rem;
+
+    &:hover {
+      transform: scale(1);
+    }
+  }
+}

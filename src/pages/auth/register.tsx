@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
 
-import { useRegisterCLient } from "@/hooks/auth";
+import { useLoginProvider } from "@/hooks/auth";
 import { useFormStore } from "@/store/form";
 
 import { CreateEditPerson } from "@/components/ui/services/CreateEditPerson";
@@ -29,7 +29,7 @@ function CreateCLientPage() {
   const formState = useFormStore<IClient>(state => state.formState)
   const checkFormErrors = useFormStore(state => state.checkFormErrors)
   const errors = formValidator().getErrors(formState, USER_VALIDATION_SCHEMA.newClient);
-  const registerCLient = useRegisterCLient();
+  const {registerClientMutation} = useLoginProvider();
 
   const handleRegisterClient = async (e: FormEvent) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ function CreateCLientPage() {
 
     if (!hasFormErrors) {
       const { repitePassword, ...restFormState } = formState;
-      registerCLient.mutate(restFormState)
+      registerClientMutation.mutate(restFormState)
     }
   }
 
@@ -65,7 +65,7 @@ function CreateCLientPage() {
           isEmployee={false}
         />
 
-        <div style={{ display: "flex" }}>
+        <div className="container-button">
           <Button type="submit" backgroundColor="green">
             Crear Cuenta
           </Button>

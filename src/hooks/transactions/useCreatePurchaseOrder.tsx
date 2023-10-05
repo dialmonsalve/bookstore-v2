@@ -1,11 +1,14 @@
 import { transactions } from "@/api";
-import { useUisStore } from "@/store";
+import {  useUisStore } from "@/store";
 import { IPurchaseOrder } from "@/types/order";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 
 export function useCreatePurchaseOrder() {
   const queryClient = useQueryClient();
   const setAlert = useUisStore((state) => state.setAlert);
+  const router = useRouter()
+
   return useMutation({
     mutationFn: ({
       purchaseOrder,
@@ -17,6 +20,7 @@ export function useCreatePurchaseOrder() {
     onSuccess: (purchaseOrder) => {
       queryClient.setQueriesData(["purchaseOrder"], purchaseOrder);
       queryClient.invalidateQueries(["purchaseOrder"]);
+      router.push('/bookstore/logistic/purchase-orders')
       setAlert("success", true, "La orden de compra se ha creado con éxito");
     },
     onError: (error: any) => {
