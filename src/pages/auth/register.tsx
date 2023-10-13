@@ -3,33 +3,34 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
 
-import { useLoginProvider } from "@/hooks/auth";
+import { UseLoginClient } from "@/hooks/auth";
 import { useFormStore } from "@/store/form";
 
-import { CreateEditPerson } from "@/components/ui/services/CreateEditPerson";
+import { CreateEditPerson } from "@/components/views";
 import { Layout } from "@/components/layouts/e-commerce";
-import { Alert, Button } from "@/components/ui/client";
+import { Alert, Button } from "@/components/ui";
 
 import { formValidator } from "@/helpers";
 import { USER_VALIDATION_SCHEMA } from "@/constants";
 import { IClient } from "@/types";
 
-
 const newClient = {
-  name: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  password: '',
-  repitePassword: ''
+  name: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  password: "",
+  repitePassword: "",
 };
 
 function CreateCLientPage() {
-  
-  const formState = useFormStore<IClient>(state => state.formState)
-  const checkFormErrors = useFormStore(state => state.checkFormErrors)
-  const errors = formValidator().getErrors(formState, USER_VALIDATION_SCHEMA.newClient);
-  const {registerClientMutation} = useLoginProvider();
+  const formState = useFormStore<IClient>((state) => state.formState);
+  const checkFormErrors = useFormStore((state) => state.checkFormErrors);
+  const errors = formValidator().getErrors(
+    formState,
+    USER_VALIDATION_SCHEMA.newClient
+  );
+  const registerClient = UseLoginClient();
 
   const handleRegisterClient = async (e: FormEvent) => {
     e.preventDefault();
@@ -38,9 +39,9 @@ function CreateCLientPage() {
 
     if (!hasFormErrors) {
       const { repitePassword, ...restFormState } = formState;
-      registerClientMutation.mutate(restFormState)
+      registerClient.mutate(restFormState);
     }
-  }
+  };
 
   return (
     <Layout

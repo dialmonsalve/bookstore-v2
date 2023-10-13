@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 
-import { InputSearch } from "@/components/ui/client";
+import { InputSearch } from "@/components/ui";
 
 export const Navbar = () => {
   const [search, setSearch] = useState("");

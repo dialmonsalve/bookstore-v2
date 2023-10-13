@@ -1,15 +1,20 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent } from "react";
 import { GetServerSideProps } from "next";
-import Image from "next/image";
+
 import Link from "next/link";
-import { getProviders, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 import { useLogin } from "@/hooks/auth";
 import { useFormStore } from "@/store/form";
-import { useLoginProvider } from "@/hooks/auth/useLoginProvider";
 
 import { Layout } from "@/components/layouts/e-commerce";
-import { Alert, Button, FormControl, Spinner } from "@/components/ui/client";
+import {
+  Alert,
+  Button,
+  FormControl,
+  LoginProvider,
+  Spinner,
+} from "@/components/ui";
 
 import { LOGIN_VALIDATION_SCHEMA } from "@/constants";
 import { formValidator } from "@/helpers";
@@ -34,9 +39,6 @@ const options = [
 ];
 
 function Login() {
-  const { loginProviderMutation } = useLoginProvider();
-
-  const [providers, setProviders] = useState<any>({});
   const loginUser = useLogin("email");
   const formState = useFormStore((state) => state.formState);
   const handleResetForm = useFormStore((state) => state.handleResetForm);
@@ -46,12 +48,6 @@ function Login() {
     formState,
     LOGIN_VALIDATION_SCHEMA.client
   );
-
-  useEffect(() => {
-    getProviders().then((prov) => {
-      setProviders(prov);
-    });
-  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -68,8 +64,6 @@ function Login() {
 
   if (loginUser.isLoading) return <Spinner />;
 
-  if (Object.values(providers) === null) return;
-
   return (
     <Layout
       title={"Ingresa y comienza a encontrar los libros que necesitas"}
@@ -77,7 +71,7 @@ function Login() {
         "Página para hacer login en diabooks. Permite a nuestros usuarios hacer sus compras e inscribirse a nuestros boletines"
       }
     >
-      <h1>Entra para que la magia comience</h1>
+      <h1>Entra y la magia comience iniciará</h1>
 
       <Alert />
       <form className="form" onSubmit={handleSubmit} noValidate>
@@ -89,7 +83,6 @@ function Login() {
           classNameLabel="form-control__label"
           initialForm={login}
         />
-
         <div className="container-button">
           <Button type="submit" backgroundColor="blue" disabled={!!errors}>
             Login
@@ -100,36 +93,7 @@ function Login() {
           </Link>
         </div>
       </form>
-
-      {Object.values(providers).map((provider: any) => {
-        if (provider.id === "credentials") return <div key="credentials"></div>;
-
-        return (
-          <Button
-            backgroundColor={
-              provider.name === "Google" ? "outline-red" : "outline-blue"
-            }
-            key={provider.id}
-            onClick={() => loginProviderMutation.mutate(provider.id)}
-            width="30rem"
-          >
-            {" "}
-            <Image
-              priority
-              style={{ marginRight: "1rem" }}
-              src={
-                provider.name === "Google"
-                  ? "/icons/google.svg"
-                  : "/icons/facebook.svg"
-              }
-              width={25}
-              height={25}
-              alt="trash"
-            />{" "}
-            Login con {provider.name}
-          </Button>
-        );
-      })}
+      <LoginProvider />
     </Layout>
   );
 }

@@ -4,7 +4,7 @@ import {
   FormControl,
   HeaderTransaction,
   Table,
-} from "../client";
+} from "./";
 import { FormOptions, useFormStore, useUITransactionStore } from "@/store";
 import { ErrorMessages, InitialForm } from "@/types";
 import { ReactNode } from "react";
@@ -76,7 +76,7 @@ export const Transactions = ({
             )}
         </div>
         <div className="container-button" >
-        <Button
+          <Button
           backgroundColor="green"
           onClick={() => {
             handleAddItem(mainForm);
@@ -102,6 +102,7 @@ export const Transactions = ({
       <div className="transactions-footer">
         <div className="transactions-button__left">
           <Button
+            buttonStyle="points"
             disabled={formItems.length === 0}
             backgroundColor="green"
             type="submit"
@@ -115,6 +116,7 @@ export const Transactions = ({
               clearAllItems();
               handleResetForm(initialForm);
             }}
+            buttonStyle="points"
             backgroundColor="red"
             type="button"
             disabled={!disabled}

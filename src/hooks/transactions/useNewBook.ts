@@ -5,12 +5,14 @@ import {
   useUisStore,
 } from "@/store";
 
-import { useBookMutation, useBookQuery } from "../books";
+import { useBookQuery, useCategoriesQuery, useCreateBook, useSearchBook } from "../books";
 import { IBook } from "@/types";
 
 export const useNewBook = () => {
-  const { createBookMutation, searchBookMutation } = useBookMutation();
-  const { getCategoriesQuery, getBooksQuery } = useBookQuery();
+  const createBook = useCreateBook()
+  const searchBook = useSearchBook()
+  const getCategoriesQuery = useCategoriesQuery()
+  const getBooksQuery = useBookQuery()
   const foundBooks = useBooksStore((state) => state.foundBooks);
   const formState = useFormStore<IBook>((state) => state.formState);
   const session = useEmployeesStore((state) => state.session);
@@ -18,12 +20,12 @@ export const useNewBook = () => {
   const setShowModal = useUisStore((state) => state.setShowModal);
 
   return {
-    createBookMutation,
+    createBook,
     formState,
     foundBooks,
     getBooksQuery,
     getCategoriesQuery,
-    searchBookMutation,
+    searchBook,
     session,
     showModal,
     setShowModal,

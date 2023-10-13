@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layouts/app";
-import { Button } from "@/components/ui/client";
+import { Button } from "@/components/ui";
 import { useRouter } from "next/router";
 
 export default function InventoryPage() {

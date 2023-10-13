@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react";
 import { useLogin } from "@/hooks/auth";
 import { useFormStore } from "@/store";
 
-import { Alert, Button, FormControl, Spinner } from "@/components/ui/client";
+import { Alert, Button, FormControl, Spinner } from "@/components/ui";
 
 import { formValidator } from "@/helpers";
 import { LOGIN_VALIDATION_SCHEMA } from "@/constants";
@@ -31,7 +31,6 @@ const options = [
 
 function PrivateLoginPage() {
   const loginUser = useLogin("username");
-
   const formState = useFormStore((state) => state.formState);
   const handleResetForm = useFormStore((state) => state.handleResetForm);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);

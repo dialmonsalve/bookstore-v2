@@ -4,7 +4,7 @@ import { useUisStore } from "@/store/ui";
 
 import { LINKS } from "@/constants";
 
-import { NavLink } from "@/components/ui/client";
+import { NavLink } from "@/components/ui";
 
 export const Sidebar = () => {
   const toggleSidebar = useUisStore((state) => state.toggleSidebar);

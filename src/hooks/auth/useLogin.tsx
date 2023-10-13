@@ -8,7 +8,7 @@ export function useLogin(fieldForm: string) {
   const queryClient = useQueryClient();
   const setAlert = useUisStore((state) => state.setAlert);
 
-  return useMutation({
+  const login = useMutation({
     mutationFn: (formData: { [key: string]: string; password: string }) => {
       const data = {
         [fieldForm]: formData[fieldForm],
@@ -19,7 +19,6 @@ export function useLogin(fieldForm: string) {
     },
 
     onSuccess: async (user, formData) => {
-
       queryClient.setQueriesData(
         [
           fieldForm === "username"
@@ -31,8 +30,10 @@ export function useLogin(fieldForm: string) {
       setAlert("success", true, "Ingreso correcto");
       await signIn("credentials", formData);
     },
-    onError: (error:any) => {
+    onError: (error: any) => {
       setAlert("error", true, error.message!);
-    }
+    },
   });
+
+  return login;
 }

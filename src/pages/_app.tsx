@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app'
-import { SessionAuthProvider } from '@/components/ui/services/SessionAuthProvider';
+import { SessionAuthProvider } from "@/components/views";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 

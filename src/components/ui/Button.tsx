@@ -106,7 +106,7 @@ export const Button = ({
     return (
       <button
         type={type}
-        className={`btn-points points points--${backgroundColor}`}
+        className={`btn-points points points--${backgroundColor} ${ disabled ? "disabled-point" : ""}`}
         disabled={disabled}
         {...props}
       >

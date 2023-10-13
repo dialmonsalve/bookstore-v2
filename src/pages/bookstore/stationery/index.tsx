@@ -1,30 +1,56 @@
 import { Layout } from "@/components/layouts/app";
-import { Button } from "@/components/ui/client";
+import {  SingleFormControl } from "@/components/ui";
+
+import { ChangeEvent, useEffect, useState } from "react";
+
+
+const initialForm  ={
+  price: 0,
+  discount: 0,
+  total:0
+}
 
 function AdminStationeries() {
-  return (
+
+  const [value, setValue] = useState(initialForm)
+
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { value, name } = e.target
+    
+    setValue(prev =>({...prev, [name]:value}))
+  } 
+  
+  useEffect(() => {
+    setValue(prev =>({...prev, total:0}))
+  }, [initialForm.total])
+  
+    return (
     <Layout title="papelería">
-      <Button size="small" buttonStyle="normal">
-        Hola
-      </Button>
-      <Button size="medium" backgroundColor="outline-purple">
-        Hola
-      </Button>
-      <Button size="large">Hola</Button>
-
-      <Button buttonStyle="filled" size="medium"  >
-        Filled
-      </Button>
-
-      <Button buttonStyle="points" backgroundColor="red" >
-        Eliminar
-      </Button>
-      <Button buttonStyle="points" backgroundColor="blue" >
-        Crear
-      </Button>
-      <Button buttonStyle="points" backgroundColor="green" >
-        Crear
-      </Button>
+      <SingleFormControl
+        label="price"
+        type="number"
+        placeholder="Price"
+        name="price"
+        value={value.price}
+        onChange={onChange}
+      />
+      <SingleFormControl
+        label="discount"
+        type="number"
+        placeholder="Discount"
+        name="discount"
+        value={value.discount}
+        onChange={onChange}
+      />
+      <SingleFormControl
+        label="total"
+        type="number"
+        placeholder="Total"
+        name="total"
+        value={ Number(value.price) + (value.price * value.discount/100)}
+          onChange={onChange}
+          disabled
+      />
     </Layout>
   );
 }

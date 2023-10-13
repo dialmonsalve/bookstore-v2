@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { useUisStore } from "@/store/ui";
-import { useEmployeeQuery, useEmployeeMutation } from "@/hooks/employee";
+import { useEmployeeQuery, useDeleteEmployee } from "@/hooks/employee";
 
 import { Layout } from "@/components/layouts/app";
 import {
@@ -12,7 +12,7 @@ import {
   Paginator,
   Spinner,
   Table,
-} from "@/components/ui/client";
+} from "@/components/ui";
 
 const titles = ["Nombre", "Apellido", "Username", "email", "Teléfono", "Role"];
 
@@ -26,14 +26,19 @@ const nameTableFields = [
 ];
 
 function UsersPage() {
+  
   //! Sates
   const [employeeId, setEmployeeId] = useState("");
   const router = useRouter();
-  const {deleteEmployeeMutation} = useEmployeeMutation();
+  const deleteEmployee = useDeleteEmployee();
   const setShowModal = useUisStore((state) => state.setShowModal);
-  const { getEmployeesQuery } = useEmployeeQuery();
-  
-  const{data, isLoading } = getEmployeesQuery
+  const getEmployees = useEmployeeQuery();
+
+  useEffect(() => {
+    useUisStore.getState().resetPage();
+  }, []);
+
+  const { data, isLoading } = getEmployees;
 
   //! Handler functions
   const handleEditEmployee = (employeeId: string | number): void => {
@@ -50,7 +55,7 @@ function UsersPage() {
 
   const handleAcceptAction = () => {
     setShowModal(false);
-    deleteEmployeeMutation.mutate(employeeId);
+    deleteEmployee.mutate(employeeId);
   };
 
   // ! Constants
@@ -90,9 +95,7 @@ function UsersPage() {
               handleEdit={handleEditEmployee}
               isEditable
             />
-              <Paginator
-              totalItems={data?.totalEmployees}
-              />
+            <Paginator totalData={data.totalEmployees} query={getEmployees} />
           </>
         )}
       </Layout>

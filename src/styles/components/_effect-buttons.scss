@@ -40,7 +40,7 @@
     @include btnPoints(v.$color-red-3, v.$color-red-2);
   }
   &--green {
-    @include btnPoints(v.$color-green-3, v.$color-green-2);
+    @include btnPoints(v.$color-green-4, v.$color-green-2);
   }
 
   & span:nth-child(n) {
@@ -105,5 +105,31 @@
   100% {
     bottom: 100px;
     transform: rotate(45deg);
+  }
+}
+
+.disabled-point {
+  background-color: v.$color-gray-2;
+  color: white;
+  outline: none;
+
+  &:hover {
+    background-color: v.$color-gray-2;
+    cursor: not-allowed;
+    box-shadow: none;
+    border: 2px solid white;
+  }
+
+  &:hover span:nth-child(1) {
+    right: 10%;
+    transform: rotate(0deg);
+    color: white;
+    background-color: white;
+  }
+  &:hover span:nth-child(2) {
+    left: 10%;
+    transform: rotate(0deg);
+    color: white;
+    background-color: white;
   }
 }

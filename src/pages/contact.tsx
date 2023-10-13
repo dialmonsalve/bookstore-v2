@@ -1,11 +1,7 @@
 import { FormEvent } from "react";
 import { Layout } from "@/components/layouts/e-commerce";
 
-import {
-  Button,
-  FormControl,
-  TextArea,
-} from "@/components/ui/client";
+import { Button, FormControl, TextArea } from "@/components/ui";
 
 import { formValidator } from "@/helpers";
 import { useFormStore } from "@/store";
@@ -55,7 +51,6 @@ function Contact() {
     formState,
     LOGIN_VALIDATION_SCHEMA.newMessage
   );
- 
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -81,7 +76,7 @@ function Contact() {
     >
       <h1>Cuéntanos, ¿Qué quieres saber?</h1>
 
-      <form style={{ width: "50rem" }} className="form" onSubmit={handleSubmit} >
+      <form style={{ width: "50rem" }} className="form" onSubmit={handleSubmit}>
         <FormControl
           initialForm={newMessage}
           formFields={formFields}
@@ -96,16 +91,12 @@ function Contact() {
           placeholder="Queremos saber tu opinión"
           errors={errors}
           label="Mensaje"
-
         />
-        <Button
-          type="submit"
-          width="50%"
-          backgroundColor="blue"
-          disabled={!!errors}
-        >
-          Enviar
-        </Button>
+        <div className="container-button">
+          <Button buttonStyle="points" type="submit" backgroundColor="blue" disabled={!!errors}>
+            Enviar
+          </Button>
+        </div>
       </form>
     </Layout>
   );

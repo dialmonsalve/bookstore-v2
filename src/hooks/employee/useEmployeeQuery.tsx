@@ -6,11 +6,10 @@ import { apiEmployee } from "@/api";
 
 export function useEmployeeQuery() {
   const setEmployees = useEmployeesStore((state) => state.setEmployees);
-  
 
   const page = useUisStore((state) => state.page);
 
-  const getEmployeesQuery = useQuery({
+  const getEmployees = useQuery({
     queryKey: ["employees", { page }],
     queryFn: async () => {
       const data = await apiEmployee.getEmployees(page);
@@ -19,10 +18,7 @@ export function useEmployeeQuery() {
       return data;
     },
     staleTime: Infinity,
-    // initialData: employees,
   });
 
-  return {
-    getEmployeesQuery,
-  };
+  return getEmployees;
 }

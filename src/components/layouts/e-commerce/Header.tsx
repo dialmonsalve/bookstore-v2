@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { useLoginProvider } from "@/hooks/auth/useLoginProvider";
+import { useLogOut } from "@/hooks/auth";
 
 import { useAuthentication } from "@/hooks/auth";
 
 export const Header = () => {
   const router = useRouter();
 
-  const { logOutMutation } = useLoginProvider();
+  const logOut = useLogOut();
   const { nextSession } = useAuthentication();
 
   const user = nextSession?.user;
@@ -93,7 +93,7 @@ export const Header = () => {
               <li className="header__login--nav-item">
                 <button
                   className="header__login--nav-link"
-                  onClick={() => logOutMutation.mutate()}
+                  onClick={() => logOut.mutate()}
                 >
                   Logout
                 </button>

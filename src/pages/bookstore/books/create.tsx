@@ -1,8 +1,8 @@
 import { FormEvent } from "react";
 
 import { Layout } from "@/components/layouts/app";
-import { ModalApiBooks, Spinner, Alert } from "@/components/ui/client";
-import { CreateEditBook } from "@/components/ui/services";
+import { ModalApiBooks, Spinner, Alert } from "@/components/ui";
+import { CreateEditBook } from "@/components/views";
 
 import { useNewBook } from "@/hooks/transactions";
 
@@ -12,9 +12,9 @@ function CreateBooksPage() {
     foundBooks,
     session,
     showModal,
-    createBookMutation,
+    createBook,
     getCategoriesQuery,
-    searchBookMutation,
+    searchBook,
     setShowModal,
   } = useNewBook();
 
@@ -26,7 +26,7 @@ function CreateBooksPage() {
         ? formState.authors.split(",").map((item) => item.trim())
         : formState.authors;
 
-    const createBook = {
+    const newBook = {
       ...formState,
       createdFor: session?._id,
       updatedFor: session?._id,
@@ -34,7 +34,7 @@ function CreateBooksPage() {
     };
     if (!session?.username) return;
 
-    createBookMutation.mutate({ book: createBook, username: session.username });
+    createBook.mutate({ book: newBook, username: session.username });
   };
 
   if (foundBooks === null || foundBooks === undefined) return;
@@ -42,8 +42,7 @@ function CreateBooksPage() {
   return (
     <Layout title="Crea Libros">
       <Alert />
-      {getCategoriesQuery.isLoading ||
-        (searchBookMutation.isLoading && <Spinner />)}
+      {getCategoriesQuery.isLoading || (searchBook.isLoading && <Spinner />)}
 
       <CreateEditBook onSubmit={handleCreateBook} />
 

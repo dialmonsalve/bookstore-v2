@@ -7,9 +7,8 @@ import { apiBook } from "@/api";
 export function useBookQuery() {
   const setAllBooks = useBooksStore((state) => state.setAllBooks);
   const page = useUisStore((state) => state.page);
-  const setAllCategories = useBooksStore((state) => state.setAllCategories);
 
-  const getBooksQuery = useQuery({
+  const getBooks = useQuery({
     queryKey: ["books", { page }],
 
     queryFn: async () => {
@@ -18,23 +17,8 @@ export function useBookQuery() {
 
       return data;
     },
-    staleTime: Infinity,
+    staleTime: 60 * 60 * 24,
   });
 
-  const getCategoriesQuery = useQuery({
-    queryKey: ["categories"],
-
-    queryFn: async () => {
-      const categories = await apiBook.getCategories();
-      setAllCategories(categories);
-
-      return categories;
-    },
-    staleTime: Infinity,
-  });
-
-  return {
-    getBooksQuery,
-    getCategoriesQuery,
-  };
+  return getBooks;
 }

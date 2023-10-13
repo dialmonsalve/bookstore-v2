@@ -23,6 +23,7 @@ interface Actions {
   setShowModal: (showModal: boolean, messageModal?: string | null) => void;
   nextPage: () => void;
   prevPage: () => void;
+  resetPage:()=>void
 }
 
 const UI_INITIAL_STATE: State = {
@@ -92,6 +93,9 @@ export const useUisStore = create<State & Actions>()(
             "page"
           );
         },
+        resetPage() {
+          set({page:1})
+        }
       };
     },
     { name: "User Interface" }

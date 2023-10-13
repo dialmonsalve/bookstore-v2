@@ -1,11 +1,11 @@
 import { FormEvent } from "react";
 
-import { useEmployeeMutation } from "@/hooks/employee";
+import { useCreateEmployee } from "@/hooks/employee";
 import { useFormStore } from "@/store/form";
 
 import { Layout } from "@/components/layouts/app";
-import { Alert, Button, Select, Spinner } from "@/components/ui/client";
-import { CreateEditPerson } from "@/components/ui/services";
+import { Alert, Button, Select, Spinner } from "@/components/ui";
+import { CreateEditPerson } from "@/components/views";
 
 import { formValidator } from "@/helpers";
 import { USER_VALIDATION_SCHEMA } from "@/constants";
@@ -22,7 +22,7 @@ const newEmployee = {
 };
 
 function CreateEmployeePage() {
-  const {createEmployeeMutation} = useEmployeeMutation();
+  const createEmployee = useCreateEmployee();
 
   const formState = useFormStore((state) => state.formState);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
@@ -39,14 +39,14 @@ function CreateEmployeePage() {
 
     if (!hasFormErrors) {
       const { repitePassword, ...newEmployee } = formState;
-      createEmployeeMutation.mutate(newEmployee);
+      createEmployee.mutate(newEmployee);
     }
-  };  
+  };
 
   return (
     <Layout title="Usuarios">
       <Alert />
-      {createEmployeeMutation.isLoading && <Spinner />}
+      {createEmployee.isLoading && <Spinner />}
 
       <form
         method="POST"
@@ -73,9 +73,9 @@ function CreateEmployeePage() {
           <Button
             type="submit"
             backgroundColor="green"
-            disabled={!!errors || createEmployeeMutation.isLoading}
+            disabled={!!errors || createEmployee.isLoading}
           >
-            {`${createEmployeeMutation.isLoading ? "Espere" : "Crear Cuenta"} `}
+            {`${createEmployee.isLoading ? "Espere" : "Crear Cuenta"} `}
           </Button>
         </div>
       </form>

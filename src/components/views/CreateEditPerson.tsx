@@ -1,4 +1,4 @@
-import { FormControl } from "../client";
+import { FormControl } from "../ui";
 
 import { ErrorMessages, InitialForm } from "@/types";
 

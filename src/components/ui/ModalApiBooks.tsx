@@ -60,10 +60,9 @@ export const ModalApiBooks = ({ googleBook }: GoogleApiBooksProps) => {
           src={googleBook.imageLinks}
         />
         <Button
-          buttonStyle="square"
-          borderRadius=".8rem"
+          buttonStyle="points"
           size="small"
-          backgroundColor="outline-purple"
+          backgroundColor="green"
           onClick={handleInsertBook}
         >
           insertar

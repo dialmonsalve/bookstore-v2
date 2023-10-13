@@ -12,7 +12,7 @@ import {
 import { useForm } from "../useForm";
 import { useCreatePurchaseOrder } from ".";
 import { useRouter } from "next/router";
-import { useBookMutation } from "../books";
+import {  useGetBookByISBN } from "../books";
 
 interface ItemsOrder {
   item: number;
@@ -61,7 +61,7 @@ export const usePurchaseOrders = () => {
 
   const session = useEmployeesStore((state) => state.session);
 
-  const {getBookByISBNMutation} = useBookMutation();
+  const getBookByISBN = useGetBookByISBN();
 
   const setShowModal = useUisStore((state) => state.setShowModal);
 
@@ -122,7 +122,7 @@ export const usePurchaseOrders = () => {
     errors,
     formItems,
     formState,
-    getBookByISBNMutation,
+    getBookByISBN,
     isTouched,
     itemsOrder,
     router,

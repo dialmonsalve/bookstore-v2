@@ -7,7 +7,7 @@ import { apiEmployee } from "@/api";
 export const useEmployee = (employeeId?: string) => {
   const setEmployee = useEmployeesStore((state) => state.setEmployee);
 
-  const getEmployeeByIdQuery = useQuery({
+  const getEmployeeById = useQuery({
     queryKey: ["employee", employeeId],
     queryFn: async () => {
       if (!employeeId) return;
@@ -16,7 +16,7 @@ export const useEmployee = (employeeId?: string) => {
       return data;
     },
   });
-  return {
-    getEmployeeByIdQuery
-  }
+
+  return getEmployeeById
+  
 };

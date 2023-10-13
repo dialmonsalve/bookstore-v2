@@ -2,12 +2,13 @@ import Image from "next/image"
 import Link from "next/link"
 
 import {useAuthentication} from "@/hooks/auth";
-import { useLoginProvider } from "@/hooks/auth/useLoginProvider";
+import { useLogOut } from "@/hooks/auth";
 
 export const Header = () => {
 
   const { status, nextSession } = useAuthentication();
-  const { logOutMutation } = useLoginProvider();
+  const logOut = useLogOut();
+  
 
   const employee = nextSession?.user
 
@@ -20,7 +21,7 @@ export const Header = () => {
       <div className="private-header__user" >
         <span >{status === 'loading' ? 'Cargando' : `Bienvenido ${ employee?.name}`}</span>
         <li className='private-header__user--item' >
-          <button className="private-header__user--link" onClick={() => logOutMutation.mutate()} >Logout</button>
+          <button className="private-header__user--link" onClick={() => logOut.mutate()} >Logout</button>
         </li>
         <Link href='/auth/configuration'>
           <Image className='private-header__user--user' src="/user.svg" alt="user" width={35} height={35} />

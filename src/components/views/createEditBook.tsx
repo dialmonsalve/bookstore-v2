@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 
-import { useBookMutation } from "@/hooks/books";
+import { useSearchBook, useCreateCategory } from "@/hooks/books";
 import {
   useBooksStore,
   useEmployeesStore,
@@ -17,7 +17,7 @@ import {
   InputTags,
   Select,
   TextArea,
-} from "../client";
+} from "../ui";
 import { formValidator } from "@/helpers";
 import { NEW_BOOK, BOOK_VALIDATION_SCHEMA } from "@/constants/book";
 
@@ -34,7 +34,9 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
   const formState = useFormStore((state) => state.formState);
   const value = useFormStore((state) => state.options);
   const setAlert = useUisStore((state) => state.setAlert);
-  const { searchBookMutation, createCategoryMutation } = useBookMutation();
+
+  const searchBookMutation=  useSearchBook()
+  const  createCategoryMutation = useCreateCategory()
 
   const categories = useBooksStore((state) => state.categories);
 
@@ -104,7 +106,6 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
           isFormSubmitted={isFormSubmitted}
         />
         <Button
-          className="form-create-books__categories--button"
           onClick={handleCreateCategory}
           type="button"
         >

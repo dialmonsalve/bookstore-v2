@@ -1,12 +1,12 @@
 import { FormEvent } from "react";
 import { GetServerSideProps } from "next";
 
-import {  useEmployeeMutation, useEmployee } from "@/hooks/employee";
+import { useUpdateEmployee, useEmployee } from "@/hooks/employee";
 import { useFormStore } from "@/store/form";
 
 import { Layout } from "@/components/layouts/app";
-import { CreateEditPerson } from "@/components/ui/services";
-import { Alert, Button, Select, Spinner } from "@/components/ui/client";
+import { CreateEditPerson } from "@/components/views";
+import { Alert, Button, Select, Spinner } from "@/components/ui";
 
 import { formValidator } from "@/helpers";
 import { getEmployeeById } from "@/api/employee";
@@ -19,12 +19,12 @@ interface Props {
 }
 
 function UpdateEmployeePage({ employeeId, employee }: Props) {
-  const {getEmployeeByIdQuery} = useEmployee(employeeId);
+  const getEmployeeById = useEmployee(employeeId);
 
   const formState = useFormStore<IEmployee>((state) => state.formState);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
 
-  const {updateEmployeeMutation} = useEmployeeMutation();
+  const updateEmployee = useUpdateEmployee();
 
   const errors = formValidator().getErrors(
     formState,
@@ -38,16 +38,16 @@ function UpdateEmployeePage({ employeeId, employee }: Props) {
     if (!hasFormErrors) {
       console.log(formState);
 
-      updateEmployeeMutation.mutate({_id:employeeId, employee:formState});
+      updateEmployee.mutate({ _id: employeeId, employee: formState });
     }
   };
 
   return (
     <Layout
-      title={`${getEmployeeByIdQuery.data?.name} ${getEmployeeByIdQuery.data?.lastName}`}
+      title={`${getEmployeeById.data?.name} ${getEmployeeById.data?.lastName}`}
     >
       <Alert />
-      {updateEmployeeMutation.isLoading && <Spinner />}
+      {updateEmployee.isLoading && <Spinner />}
 
       <form
         className="form"
@@ -55,7 +55,7 @@ function UpdateEmployeePage({ employeeId, employee }: Props) {
         onSubmit={handleUpdateEmployee}
       >
         <CreateEditPerson
-          initialForm={getEmployeeByIdQuery.data as Record<string, any>}
+          initialForm={getEmployeeById.data as Record<string, any>}
           errors={errors}
           isCreate={false}
           isEmployee
@@ -72,9 +72,9 @@ function UpdateEmployeePage({ employeeId, employee }: Props) {
           <Button
             type="submit"
             backgroundColor="green"
-            disabled={!!errors || updateEmployeeMutation.isLoading}
+            disabled={!!errors || updateEmployee.isLoading}
           >
-            {`${updateEmployeeMutation.isLoading ? "Espere" : "Actualiza Usuario"} `}
+            {`${updateEmployee.isLoading ? "Espere" : "Actualiza Usuario"} `}
           </Button>
         </div>
       </form>
