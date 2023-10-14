@@ -17,7 +17,7 @@ export function useBookQuery() {
 
       return data;
     },
-    staleTime: 60 * 60 * 24,
+    staleTime: 60 * 60 * 24 * 1000,
   });
 
   return getBooks;

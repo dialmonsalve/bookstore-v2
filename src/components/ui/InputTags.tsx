@@ -36,12 +36,12 @@ export const InputTags = ({ errors, name, optionTags }: InputTagProps) => {
 
   return (
     <div>
-      <div className="form-control" onKeyDown={handleAddTags}>
-        <label htmlFor="tags" className="form-control__label">
+      <div className="form__control" onKeyDown={handleAddTags}>
+        <label htmlFor="tags" className="form__label">
           tag
         </label>
         <input
-          className="form-control__input"
+          className="form__input"
           type="text"
           name="tag"
           id="tags"
@@ -51,10 +51,10 @@ export const InputTags = ({ errors, name, optionTags }: InputTagProps) => {
           onKeyDown={(e)=> e.key === 'Enter' && e.preventDefault()}
         />
       </div>
-      <div id="tags" className={`select-container`}>
+      <div id="tags" className={`tags-container`}>
         {optionTags.map((tag) => (
           <span
-            className="select-container__span--option-badge"
+            className="tags-container__span--option-badge"
             key={tag}
             onClick={() => handleDeleteTags(tag)}
           >

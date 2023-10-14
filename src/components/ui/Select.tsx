@@ -130,8 +130,8 @@ export const Select = ({
   };
 
   return (
-    <div className={`${className || ""} form-control `}>
-      <span className="form-control__label">
+    <div className={`control-select`}>
+      <span className="form__label">
         {label}
       </span>
       <div

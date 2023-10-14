@@ -64,6 +64,7 @@ export const useUisStore = create<State & Actions>()(
                 {
                   showAlert: false,
                   alertMessage,
+                  alertType: "",
                 },
                 false,
                 "alert"
@@ -94,7 +95,7 @@ export const useUisStore = create<State & Actions>()(
           );
         },
         resetPage() {
-          set({page:1})
+          set({page:1}, false, "page")
         }
       };
     },

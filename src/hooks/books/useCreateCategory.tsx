@@ -1,6 +1,5 @@
 import { apiBook } from "@/api";
 import { useUisStore } from "@/store";
-import { ICategory } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useCreateCategory() {
@@ -13,11 +12,7 @@ export function useCreateCategory() {
 
     onSuccess: (category) => {
       queryClient.setQueriesData(["category"], category);
-
-      queryClient.setQueryData<(ICategory | null)[]>(["categories"], (old) => {
-        if (!old) return [category];
-        return [...old, category];
-      });
+      queryClient.invalidateQueries(["categories"]);
       setAlert("success", true, "Categoría Creada con éxito");
     },
     onError: (error: any) => {

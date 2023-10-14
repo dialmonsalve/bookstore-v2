@@ -1,7 +1,7 @@
 @use "../abstract/variables" as v;
 @use "../abstract/mixins" as m;
 
-@mixin btn-ico($url){
+@mixin btn-ico($url) {
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: 100%;
@@ -64,25 +64,53 @@
   }
 }
 
-.back {
-  @include btn-ico("/icons/back.svg");
-  width: 8rem;
-  height: 6rem;
-  top: 13vh;
-  left: 12%;
-  position: absolute;
-  z-index: 3;
-
+@mixin btnBack($color, $backgroundColor) {
+  color: $color;
   &:hover {
-    transform: scale(1.1);
+    color: v.$color-white;
+    background-color: $backgroundColor;
+    box-shadow: 0 0 20px $color;
+    border-color: $color;
   }
-  @include m.responsive(phone) {
-    top: 18vh;
-    left: 6%;
-    width: 6rem;
 
-    &:hover {
-      transform: scale(1);
-    }
+  &:hover span:nth-child(1) {
+    right: 80%;
+    transform: rotate(180deg);
+    color: $color;
+    background-color: $color;
   }
 }
+
+.btn-back {
+  border: 2px solid;
+  padding: .5em .5rem;
+  position: absolute;
+  top: 11vh;
+  left: 8%;
+  z-index: 9;
+
+  @include m.responsive(phone){
+    top: 19vh;
+  }
+}
+
+.back {
+  font-weight: 900;
+  border-radius: 0.7rem;
+  @include btnBack(v.$color-blue-3, #001a2b);
+
+  & span:nth-child(n) {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 2px solid;
+    transition: all 0.6s ease;
+  }
+  & span:nth-child(1) {
+    right: 10%;
+    top: -6px;
+    background-color: v.$color-white;
+  }
+
+}
+

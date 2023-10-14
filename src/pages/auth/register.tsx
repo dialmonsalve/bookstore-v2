@@ -11,7 +11,7 @@ import { Layout } from "@/components/layouts/e-commerce";
 import { Alert, Button } from "@/components/ui";
 
 import { formValidator } from "@/helpers";
-import { USER_VALIDATION_SCHEMA } from "@/constants";
+import { CLIENT_VALIDATION_SCHEMA } from "@/constants";
 import { IClient } from "@/types";
 
 const newClient = {
@@ -28,7 +28,7 @@ function CreateCLientPage() {
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
   const errors = formValidator().getErrors(
     formState,
-    USER_VALIDATION_SCHEMA.newClient
+    CLIENT_VALIDATION_SCHEMA.newClient
   );
   const registerClient = UseLoginClient();
 
@@ -89,25 +89,26 @@ function CreateCLientPage() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
-
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
   const session = await getSession({ req });
 
-  const { p = '/' } = query;
+  const { p = "/" } = query;
 
   if (session) {
     return {
       redirect: {
         destination: p.toString(),
-        permanent: false
-      }
-    }
+        permanent: false,
+      },
+    };
   }
 
   return {
-    props: {
-    }
-  }
-}
+    props: {},
+  };
+};
 
-export default CreateCLientPage
+export default CreateCLientPage;

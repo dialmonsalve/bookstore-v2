@@ -10,23 +10,22 @@ export const LoginProvider = () => {
   const loginProvider = useLoginWithProvider();
 
   useEffect(() => {
-    getProviders().then((prov) => {
-      setProviders(prov);
-    });
-  }, []);
+    if (!providers) return;
+    async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+  }, [providers]);
 
-  if (!Object.values(providers)) return;
+  return Object.values(providers).map((provider: any) => {
+    if (provider.id === "credentials") return <div key="credentials"></div>;
 
-  return (
-    Object.values(providers).map((provider: any) => {
-      if (provider.id === "credentials") return <div key="credentials"></div>;
-
-      return (
+    return (
+      <div key={provider.id} className="container-button">
         <Button
           backgroundColor={
             provider.name === "Google" ? "outline-red" : "outline-blue"
           }
-          key={provider.id}
           onClick={() => loginProvider.mutate(provider.id)}
         >
           {" "}
@@ -44,7 +43,7 @@ export const LoginProvider = () => {
           />{" "}
           Login con {provider.name}
         </Button>
-      );
-    })
-  )
-}
+      </div>
+    );
+  });
+};

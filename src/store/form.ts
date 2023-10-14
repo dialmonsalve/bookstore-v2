@@ -20,7 +20,7 @@ interface State<T> {
 
 interface Actions {
   setFormState: (formState: Record<string, any>) => void;
-  handleResetForm: (initialState: Record<string, any>) => void;
+  handleResetForm: (initialState?: Record<string, any>) => void;
   handleBlur: (e: ReactFocusEvent) => void;
   checkFormErrors: (
     errors: ErrorMessages<Record<string, any> | undefined>
@@ -104,7 +104,7 @@ export const useFormStore = create<State<any> & Actions>()(
               isTouched: null,
               isFormSubmitted: false,
               options: [],
-              optionTags:[]
+              optionTags: [],
             },
             false,
             "initialForm"

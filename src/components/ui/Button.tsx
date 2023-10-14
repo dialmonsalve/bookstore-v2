@@ -17,7 +17,7 @@ type Color =
 
 interface ButtonProps {
   backgroundColor?: Color;
-  buttonStyle?: "normal" | "iconButton" | "points" | "filled";
+  buttonStyle?: "normal" | "iconButton" | "points" | "filled" | "back";
   children?: string | ReactNode;
   disabled?: boolean;
   ico?: string;
@@ -106,7 +106,9 @@ export const Button = ({
     return (
       <button
         type={type}
-        className={`btn-points points points--${backgroundColor} ${ disabled ? "disabled-point" : ""}`}
+        className={`btn-points points points--${backgroundColor} ${
+          disabled ? "disabled-point" : ""
+        }`}
         disabled={disabled}
         {...props}
       >
@@ -140,6 +142,20 @@ export const Button = ({
         disabled={disabled}
         {...props}
       ></button>
+    );
+  }
+
+  if (buttonStyle === "back") {
+    return (
+      <button
+        type={type}
+        className={`btn-back back back--blue`}
+        disabled={disabled}
+        {...props}
+      >
+        <span></span>
+        {children}
+      </button>
     );
   }
 };

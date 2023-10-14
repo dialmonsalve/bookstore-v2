@@ -9,6 +9,7 @@ li {
 a {
 	cursor: pointer;
 	text-decoration: none;
+	text-transform: uppercase;
 }
 
 button {
@@ -18,7 +19,7 @@ button {
 	outline: none;
 	text-transform: uppercase;
 	text-decoration: none;
-	letter-spacing: .3rem;
+	letter-spacing: 0.5px;
 	transition: all 0.3s ease;
 	position: relative;
 }

@@ -1,9 +1,3 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
-import { useUisStore } from "@/store/ui";
-import { useEmployeeQuery, useDeleteEmployee } from "@/hooks/employee";
-
 import { Layout } from "@/components/layouts/app";
 import {
   Alert,
@@ -13,30 +7,19 @@ import {
   Spinner,
   Table,
 } from "@/components/ui";
-
-const titles = ["Nombre", "Apellido", "Username", "email", "Teléfono", "Role"];
-
-const nameTableFields = [
-  "name",
-  "lastName",
-  "username",
-  "email",
-  "phone",
-  "role",
-];
+import { useMainEmployees } from "@/hooks/useMainEmployees";
 
 function UsersPage() {
-  
-  //! Sates
-  const [employeeId, setEmployeeId] = useState("");
-  const router = useRouter();
-  const deleteEmployee = useDeleteEmployee();
-  const setShowModal = useUisStore((state) => state.setShowModal);
-  const getEmployees = useEmployeeQuery();
-
-  useEffect(() => {
-    useUisStore.getState().resetPage();
-  }, []);
+  const {
+    deleteEmployee,
+    employeeId,
+    getEmployees,
+    nameTableFields,
+    router,
+    titles,
+    setEmployeeId,
+    setShowModal,
+  } = useMainEmployees();
 
   const { data, isLoading } = getEmployees;
 
@@ -57,7 +40,6 @@ function UsersPage() {
     setShowModal(false);
     deleteEmployee.mutate(employeeId);
   };
-
   // ! Constants
   if (isLoading) return <Spinner />;
 

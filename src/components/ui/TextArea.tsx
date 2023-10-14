@@ -29,12 +29,12 @@ export const TextArea = ({
   const handleBlur = useFormStore((state) => state.handleBlur);
 
   return (
-    <div className={`form-control__area ${className}`}>
-      <label className="form-control__label" htmlFor={name}>
+    <div className={`form__area ${className}`}>
+      <label className="form__label" htmlFor={name}>
         {label}
       </label>
       <textarea
-        className={"form-control__input"}
+        className={"form__input"}
         cols={30}
         id={name}
         name={name}

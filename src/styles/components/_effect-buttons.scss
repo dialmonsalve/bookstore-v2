@@ -16,12 +16,12 @@
     color: $color;
     background-color: $color;
   }
-  &:hover span:nth-child(2) {
-    left: 80%;
-    transform: rotate(90deg);
-    color: $color;
-    background-color: $color;
-  }
+  // &:hover span:nth-child(2) {
+  //   left: 80%;
+  //   transform: rotate(90deg);
+  //   color: $color;
+  //   background-color: $color;
+  // }
 }
 
 .btn-points {

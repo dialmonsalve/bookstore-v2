@@ -49,7 +49,7 @@ export const useUITransactionStore = create<State<any> & Actions>()(devtools((se
         }
 
         return { formItems: updatedItems, };
-      }, false, 'addItem')
+      }, false, 'formItems')
       set({ disabled: true }, false, 'disabled')
     },
 
@@ -58,7 +58,7 @@ export const useUITransactionStore = create<State<any> & Actions>()(devtools((se
         const updatedItems = state.formItems.filter(item => item._id !== itemToRemove);
 
         if (updatedItems.length === 0) {
-          set({ disabled: false })
+          set({ disabled: false }, false, "disabled")
         }
 
         const updatedItemsWithAdjustedItem = updatedItems.map(item => {
@@ -72,10 +72,10 @@ export const useUITransactionStore = create<State<any> & Actions>()(devtools((se
           return item;
         });
         return { formItems: updatedItemsWithAdjustedItem }
-      })
+      }, false, "formItems")
     },
     clearAllItems() {
-      set({ disabled: false, formItems: [] })
+      set({ disabled: false, formItems: [] }, false, "formItems")
     }
   }
 }, { name: "Transactions Interface" }))

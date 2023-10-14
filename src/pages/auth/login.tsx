@@ -16,30 +16,11 @@ import {
   Spinner,
 } from "@/components/ui";
 
-import { LOGIN_VALIDATION_SCHEMA } from "@/constants";
+import { LOGIN_CLIENT, LOGIN_VALIDATION_SCHEMA } from "@/constants";
 import { formValidator } from "@/helpers";
 
-const login = {
-  email: "",
-  password: "",
-};
-const options = [
-  {
-    _id: 0,
-    name: "email",
-    type: "email",
-    label: "email",
-  },
-  {
-    _id: 1,
-    name: "password",
-    type: "password",
-    label: "password",
-  },
-];
-
 function Login() {
-  const loginUser = useLogin("email");
+  const loginClient = useLogin("email");
   const formState = useFormStore((state) => state.formState);
   const handleResetForm = useFormStore((state) => state.handleResetForm);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
@@ -54,15 +35,15 @@ function Login() {
     const hasErrors = checkFormErrors(errors);
 
     if (!hasErrors) {
-      handleResetForm(login);
-      loginUser.mutate({
+      handleResetForm(LOGIN_CLIENT.initialForm);
+      loginClient.mutate({
         email: formState?.email,
         password: formState?.password,
       });
     }
   };
 
-  if (loginUser.isLoading) return <Spinner />;
+  if (loginClient.isLoading) return <Spinner />;
 
   return (
     <Layout
@@ -77,11 +58,11 @@ function Login() {
       <form className="form" onSubmit={handleSubmit} noValidate>
         <FormControl
           errors={errors}
-          formFields={options}
-          className="form-control"
-          classNameInput="form-control__input"
-          classNameLabel="form-control__label"
-          initialForm={login}
+          formFields={LOGIN_CLIENT.formFields}
+          classNameControl="form__control"
+          classNameInput="form__input"
+          classNameLabel="form__label"
+          initialForm={LOGIN_CLIENT.initialForm}
         />
         <div className="container-button">
           <Button type="submit" backgroundColor="blue" disabled={!!errors}>

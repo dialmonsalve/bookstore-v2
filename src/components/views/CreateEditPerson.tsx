@@ -82,9 +82,9 @@ export const CreateEditPerson = ({
       formFields={formFields}
       errors={errors}
       initialForm={initialForm}
-      className="form-control"
-      classNameInput="form-control__input"
-      classNameLabel="form-control__label"
+      classNameControl="form__control"
+      classNameInput="form__input"
+      classNameLabel="form__label"
     />
   );
 };

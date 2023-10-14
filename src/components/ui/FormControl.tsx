@@ -6,7 +6,7 @@ import { FormOptions, useFormStore } from "@/store";
 import { ErrorMessages, InitialForm } from "@/types";
 
 interface FormControlProps {
-  className?: string;
+  classNameControl?: string;
   classNameInput?: string;
   classNameLabel?: string;
   disabled?: boolean;
@@ -16,7 +16,7 @@ interface FormControlProps {
 }
 
 export const FormControl = ({
-  className,
+  classNameControl,
   classNameInput,
   classNameLabel,
   disabled,
@@ -34,7 +34,7 @@ export const FormControl = ({
   if (formState === "undefined") return;
 
   return formFields.map((option) => (
-    <div key={option._id} className="form-control">
+    <div key={option._id}  className={classNameControl ? classNameControl : ""}>
       <label
         className={classNameLabel ? classNameLabel : ""}
         htmlFor={`${option.name}`}
@@ -44,7 +44,7 @@ export const FormControl = ({
       <input
         onKeyDown={(e)=> e.key === 'Enter' && e.preventDefault()}
         className={`${classNameInput ? classNameInput : ""} ${
-          disabled ? "input-disabled" : ""
+          disabled ? "form__input--disabled" : ""
         } `}
         type={`${option.type}`}
         name={`${option.name}`}

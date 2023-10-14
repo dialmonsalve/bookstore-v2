@@ -89,6 +89,26 @@
   }
 }
 
+@mixin control(){
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 2fr 0.5fr;
+  column-gap: 0.5rem;
+  align-items: center;
+  z-index: 2;
+  @include responsive(phone) {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+  }
+
+  &:nth-last-child(1) {
+    @include responsive(phone) {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
 
 // @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
 

@@ -4,8 +4,6 @@ import { useBookQuery } from "@/hooks/books";
 
 import { Layout } from "@/components/layouts/app";
 import { Alert, Button, Paginator, Spinner, Table } from "@/components/ui";
-import { useUisStore } from "@/store";
-import { useEffect } from "react";
 
 const titles = [
   "imagen",
@@ -32,9 +30,6 @@ const nameTableFields = [
 ];
 
 function AdminBooks() {
-  useEffect(() => {
-    useUisStore.getState().resetPage();
-  }, []);
 
   const getBooks = useBookQuery();
 

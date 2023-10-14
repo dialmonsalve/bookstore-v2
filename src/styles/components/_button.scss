@@ -2,7 +2,6 @@
 @use "../abstract/mixins" as m;
 
 @mixin btn-color($color, $hover-color) {
-
   background-color: $color;
   color: v.$color-white;
 
@@ -25,7 +24,6 @@
 .container-button {
   display: flex;
   justify-content: center;
-  width: 100%;
   gap: 1rem;
 
   @include m.responsive(phone) {
@@ -35,20 +33,25 @@
 
 .btn {
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+
   & span {
     position: absolute;
     background: #fff;
     transform: translate(-50%, -50%);
     pointer-events: none;
     border-radius: 50%;
-    animation: animate .6s linear infinite;
+    animation: animate 0.6s linear infinite;
   }
 
   @keyframes animate {
     0% {
       width: 0px;
       height: 0px;
-      opacity: .5;
+      opacity: 0.5;
     }
     100% {
       width: 500px;
@@ -112,7 +115,7 @@
   &--small {
     font-size: v.$font-size - 0.5rem;
     padding: 0.8rem 1rem;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
 
     @include m.responsive(phone) {
       padding: 0.6rem;
@@ -122,8 +125,7 @@
   &--medium {
     font-size: v.$font-size - 0.2rem;
     padding: 1.1rem 1.3rem;
-    border-radius: .8rem;
-
+    border-radius: 0.8rem;
 
     @include m.responsive(phone) {
       font-size: v.$font-size;
@@ -134,8 +136,7 @@
   &--large {
     font-size: v.$font-size + 0.4rem;
     padding: 1.3rem 1.5rem;
-    border-radius: .8rem;
-
+    border-radius: 0.8rem;
 
     @include m.responsive(phone) {
       padding: 1.2rem 0rem;

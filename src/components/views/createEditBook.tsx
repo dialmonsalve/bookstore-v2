@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 
-import { useSearchBook, useCreateCategory } from "@/hooks/books";
+import { useSearchBook, useCreateCategory, useCreateBook } from "@/hooks/books";
 import {
   useBooksStore,
   useEmployeesStore,
@@ -30,13 +30,14 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
   const [createCategory, setCreateCategory] = useState("");
   const [erroMessage, setErroMessage] = useState("");
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const createBook = useCreateBook()
 
   const formState = useFormStore((state) => state.formState);
   const value = useFormStore((state) => state.options);
   const setAlert = useUisStore((state) => state.setAlert);
 
-  const searchBookMutation=  useSearchBook()
-  const  createCategoryMutation = useCreateCategory()
+  const searchBookMutation = useSearchBook();
+  const createCategoryMutation = useCreateCategory();
 
   const categories = useBooksStore((state) => state.categories);
 
@@ -48,7 +49,7 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
   );
 
   const handleCreateCategory = () => {
-    if (createCategory.length < 3) {
+    if (createCategory.length < 2) {
       setErroMessage("El campo debe tener al menos 3 caracteres");
       setIsFormSubmitted(true);
       return;
@@ -87,11 +88,11 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
         onSubmit={handleSearch}
       />
       <div className="form-create-books__new-category">
-        <label className="form-control__label" htmlFor="createCategory">
+        <label className="form__label" htmlFor="createCategory">
           Nueva categoría
         </label>
         <input
-          className="form-control__input"
+          className="form__input"
           value={createCategory}
           type="text"
           name="createCategory"
@@ -105,12 +106,11 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
           fieldName={[erroMessage]}
           isFormSubmitted={isFormSubmitted}
         />
-        <Button
-          onClick={handleCreateCategory}
-          type="button"
-        >
+        <div className="container-button" >
+        <Button onClick={handleCreateCategory} type="button">
           Crear categoría
         </Button>
+        </div>
       </div>
 
       <form method="POST" className="form-create-books" onSubmit={onSubmit}>
@@ -119,9 +119,9 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
             formFields={NEW_BOOK.formFields}
             errors={errors}
             initialForm={NEW_BOOK.initialForm}
-            className="form-control"
-            classNameInput="form-control__input"
-            classNameLabel="form-control__label"
+            classNameControl="form__control"
+            classNameInput="form__input"
+            classNameLabel="form__label"
           />
         </div>
 
@@ -164,7 +164,7 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
           <Button
             type="submit"
             backgroundColor="green"
-            // disabled={!!errors || registerEmployee.isLoading}
+            disabled={!!errors || createBook.isLoading}
             // disabled={!!errors}
           >
             Crear libro

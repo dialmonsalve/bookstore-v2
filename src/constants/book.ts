@@ -1,6 +1,25 @@
 import { formValidator } from "../helpers/formValidator";
 
 export const NEW_BOOK = {
+  initialForm: {
+    authors: [],
+    categories: null,
+    cost: 0,
+    description: "",
+    discount: 0,
+    editorial: "",
+    format: "",
+    imageLinks: "",
+    isbn: "",
+    language: "",
+    pageCount: 0,
+    price: 0,
+    publishedDate: "",
+    slug: "",
+    tags: [],
+    title: "",
+    utility: 0,
+  },
   formFields: [
     {
       _id: 1,
@@ -50,7 +69,7 @@ export const NEW_BOOK = {
       type: "text",
       label: "Idioma",
     },
-  
+
     {
       _id: 9,
       name: "format",
@@ -82,26 +101,7 @@ export const NEW_BOOK = {
       label: "descuento",
     },
   ],
-  initialForm: {
-    authors: [],
-    categories: null,
-    cost: 0,
-    description: "",
-    discount: 0,
-    editorial: "",
-    format: "",
-    imageLinks: "",
-    isbn: "",
-    language: "",
-    pageCount: 0,
-    price: 0,
-    publishedDate: "",
-    slug: "",
-    tags: [],
-    title: "",
-    utility: 0,
-  }
-} 
+};
 
 export const BOOK_VALIDATION_SCHEMA = {
   newBook: {
@@ -117,18 +117,16 @@ export const BOOK_VALIDATION_SCHEMA = {
       .string()
       .required("Campo slug es requerido")
       .min(3, "El slug debe tener al menos de 3 caracteres"),
-    authors: formValidator()
-      .required("Campo autor(es) es requerido"),
-    price: formValidator()
-      .zero("El precio debe ser igual o mayor a cero"),
-    discount: formValidator()
-      .zero("El descuento debe ser igual o mayor a cero"),
-    cost: formValidator()
-      .zero("El costo debe ser igual o mayor a cero"),
-    utility: formValidator()
-      .zero("La utilidad debe ser igual o mayor a cero"),
-    pageCount: formValidator()
-      .zero("La cantidad de páginas debe ser igual o mayor a cero"),
+    authors: formValidator().required("Campo autor(es) es requerido"),
+    price: formValidator().zero("El precio debe ser igual o mayor a cero"),
+    discount: formValidator().zero(
+      "El descuento debe ser igual o mayor a cero"
+    ),
+    cost: formValidator().zero("El costo debe ser igual o mayor a cero"),
+    utility: formValidator().zero("La utilidad debe ser igual o mayor a cero"),
+    pageCount: formValidator().zero(
+      "La cantidad de páginas debe ser igual o mayor a cero"
+    ),
     categories: formValidator().required(
       "El libro debe tener por lo menos una categoría"
     ),

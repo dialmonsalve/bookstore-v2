@@ -18,6 +18,7 @@ export const Sidebar = () => {
     handleToggleSidebar();
   };
 
+
   return (
     <nav
       className={`private-nav ${
