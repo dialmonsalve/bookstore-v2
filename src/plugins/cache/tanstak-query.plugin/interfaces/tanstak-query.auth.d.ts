@@ -78,7 +78,7 @@ export interface LoginWithProvider {
   useUIStore: UIStore;
 }
 
-export interface UIStore {
+interface UIStore {
   <T>(selector: (state: AlertSlice & ModalSlice & PaginatorSlice) => T): T;
 }
 

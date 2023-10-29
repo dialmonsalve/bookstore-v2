@@ -1,37 +1,37 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useAuth } from "../cache/tanstak-query.plugin/entities/useAuth";
+import { useAuthOperations } from "../cache/tanstak-query.plugin/entities/useAuthOperations";
 import { useEmployeesStore, useUIStore } from "@/stores";
 import { userAuth } from "@/api";
 
 export const useUserAuthentication = () =>
-  useAuth().auth({
+  useAuthOperations().authentication({
     useEmployeesStore,
     searchUser: userAuth.searchUser,
     useSession,
   });
 
 export const useLogin = (fieldForm: string) =>
-  useAuth().login(fieldForm, {
+  useAuthOperations().login(fieldForm, {
     useUIStore,
     signIn,
     handleLogin: userAuth.handleLogin,
   });
 
 export const useLoginWithProvider = () =>
-  useAuth().loginWithProvider({
+  useAuthOperations().loginWithProvider({
     useUIStore,
     signIn,
   });
 
 export const useRegisterUser = () =>
-  useAuth().registerUser({
+  useAuthOperations().registerUser({
     useUIStore,
     signIn,
     registerUser:userAuth.registerUser
   });
 
 export const useLogout = () =>
-  useAuth().logout({
+  useAuthOperations().logout({
     signOut,
     useSession
   });

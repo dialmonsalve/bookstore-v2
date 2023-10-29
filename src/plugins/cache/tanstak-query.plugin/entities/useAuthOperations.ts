@@ -13,7 +13,7 @@ import {
   RegisterUser,
 } from "../interfaces/tanstak-query.auth";
 
-export const useAuth = () => {
+export const useAuthOperations = () => {
   function registerUser(actionRegister: RegisterUser) {
     const register = UseMutationRegisterUser(actionRegister);
 
@@ -48,7 +48,7 @@ export const useAuth = () => {
     };
   }
 
-  function auth(auth: Authentication) {
+  function authentication(auth: Authentication) {
     const authUser = useQueryAuthentication(auth);
 
     return {
@@ -60,7 +60,7 @@ export const useAuth = () => {
   }
 
   return {
-    auth,
+    authentication,
     login,
     loginWithProvider,
     logout,
