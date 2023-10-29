@@ -1,6 +1,9 @@
-import { useFormStore } from "@/store";
 import { useEffect, useRef, useState } from "react";
+
+import { useFormStore } from "@/stores";
+
 import { ErrorMessage } from ".";
+
 import { ErrorMessages, InitialForm } from "@/types";
 
 type SingleSelectProps = {
@@ -131,9 +134,7 @@ export const Select = ({
 
   return (
     <div className={`control-select`}>
-      <span className="form__label">
-        {label}
-      </span>
+      <span className="form__label">{label}</span>
       <div
         id={name}
         onBlur={(e) => {

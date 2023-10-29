@@ -1,17 +1,17 @@
-import { useCreateEmployee } from "@/hooks/employee";
+import { useCreateEmployee } from "@/plugins/dependencies/employeeDependency";
+
+import { CreateEmployeeView } from "@/components/views/user/CreateEmployeeView";
 
 import { Layout } from "@/components/layouts/app";
 import { Alert, Spinner } from "@/components/ui";
 
-import { CreateEmployeeView } from "@/components/views/user/CreateEmployeeView";
-
 function CreateEmployeePage() {
-  const createEmployee = useCreateEmployee();
+  const employee  = useCreateEmployee();
 
   return (
     <Layout title="Usuarios">
+      {employee.IsCreateLoading && <Spinner />}
       <Alert />
-      {createEmployee.isLoading && <Spinner />}
 
       <CreateEmployeeView />
     </Layout>

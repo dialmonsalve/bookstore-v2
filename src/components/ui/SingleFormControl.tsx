@@ -1,4 +1,4 @@
-import { useFormStore } from "@/store";
+import { useFormStore } from "@/stores";
 
 interface SingleFormControlProps {
   autoComplete?: "on" | "off";

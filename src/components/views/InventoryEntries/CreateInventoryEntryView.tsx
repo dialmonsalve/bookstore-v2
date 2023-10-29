@@ -1,6 +1,6 @@
 import { ErrorMessage, FormControl, Transactions } from "@/components/ui";
 import { INVENTORY_ENTRIES } from "@/constants";
-import { useInventoryEntries } from "@/hooks/transactions";
+import { useInventoryEntries } from "@/hooks/views";
 
 export const CreateInventoryEntryView = () => {
 

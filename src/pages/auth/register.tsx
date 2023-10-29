@@ -3,8 +3,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
 
-import { UseLoginClient } from "@/hooks/auth";
-import { useFormStore } from "@/store/form";
+import { useFormStore } from "@/stores/form/form.store";
 
 import { CreateEditPerson } from "@/components/views";
 import { Layout } from "@/components/layouts/e-commerce";
@@ -13,6 +12,7 @@ import { Alert, Button } from "@/components/ui";
 import { formValidator } from "@/helpers";
 import { CLIENT_VALIDATION_SCHEMA } from "@/constants";
 import { IClient } from "@/types";
+import { useRegisterUser } from "@/plugins/dependencies";
 
 const newClient = {
   name: "",
@@ -30,7 +30,7 @@ function CreateCLientPage() {
     formState,
     CLIENT_VALIDATION_SCHEMA.newClient
   );
-  const registerClient = UseLoginClient();
+  const client = useRegisterUser();
 
   const handleRegisterClient = async (e: FormEvent) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ function CreateCLientPage() {
 
     if (!hasFormErrors) {
       const { repitePassword, ...restFormState } = formState;
-      registerClient.mutate(restFormState);
+      client.register(restFormState);
     }
   };
 

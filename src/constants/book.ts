@@ -112,7 +112,7 @@ export const BOOK_VALIDATION_SCHEMA = {
     title: formValidator()
       .string()
       .required("Campo título es requerido")
-      .min(3, "El nombre debe tener al menos de 3 caracteres"),
+      .min(3, "El título debe tener al menos de 3 caracteres"),
     slug: formValidator()
       .string()
       .required("Campo slug es requerido")

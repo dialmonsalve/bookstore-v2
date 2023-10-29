@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 import { db } from '@/database';
 import { Employee } from '@/models';
-import { IEmployee, ResponseObject } from '@/types';
+import {  ResponseObject } from '@/types';
 
 
 type Data =

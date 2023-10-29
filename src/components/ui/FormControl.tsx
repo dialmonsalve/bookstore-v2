@@ -1,9 +1,10 @@
 import { useForm } from "@/hooks/useForm";
 import { ErrorMessage } from "./";
 
-import { FormOptions, useFormStore } from "@/store";
+import {  useFormStore } from "@/stores";
 
 import { ErrorMessages, InitialForm } from "@/types";
+import { FormOptions } from "@/stores/interfaces.store";
 
 interface FormControlProps {
   classNameControl?: string;
@@ -27,9 +28,9 @@ export const FormControl = ({
   const { handleFieldChange } = useForm(initialForm);
 
   const formState = useFormStore((state) => state.formState);
-  const handleBlur = useFormStore((state) => state.handleBlur);
   const isTouched = useFormStore((state) => state.isTouched);
   const isFormSubmitted = useFormStore((state) => state.isFormSubmitted);
+  const handleBlur = useFormStore((state) => state.handleBlur);
 
   if (formState === "undefined") return;
 

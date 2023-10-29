@@ -1,13 +1,14 @@
 import { FormEvent, useState } from "react";
 import Image from "next/image";
 
-import { useSearchBook, useCreateCategory, useCreateBook } from "@/hooks/books";
+import { useCreateBook,  useGetSearchBooks, useCreateCategory} from "@/plugins/dependencies/bookDependency";
+
 import {
   useBooksStore,
   useEmployeesStore,
   useFormStore,
-  useUisStore,
-} from "@/store";
+  useUIStore,
+} from "@/stores";
 
 import {
   Button,
@@ -34,9 +35,9 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
 
   const formState = useFormStore((state) => state.formState);
   const value = useFormStore((state) => state.options);
-  const setAlert = useUisStore((state) => state.setAlert);
+  const setAlert = useUIStore((state) => state.setAlert);
 
-  const searchBookMutation = useSearchBook();
+  const searchBookMutation = useGetSearchBooks();
   const createCategoryMutation = useCreateCategory();
 
   const categories = useBooksStore((state) => state.categories);
@@ -56,7 +57,7 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
     }
     setIsFormSubmitted(false);
 
-    createCategoryMutation.mutate({
+    createCategoryMutation.createCategory({
       name: createCategory.toLocaleLowerCase(),
       username: session?.username,
     });
@@ -73,7 +74,7 @@ export const CreateEditBook = ({ onSubmit }: Props) => {
       );
       return;
     }
-    searchBookMutation.mutate(search);
+    searchBookMutation.searchBook(search);
   };
 
   const existImage = formState?.imageLinks

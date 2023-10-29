@@ -1,4 +1,4 @@
-import { useUITransactionStore, useEmployeesStore } from "@/store";
+import { useUIStore, useEmployeesStore } from "@/stores";
 import { TextArea } from "./";
 
 interface FooterTransaction {
@@ -7,7 +7,7 @@ interface FooterTransaction {
 
 export const FooterTransaction = ({ initialForm }: FooterTransaction) => {
   const session = useEmployeesStore((state) => state.session);
-  const formItems = useUITransactionStore((state) => state.formItems);
+  const formItems = useUIStore((state) => state.formItems);
 
   return (
     <>

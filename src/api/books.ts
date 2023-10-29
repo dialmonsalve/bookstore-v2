@@ -56,7 +56,7 @@ export async function createBook(
 }
 
 //! Get book by ISBN
-export async function getBookByIsbn(isbn: string): Promise<IBook | null> {
+export async function getBookByISBN(isbn: string): Promise<IBook | null> {
   try {
     const { data } = await bookApi.get<IBook | null>(`/${isbn}`);
     return data;
@@ -117,7 +117,7 @@ export async function getSearchBooks(
       const { volumeInfo, id } = book;
       const ISBN = volumeInfo.industryIdentifiers
         ? volumeInfo.industryIdentifiers?.[0].identifier
-        : "No hay ISB disponible";
+        : "";
       const subtitle = volumeInfo.subtitle || "No hay subtitulo disponible";
       const authors = volumeInfo.authors || "sin definir";
       const googleCategories = volumeInfo.categories || ["Sin definir"];

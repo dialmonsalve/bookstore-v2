@@ -1,10 +1,14 @@
 import { FormEvent } from "react";
 
-import { useFormStore } from "@/store";
-import { useEmployee, useUpdateEmployee } from "@/hooks/employee";
+import {
+  useUpdateEmployee,
+  useGetEmployeeById,
+} from "@/plugins/dependencies/employeeDependency";
 
+import { useFormStore } from "@/stores";
+
+import { CreateEditPerson } from "../";
 import { Select, Button } from "@/components/ui";
-import { CreateEditPerson } from "..";
 
 import { formValidator } from "@/helpers";
 import { EMPLOYEE_VALIDATION_SCHEMA } from "@/constants";
@@ -15,10 +19,10 @@ interface Props {
 }
 
 export const UpdateEmployeeView = ({ employeeId }: Props) => {
-  const updateEmployee = useUpdateEmployee();
   const formState = useFormStore<IEmployee>((state) => state.formState);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
-  const getEmployeeById = useEmployee(employeeId);
+  const employeeUpdate = useUpdateEmployee();
+  const employeeGetById = useGetEmployeeById(employeeId);
 
   const errors = formValidator().getErrors(
     formState,
@@ -30,9 +34,7 @@ export const UpdateEmployeeView = ({ employeeId }: Props) => {
     const hasFormErrors = checkFormErrors(errors);
 
     if (!hasFormErrors) {
-      console.log(formState);
-
-      updateEmployee.mutate({ _id: employeeId, employee: formState });
+      employeeUpdate.update({ _id: employeeId, employee: formState });
     }
   };
   return (
@@ -42,7 +44,7 @@ export const UpdateEmployeeView = ({ employeeId }: Props) => {
       onSubmit={handleUpdateEmployee}
     >
       <CreateEditPerson
-        initialForm={getEmployeeById.data as Record<string, any>}
+        initialForm={employeeGetById.getById as Record<string, any>}
         errors={errors}
         isCreate={false}
         isEmployee
@@ -59,9 +61,11 @@ export const UpdateEmployeeView = ({ employeeId }: Props) => {
         <Button
           type="submit"
           backgroundColor="green"
-          disabled={!!errors || updateEmployee.isLoading}
+          disabled={!!errors || employeeUpdate.IsUpdateLoading}
         >
-          {`${updateEmployee.isLoading ? "Espere" : "Actualiza Usuario"} `}
+          {`${
+            employeeUpdate.IsUpdateLoading ? "Espere" : "Actualiza Usuario"
+          } `}
         </Button>
       </div>
     </form>

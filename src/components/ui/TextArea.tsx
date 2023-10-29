@@ -1,5 +1,5 @@
 import { useForm } from "@/hooks/useForm";
-import { useFormStore } from "@/store";
+import { useFormStore } from "@/stores";
 import { ErrorMessage } from "./";
 import { ErrorMessages, InitialForm } from "@/types";
 

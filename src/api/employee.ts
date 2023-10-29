@@ -38,7 +38,6 @@ export async function updateEmployee(
   _id: string,
   employee: IEmployee
 ): Promise<IEmployee> {
-  console.log(employee);
 
   try {
     const { data } = await employeeApi.put<IEmployee>(`/${_id}`, employee);

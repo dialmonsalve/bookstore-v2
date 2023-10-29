@@ -1,8 +1,9 @@
 import Image from "next/image";
+
+import { useBooksStore, useFormStore, useUIStore } from "@/stores";
 import { Button } from ".";
 
 import { FoundBooks } from "@/types/googleBooks";
-import { useBooksStore, useFormStore, useUisStore } from "@/store";
 import { IBook } from "@/types";
 
 interface GoogleApiBooksProps {
@@ -10,7 +11,7 @@ interface GoogleApiBooksProps {
 }
 
 export const ModalApiBooks = ({ googleBook }: GoogleApiBooksProps) => {
-  const setShowModal = useUisStore((state) => state.setShowModal);
+  const setShowModal = useUIStore((state) => state.setShowModal);
 
   const formState = useFormStore((state) => state.formState);
   const setFormState = useFormStore((state) => state.setFormState);

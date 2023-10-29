@@ -1,18 +1,16 @@
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 
-import { useLogin } from "@/hooks/auth";
-
 import { Alert, Spinner } from "@/components/ui";
 import { LoginEmployee } from "@/components/views/user/LoginEmployee";
+import { useLogin } from "@/plugins/dependencies";
 
 function PrivateLoginPage() {
   const loginEmployee = useLogin("username");
 
-  if (loginEmployee.isLoading) return <Spinner />;
-
   return (
     <main className="admin-login">
+      {loginEmployee.isLoading && <Spinner />}
       <h1 style={{ color: "white" }}>Login</h1>
       <Alert />
       <LoginEmployee />

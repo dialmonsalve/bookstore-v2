@@ -4,8 +4,8 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { getSession } from "next-auth/react";
 
-import { useLogin } from "@/hooks/auth";
-import { useFormStore } from "@/store/form";
+
+import { useFormStore } from "@/stores/form/form.store";
 
 import { Layout } from "@/components/layouts/e-commerce";
 import {
@@ -18,6 +18,7 @@ import {
 
 import { LOGIN_CLIENT, LOGIN_VALIDATION_SCHEMA } from "@/constants";
 import { formValidator } from "@/helpers";
+import { useLogin } from "@/plugins/dependencies";
 
 function Login() {
   const loginClient = useLogin("email");
@@ -36,14 +37,12 @@ function Login() {
 
     if (!hasErrors) {
       handleResetForm(LOGIN_CLIENT.initialForm);
-      loginClient.mutate({
+      loginClient.login({
         email: formState?.email,
         password: formState?.password,
       });
     }
   };
-
-  if (loginClient.isLoading) return <Spinner />;
 
   return (
     <Layout
@@ -52,8 +51,8 @@ function Login() {
         "Página para hacer login en diabooks. Permite a nuestros usuarios hacer sus compras e inscribirse a nuestros boletines"
       }
     >
-      <h1>Entra y la magia comience iniciará</h1>
-
+      <h1>Ingresa y haz que la magia comience</h1>
+      {loginClient.isLoading && <Spinner />}
       <Alert />
       <form className="form" onSubmit={handleSubmit} noValidate>
         <FormControl

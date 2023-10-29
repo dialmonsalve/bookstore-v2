@@ -11,42 +11,18 @@ import { useMainEmployees } from "@/hooks/useMainEmployees";
 
 function UsersPage() {
   const {
-    deleteEmployee,
-    employeeId,
-    getEmployees,
+    employeeGetAll,
     nameTableFields,
     router,
     titles,
-    setEmployeeId,
-    setShowModal,
+    handleAcceptAction,
+    handleDeleteEmployee,
+    handleEditEmployee,
   } = useMainEmployees();
-
-  const { data, isLoading } = getEmployees;
-
-  //! Handler functions
-  const handleEditEmployee = (employeeId: string | number): void => {
-    router.push(`/admin/users/${employeeId}`);
-  };
-
-  const handleDeleteEmployee = (
-    employeeId: string | number,
-    employeeUsername?: string | number
-  ): void => {
-    setShowModal(true, `¿Desea eliminar el usuario ${employeeUsername}?`);
-    setEmployeeId(`${employeeId}`);
-  };
-
-  const handleAcceptAction = () => {
-    setShowModal(false);
-    deleteEmployee.mutate(employeeId);
-  };
-  // ! Constants
-  if (isLoading) return <Spinner />;
-
-  if (!data) return;
 
   return (
     <>
+      {employeeGetAll.IsEmployeeLoading && <Spinner />}
       <Modal typeModal="warning">
         <Button backgroundColor="red" onClick={handleAcceptAction}>
           ¿Está seguro?
@@ -63,7 +39,7 @@ function UsersPage() {
           right="20%"
           onClick={() => router.push("/admin/users/create")}
         />
-        {data.totalEmployees === 0 ? (
+        {employeeGetAll?.totalEmployees === 0 ? (
           <h2 style={{ textAlign: "center", fontSize: "3rem" }}>
             Aún No hay usuarios
           </h2>
@@ -72,12 +48,15 @@ function UsersPage() {
             <Table
               tableTitles={titles}
               nameTableFields={nameTableFields}
-              data={data.employees}
+              data={employeeGetAll?.getAll}
               handleDelete={handleDeleteEmployee}
               handleEdit={handleEditEmployee}
               isEditable
             />
-            <Paginator totalData={data.totalEmployees} query={getEmployees} />
+            <Paginator
+              totalData={employeeGetAll?.totalEmployees || 0}
+              query={employeeGetAll}
+            />
           </>
         )}
       </Layout>

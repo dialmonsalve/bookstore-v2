@@ -1,4 +1,4 @@
-import { useUisStore } from "@/store/ui";
+import { useUIStore } from "@/stores/ui/ui.store";
 import { Button } from ".";
 import { ReactNode } from "react";
 import Image from "next/image";
@@ -8,9 +8,9 @@ interface ModalProps {
   children: ReactNode;
 }
 export const Modal = ({ typeModal, children }: ModalProps) => {
-  const messageModal = useUisStore((state) => state.messageModal);
-  const showModal = useUisStore((state) => state.showModal);
-  const setShowModal = useUisStore((state) => state.setShowModal);
+  const messageModal = useUIStore((state) => state.messageModal);
+  const showModal = useUIStore((state) => state.showModal);
+  const setShowModal = useUIStore((state) => state.setShowModal);
 
   const color =
     typeModal === "success"
@@ -46,7 +46,9 @@ export const Modal = ({ typeModal, children }: ModalProps) => {
           <p className="modal__container--message">{messageModal}</p>
           <div className="modal__container--buttons">
             {children}
-            <Button backgroundColor="red"  onClick={handleCancelAction}>Cancelar</Button>
+            <Button backgroundColor="red" onClick={handleCancelAction}>
+              Cancelar
+            </Button>
           </div>
         </div>
       </div>

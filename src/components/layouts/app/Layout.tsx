@@ -1,7 +1,7 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 
 import { Header, Sidebar } from "./";
-import { useFormStore, useUITransactionStore, useUisStore } from "@/store";
+import { useFormStore, useUIStore } from "@/stores";
 import { Button } from "@/components/ui";
 import { useRouter } from "next/router";
 
@@ -11,15 +11,14 @@ interface Props {
 }
 
 export const Layout = ({ title, children }: Props) => {
-
   const router = useRouter();
-  const reset = useUisStore(state => state.resetPage);
-  const handleResetForm = useFormStore(state => state.handleResetForm);
-  const clearAllItems = useUITransactionStore((state) => state.clearAllItems);
+  const reset = useUIStore((state) => state.resetPage);
+  const handleResetForm = useFormStore((state) => state.handleResetForm);
+  const clearItems = useUIStore((state) => state.clearItems);
 
   const handleBack = () => {
     router.back();
-    clearAllItems();
+    clearItems();
     reset();
     handleResetForm({});
   };
@@ -28,7 +27,9 @@ export const Layout = ({ title, children }: Props) => {
     <>
       <Sidebar />
       <Header />
-      <Button onClick={handleBack} buttonStyle="back" >atrás</Button>
+      <Button onClick={handleBack} buttonStyle="back">
+        atrás
+      </Button>
 
       <main className="private-main">
         <h1>{title}</h1>

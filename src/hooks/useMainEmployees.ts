@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { useUisStore } from "@/store/ui";
-import { useEmployeeQuery, useDeleteEmployee } from "@/hooks/employee";
+import { useUIStore } from "@/stores/ui/ui.store";
+import {
+  useGetAllEmployees,
+  useDeleteEmployee,
+} from "@/plugins/dependencies/employeeDependency";
 
-const titles = ["Nombre", "Apellido", "Username", "email", "Teléfono", "Role"];
+const titles = ["Nombre", "Apellido", "Username", "Email", "Teléfono", "Role"];
 
 const nameTableFields = [
   "name",
@@ -18,17 +21,38 @@ const nameTableFields = [
 export const useMainEmployees = () => {
   const [employeeId, setEmployeeId] = useState("");
   const router = useRouter();
-  const deleteEmployee = useDeleteEmployee();
-  const setShowModal = useUisStore((state) => state.setShowModal);
-  const getEmployees = useEmployeeQuery();
+  const employeeGetAll = useGetAllEmployees();
+  const employeeDelete = useDeleteEmployee();
+  const setShowModal = useUIStore((state) => state.setShowModal);
+
+  //! Handler functions
+  const handleEditEmployee = (employeeId: string | number): void => {
+    router.push(`/admin/users/${employeeId}`);
+  };
+
+  const handleDeleteEmployee = (
+    employeeId: string | number,
+    employeeUsername?: string | number
+  ): void => {
+    setShowModal(true, `¿Desea eliminar el usuario ${employeeUsername}?`);
+    setEmployeeId(`${employeeId}`);
+  };
+
+  const handleAcceptAction = () => {
+    setShowModal(false);
+    employeeDelete.delete(employeeId);
+  };
 
   return {
-    deleteEmployee,
+    employeeDelete,
     employeeId,
-    getEmployees,
+    employeeGetAll,
     nameTableFields,
     router,
     titles,
+    handleAcceptAction,
+    handleDeleteEmployee,
+    handleEditEmployee,
     setEmployeeId,
     setShowModal,
   };

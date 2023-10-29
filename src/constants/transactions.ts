@@ -92,7 +92,7 @@ export const TRANSACTION_VALIDATION_SCHEMA = {
   newOrder: {
     isbn: formValidator()
       .string()
-      .required('Campo ISBN es requerido')
+      .required('Código es requerido')
       .min(3, 'El nombre debe tener al menos de 3 caracteres'),
     quantity: formValidator()
       .number()
@@ -104,6 +104,10 @@ export const TRANSACTION_VALIDATION_SCHEMA = {
       .min(3, 'El nombre debe tener al menos de 3 caracteres'),
     productType: formValidator()
       .string()
-      .required('Campo producto es requerido')
+      .required('Campo producto es requerido'),
+      title: formValidator()
+      .string()
+      .required("Campo nombre es requerido")
+      .min(3, "El nombre debe tener al menos de 3 caracteres"),
   }
 }

@@ -1,15 +1,16 @@
 import { FormEvent } from "react";
 
-import { useLogin } from "@/hooks/auth";
-import { useFormStore } from "@/store";
+import { useLogin } from "@/plugins/dependencies";
+import { useFormStore } from "@/stores";
 
 import { FormControl, Button } from "@/components/ui";
+
 import { formValidator } from "@/helpers";
 import { LOGIN_EMPLOYEE, LOGIN_VALIDATION_SCHEMA } from "@/constants";
 
 export const LoginEmployee = () => {
+  const employee = useLogin("username");
   const formState = useFormStore((state) => state.formState);
-  const loginEmployee = useLogin("username");
   const handleResetForm = useFormStore((state) => state.handleResetForm);
   const checkFormErrors = useFormStore((state) => state.checkFormErrors);
 
@@ -24,7 +25,7 @@ export const LoginEmployee = () => {
 
     if (!hasErrors) {
       handleResetForm(LOGIN_EMPLOYEE.initialForm);
-      loginEmployee.mutate(formState);
+      employee.login(formState);
     }
   };
 

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { FormEvent } from "react";
+import Image from "next/image";
 
 interface Props {
   search: string;

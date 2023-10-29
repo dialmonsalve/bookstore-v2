@@ -4,7 +4,7 @@ import { ErrorMessage } from ".";
 
 import { ErrorMessages, InitialForm } from "@/types";
 
-import { useFormStore } from "@/store";
+import { useFormStore } from "@/stores";
 
 interface InputTagProps {
   optionTags: string[];

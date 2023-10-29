@@ -1,12 +1,12 @@
 import { transactions } from "@/api";
-import {  useUisStore } from "@/store";
+import { useUIStore } from "@/stores";
 import { IPurchaseOrder } from "@/types/order";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
 export function useCreatePurchaseOrder() {
   const queryClient = useQueryClient();
-  const setAlert = useUisStore((state) => state.setAlert);
+  const setAlert = useUIStore((state) => state.setAlert);
   const router = useRouter()
 
   return useMutation({

@@ -3,7 +3,7 @@ import { Button } from "./";
 import Image from "next/image";
 
 interface Props {
-  data: Record<string, any>[] | null;
+  data: Record<string, any>[] | undefined | null ;
   tableTitles: string[];
   nameTableFields: string[];
   isEditable: boolean;

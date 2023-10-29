@@ -1,20 +1,25 @@
 import { Button } from "./";
-import { useUisStore } from "@/store/ui";
+import { useUIStore } from "@/stores/ui/ui.store";
 import { URL_CONSTANTS } from "@/constants";
-import { UseQueryResult } from "@tanstack/react-query";
 
 interface PaginatorProps<T> {
-  query : UseQueryResult<T | null, unknown>;
+  query: EmployeeGetAll;
   totalData: number;
 }
 
+interface EmployeeGetAll {
+  getAll: Record<string, any> | null | undefined;
+  isFetching: boolean;
+}
+
 export function Paginator<T>({ query, totalData }: PaginatorProps<T>) {
-  const prevPage = useUisStore((state) => state.prevPage);
-  const nextPage = useUisStore((state) => state.nextPage);
-  const page = useUisStore((state) => state.page);
+  const prevPage = useUIStore((state) => state.prevPage);
+  const nextPage = useUIStore((state) => state.nextPage);
+  const page = useUIStore((state) => state.page);
 
   const totalPages =
-    query.data !== undefined && Math.ceil(Number(totalData) / URL_CONSTANTS.limit);
+    query.getAll !== undefined &&
+    Math.ceil(Number(totalData) / URL_CONSTANTS.limit);
 
   return (
     <div className="paginator">

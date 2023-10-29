@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 
-import { useBookQuery } from "@/hooks/books";
-
 import { Layout } from "@/components/layouts/app";
 import { Alert, Button, Paginator, Spinner, Table } from "@/components/ui";
+import {  useGetBooks } from "@/plugins/dependencies/bookDependency";
 
 const titles = [
   "imagen",
@@ -31,19 +30,17 @@ const nameTableFields = [
 
 function AdminBooks() {
 
-  const getBooks = useBookQuery();
+  const books = useGetBooks();
 
-  const { data, isLoading } = getBooks;
+
   const router = useRouter();
 
   const handleDeleteBook = () => {};
   const handleEditBook = () => {};
 
-  if (isLoading) return <Spinner />;
-  if (!data) return;
-
   return (
     <Layout title="libros">
+      {books.isLoading && <Spinner />}
       <Alert />
 
       <Button
@@ -54,7 +51,7 @@ function AdminBooks() {
         right="20%"
         onClick={() => router.push("books/create")}
       />
-      {data.totalBooks === 0 ? (
+      {books?.totalBooks === 0 ? (
         <h2 style={{ textAlign: "center", fontSize: "3rem" }}>
           Aún No hay libros
         </h2>
@@ -63,12 +60,12 @@ function AdminBooks() {
           <Table
             tableTitles={titles}
             nameTableFields={nameTableFields}
-            data={data.books}
+            data={books?.getAll}
             handleDelete={handleDeleteBook}
             handleEdit={handleEditBook}
             isEditable
           />
-      <Paginator totalData={data.totalBooks} query={getBooks} />
+      <Paginator totalData={books?.totalBooks || 0} query={books} />
         </>
       )}
     </Layout>

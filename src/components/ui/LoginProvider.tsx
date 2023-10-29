@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { getProviders } from "next-auth/react";
+import { useLoginWithProvider } from "@/plugins/dependencies";
 import Image from "next/image";
 
-import { useLoginWithProvider } from "@/hooks/auth";
+
 import { Button } from "./";
 
 export const LoginProvider = () => {
@@ -26,7 +27,7 @@ export const LoginProvider = () => {
           backgroundColor={
             provider.name === "Google" ? "outline-red" : "outline-blue"
           }
-          onClick={() => loginProvider.mutate(provider.id)}
+          onClick={() => loginProvider.provider(provider.id)}
         >
           {" "}
           <Image

@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 
-import { useUpdateEmployee, useEmployee } from "@/hooks/employee";
+import { useGetEmployeeById } from "@/plugins/dependencies/employeeDependency";
 
 import { Layout } from "@/components/layouts/app";
 import { Alert, Spinner } from "@/components/ui";
@@ -10,21 +10,17 @@ import { getEmployeeById } from "@/api/employee";
 import { IEmployee } from "@/types";
 
 interface Props {
-  employee: IEmployee;
+  employee?: IEmployee;
   employeeId: string;
 }
 
-function UpdateEmployeePage({ employeeId, employee }: Props) {
-  const getEmployeeById = useEmployee(employeeId);
-
-  const updateEmployee = useUpdateEmployee();
+function UpdateEmployeePage({ employeeId }: Props) {
+  const  employee = useGetEmployeeById(employeeId);
 
   return (
-    <Layout
-      title={`${getEmployeeById.data?.name} ${getEmployeeById.data?.lastName}`}
-    >
+    <Layout title={`${employee.getById?.name} ${employee.getById?.lastName}`}>
+      {employee.getById?.isLoading && <Spinner />}
       <Alert />
-      {updateEmployee.isLoading && <Spinner />}
 
       <UpdateEmployeeView employeeId={employeeId} />
     </Layout>

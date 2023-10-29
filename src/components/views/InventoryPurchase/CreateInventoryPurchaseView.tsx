@@ -1,7 +1,10 @@
-import { ErrorMessage, FormControl, Transactions } from "@/components/ui";
-import { CONST_FORM_ORDER } from "@/constants";
-import { usePurchaseOrders } from "@/hooks/transactions";
 import { FormEvent } from "react";
+
+import { usePurchaseOrders } from "@/hooks/views";
+
+import { ErrorMessage, FormControl, Transactions } from "@/components/ui";
+
+import { CONST_FORM_ORDER } from "@/constants";
 
 export const CreateInventoryPurchaseView = () => {
   const {
@@ -19,7 +22,7 @@ export const CreateInventoryPurchaseView = () => {
     handleFieldChange,
     handleResetForm,
     setNewFieldsForm,
-    clearAllItems,
+    clearItems,
   } = usePurchaseOrders();
 
   const { titles, formTable, nameTableFields } = setNewFieldsForm();
@@ -53,12 +56,12 @@ export const CreateInventoryPurchaseView = () => {
     });
     if (createPurchaseOrder.isSuccess) {
       handleResetForm(itemsOrder);
-      clearAllItems();
+      clearItems();
     }
   };
 
   const handleSearchBook = () => {
-    getBookByISBN.mutate(formState.isbn);
+    getBookByISBN.getByISBN(formState.isbn);
   };
 
   return (

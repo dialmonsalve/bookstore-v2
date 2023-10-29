@@ -4,7 +4,7 @@ import { Layout } from "@/components/layouts/e-commerce";
 import { Button, FormControl, TextArea } from "@/components/ui";
 
 import { formValidator } from "@/helpers";
-import { useFormStore } from "@/store";
+import { useFormStore } from "@/stores";
 import { LOGIN_VALIDATION_SCHEMA } from "@/constants";
 
 const formFields = [

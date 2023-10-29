@@ -1,4 +1,4 @@
-import { useUisStore, useFormStore, useUITransactionStore } from "@/store";
+import { useUIStore, useFormStore } from "@/stores";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,12 +10,12 @@ interface Props {
 }
 
 export const NavLink = ({ src, alt, children, href }: Props) => {
-  const reset = useUisStore((state) => state.resetPage);
+  const reset = useUIStore((state) => state.resetPage);
   const handleResetForm = useFormStore((state) => state.handleResetForm);
-  const clearAllItems = useUITransactionStore((state) => state.clearAllItems);
+  const clearItems = useUIStore((state) => state.clearItems);
 
   const clearState = () => {
-    clearAllItems();
+    clearItems();
     reset();
     handleResetForm({});
   };

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
   Button,
   FooterTransaction,
@@ -5,9 +6,10 @@ import {
   HeaderTransaction,
   Table,
 } from "./";
-import { FormOptions, useFormStore, useUITransactionStore } from "@/store";
+import { useShallow } from "zustand/react/shallow";
+import {  useFormStore, useUIStore } from "@/stores";
 import { ErrorMessages, InitialForm } from "@/types";
-import { ReactNode } from "react";
+import { FormOptions } from "@/stores/interfaces.store";
 
 interface TransactionsProps {
   children: ReactNode;
@@ -38,13 +40,11 @@ export const Transactions = ({
 }: TransactionsProps) => {
   const handleResetForm = useFormStore((state) => state.handleResetForm);
 
-  const {
-    disabled,
-    formItems,
-    clearAllItems,
-    handleAddItem,
-    handleRemoveItem,
-  } = useUITransactionStore();
+  const disabled = useUIStore(useShallow((state) => state.disabled));
+  const formItems = useUIStore(useShallow((state) => state.formItems));
+  const clearItems = useUIStore(useShallow((state) => state.clearItems));
+  const addItem = useUIStore(useShallow((state) => state.addItem));
+  const removeItem = useUIStore(useShallow((state) => state.removeItem));
 
   return (
     <>
@@ -63,8 +63,7 @@ export const Transactions = ({
             errors={errors}
           />
           {productType === "Book" && (
-            <div className="container-button" >
-
+            <div className="container-button">
               <Button
                 disabled={mainForm.isbn.length <= 3}
                 size="small"
@@ -73,26 +72,26 @@ export const Transactions = ({
                 buscar
               </Button>
             </div>
-            )}
+          )}
         </div>
-        <div className="container-button" >
+        <div className="container-button">
           <Button
-          backgroundColor="green"
-          onClick={() => {
-            handleAddItem(mainForm);
-            handleResetForm(formReset);
-          }}
-          disabled={!!errors  || mainForm.title === ''}
-        >
-          add
-        </Button>
+            backgroundColor="green"
+            onClick={() => {
+              addItem(mainForm);
+              handleResetForm(formReset);
+            }}
+            disabled={!!errors || mainForm.title === ""}
+          >
+            add
+          </Button>
         </div>
 
         <Table
           data={formItems}
           tableTitles={tableTitles}
           nameTableFields={nameTableFields}
-          handleDelete={handleRemoveItem}
+          handleDelete={removeItem}
           isEditable={isEditable}
         />
       </div>
@@ -113,7 +112,7 @@ export const Transactions = ({
         <div className="transactions-button__right">
           <Button
             onClick={() => {
-              clearAllItems();
+              clearItems();
               handleResetForm(initialForm);
             }}
             buttonStyle="points"

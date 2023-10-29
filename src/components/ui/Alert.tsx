@@ -1,9 +1,9 @@
-import { useUisStore } from "@/store/ui";
+import { useUIStore } from "@/stores/ui/ui.store";
 
 export const Alert = () => {
-  const showAlert = useUisStore((state) => state.showAlert);
-  const alertType = useUisStore((state) => state.alertType);
-  const alertMessage = useUisStore((state) => state.alertMessage);
+  const showAlert = useUIStore((state) => state.showAlert);
+  const alertType = useUIStore((state) => state.alertType);
+  const alertMessage = useUIStore((state) => state.alertMessage);
 
   return (
     <div

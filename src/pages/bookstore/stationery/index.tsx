@@ -1,30 +1,24 @@
+import { ChangeEvent,  useState } from "react";
+
 import { Layout } from "@/components/layouts/app";
-import {  SingleFormControl } from "@/components/ui";
+import { SingleFormControl } from "@/components/ui";
 
-import { ChangeEvent, useEffect, useState } from "react";
-
-
-const initialForm  ={
+const initialForm = {
   price: 0,
   discount: 0,
-  total:0
-}
+  total: 0,
+};
 
 function AdminStationeries() {
-
-  const [value, setValue] = useState(initialForm)
+  const [value, setValue] = useState(initialForm);
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { value, name } = e.target
-    
-    setValue(prev =>({...prev, [name]:value}))
-  } 
-  
-  useEffect(() => {
-    setValue(prev =>({...prev, total:0}))
-  }, [initialForm.total])
-  
-    return (
+    const { value, name } = e.target;
+
+    setValue((prev) => ({ ...prev, [name]: value }));
+  };
+
+  return (
     <Layout title="papelería">
       <SingleFormControl
         label="price"
@@ -47,9 +41,9 @@ function AdminStationeries() {
         type="number"
         placeholder="Total"
         name="total"
-        value={ Number(value.price) + (value.price * value.discount/100)}
-          onChange={onChange}
-          disabled
+        value={Number(value.price) + (value.price * value.discount) / 100}
+        onChange={onChange}
+        disabled
       />
     </Layout>
   );

@@ -2,15 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { useLogOut } from "@/hooks/auth";
-
-import { useAuthentication } from "@/hooks/auth";
+import { useLogout, useUserAuthentication } from "@/plugins/dependencies";
 
 export const Header = () => {
   const router = useRouter();
 
-  const logOut = useLogOut();
-  const { nextSession } = useAuthentication();
+  const logOut = useLogout();
+  const { nextSession } = useUserAuthentication();
 
   const user = nextSession?.user;
 
@@ -93,7 +91,7 @@ export const Header = () => {
               <li className="header__login--nav-item">
                 <button
                   className="header__login--nav-link"
-                  onClick={() => logOut.mutate()}
+                  onClick={() => logOut.logout()}
                 >
                   Logout
                 </button>

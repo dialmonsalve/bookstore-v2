@@ -1,14 +1,14 @@
 import Image from "next/image";
 
-import { useUisStore } from "@/store/ui";
+import { useUIStore } from "@/stores/ui/ui.store";
 
 import { LINKS } from "@/constants";
 
 import { NavLink } from "@/components/ui";
 
 export const Sidebar = () => {
-  const toggleSidebar = useUisStore((state) => state.toggleSidebar);
-  const handleToggleSidebar = useUisStore((state) => state.setToggleSidebar);
+  const toggleSidebar = useUIStore((state) => state.toggleSidebar);
+  const handleToggleSidebar = useUIStore((state) => state.setToggleSidebar);
 
   const handleContentClick = (
     e: React.MouseEvent<HTMLUListElement | HTMLLIElement, MouseEvent>

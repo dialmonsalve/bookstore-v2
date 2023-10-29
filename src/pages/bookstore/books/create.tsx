@@ -4,7 +4,7 @@ import { Layout } from "@/components/layouts/app";
 import { ModalApiBooks, Spinner, Alert } from "@/components/ui";
 import { CreateEditBook } from "@/components/views";
 
-import { useNewBook } from "@/hooks/transactions";
+import { useNewBook } from "@/hooks/views";
 
 function CreateBooksPage() {
   const {
@@ -34,7 +34,7 @@ function CreateBooksPage() {
     };
     if (!session?.username) return;
 
-    createBook.mutate({ book: newBook, username: session.username });
+    createBook.create({ book: newBook, username: session.username });
   };
 
   if (foundBooks === null || foundBooks === undefined) return;
