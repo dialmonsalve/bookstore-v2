@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { GetBookByISBN } from "../../interfaces/tanstak-query.books";
+
+import { GetBookByISBN } from "@/plugins/interfaces";
 
 export function useMutationGetBookByISBN(actionBook: GetBookByISBN) {
 

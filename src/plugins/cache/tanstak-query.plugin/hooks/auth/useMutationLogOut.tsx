@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { Logout } from "../../interfaces/tanstak-query.auth";
+import { Logout } from "../../../../interfaces/auth";
 
 export function useMutationLogOut (logout:Logout) {
 

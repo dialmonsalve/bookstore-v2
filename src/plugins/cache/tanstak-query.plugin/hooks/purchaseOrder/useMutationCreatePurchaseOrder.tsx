@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { IPurchaseOrder } from "@/types/order";
-import { CreatePurchaseOrder } from "../../interfaces/tanstak-query.purchase-order";
+import { CreatePurchaseOrder } from "@/plugins/interfaces";
 
 export function useMutationCreatePurchaseOrder(
   purchaseOrderAction: CreatePurchaseOrder

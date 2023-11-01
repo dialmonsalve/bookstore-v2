@@ -1,12 +1,13 @@
-import { CONST_FORM_ORDER, TRANSACTION_VALIDATION_SCHEMA } from "@/constants";
+import { FormEvent } from "react";
 import { formValidator } from "@/helpers";
 import {  
   useEmployeesStore,
   useFormStore,
   useUIStore,
 } from "@/stores";
-import { FormEvent } from "react";
 import { useForm } from "../useForm";
+import { CONST_FORM_ORDER, TRANSACTION_VALIDATION_SCHEMA } from "@/constants";
+
 import { FormOptions } from "@/stores/interfaces.store";
 
 interface ItemsOrder {

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { LoginWithProvider } from "../../interfaces/tanstak-query.auth";
+import { LoginWithProvider } from "../../../../interfaces/auth";
 
 export function useMutationLoginWithProvider(actionLogin: LoginWithProvider) {
   

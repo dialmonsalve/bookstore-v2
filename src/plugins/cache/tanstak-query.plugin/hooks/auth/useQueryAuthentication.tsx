@@ -1,23 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { Authentication } from "../../interfaces/tanstak-query.auth";
+import { Authentication } from "../../../../interfaces/auth";
 
 export function useQueryAuthentication(auth: Authentication) {
   
-  const { useSession, searchUser, useEmployeesStore } = auth
+  const { useSession, findUserByEmailOrUsername, useEmployeesStore } = auth
   const { data: nextSession, status } = useSession();
   const setSession = useEmployeesStore(state=>state.setSession)
 
-  const employee = nextSession?.user.username
+  const user = nextSession?.user.username
     ? "credential-employee"
     : "credential-client";
 
   const sessionQuery = useQuery({
-    queryKey: [employee],
+    queryKey: [user],
 
     queryFn: async () => {
       if (status === "authenticated") {
-        const data = await searchUser();
+        const data = await findUserByEmailOrUsername();
         setSession(data);
         return data;
       }

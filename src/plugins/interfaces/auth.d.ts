@@ -2,11 +2,6 @@ import {
   BuiltInProviderType,
   RedirectableProviderType,
 } from "next-auth/providers/index";
-import {
-  AlertSlice,
-  ModalSlice,
-  PaginatorSlice,
-} from "@/stores/interfaces.store";
 import { IClient, IEmployee, TypeRole } from "@/types";
 import {
   LiteralUnion,
@@ -18,12 +13,21 @@ import {
   SignOutResponse,
   UseSessionOptions,
 } from "next-auth/react";
-
-import { EmployeesStore } from "./tanstak-query.employees";
+import { EmployeesStore, UIStore } from ".";
 
 export interface RegisterUser {
   useUIStore: UIStore;
-  signIn: SignInFunction;
+  signIn<P extends RedirectableProviderType | undefined = undefined>(
+    provider?: LiteralUnion<
+      P extends RedirectableProviderType
+        ? P | BuiltInProviderType
+        : BuiltInProviderType
+    >,
+    options?: SignInOptions,
+    authorizationParams?: SignInAuthorizationParams
+  ): Promise<
+    P extends RedirectableProviderType ? SignInResponse | undefined : undefined
+  >;
   registerUser: (
     employee: IEmployee | IClient,
     admin: Admin | null,
@@ -52,7 +56,7 @@ export interface LoginUser {
 
 export interface Authentication {
   useSession: UseSessionFunction<any>;
-  searchUser(): Promise<IEmployee | null>;
+  findUserByEmailOrUsername(): Promise<IEmployee | null>;
   useEmployeesStore: EmployeesStore;
 }
 
@@ -78,11 +82,7 @@ export interface LoginWithProvider {
   useUIStore: UIStore;
 }
 
-interface UIStore {
-  <T>(selector: (state: AlertSlice & ModalSlice & PaginatorSlice) => T): T;
-}
-
-interface Admin {
+export interface Admin {
   adminRole: TypeRole[] | undefined;
   userAdmin: string | undefined;
 }

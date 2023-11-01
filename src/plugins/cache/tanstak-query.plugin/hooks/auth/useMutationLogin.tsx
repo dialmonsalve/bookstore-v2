@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { LoginUser } from "../../interfaces/tanstak-query.auth";
+import { LoginUser } from "../../../../interfaces/auth";
 
 export function useMutationLogin(fieldForm: string, actionRegister: LoginUser) {
   const { useUIStore, signIn, handleLogin } = actionRegister;

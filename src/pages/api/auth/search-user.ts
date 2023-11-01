@@ -16,14 +16,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   switch (req.method) {
     case 'GET':
 
-      return findUserByEmail(req, res)
+      return findUserByEmailOrUsername(req, res)
 
     default:
       res.status(400).json({ message: 'Bad Request' })
   }
 }
 
-async function findUserByEmail(req: NextApiRequest, res: NextApiResponse<Data>) {
+async function findUserByEmailOrUsername(req: NextApiRequest, res: NextApiResponse<Data>) {
 
   const session = await getSession({ req });
 

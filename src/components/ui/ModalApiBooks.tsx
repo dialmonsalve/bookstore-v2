@@ -3,8 +3,8 @@ import Image from "next/image";
 import { useBooksStore, useFormStore, useUIStore } from "@/stores";
 import { Button } from ".";
 
-import { FoundBooks } from "@/types/googleBooks";
 import { IBook } from "@/types";
+import { FoundBooks } from "@/plugins/interfaces";
 
 interface GoogleApiBooksProps {
   googleBook: FoundBooks;

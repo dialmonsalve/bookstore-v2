@@ -3,20 +3,17 @@ import { getProviders } from "next-auth/react";
 import { useLoginWithProvider } from "@/plugins/dependencies";
 import Image from "next/image";
 
-
 import { Button } from "./";
 
 export const LoginProvider = () => {
   const [providers, setProviders] = useState<any>({});
-  const loginProvider = useLoginWithProvider();
+  const loginWithProvider = useLoginWithProvider();
 
   useEffect(() => {
-    if (!providers) return;
-    async () => {
-      const res = await getProviders();
-      setProviders(res);
-    };
-  }, [providers]);
+    getProviders().then((prov) => {
+      setProviders(prov);
+    });
+  }, []);
 
   return Object.values(providers).map((provider: any) => {
     if (provider.id === "credentials") return <div key="credentials"></div>;
@@ -27,7 +24,9 @@ export const LoginProvider = () => {
           backgroundColor={
             provider.name === "Google" ? "outline-red" : "outline-blue"
           }
-          onClick={() => loginProvider.provider(provider.id)}
+          onClick={() => {
+            loginWithProvider.provider(provider.id);
+          }}
         >
           {" "}
           <Image

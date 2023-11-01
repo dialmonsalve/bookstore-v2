@@ -1,12 +1,14 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useAuthOperations } from "../cache/tanstak-query.plugin/entities/useAuthOperations";
+
 import { useEmployeesStore, useUIStore } from "@/stores";
-import { userAuth } from "@/api";
+
+import { useAuthOperations } from "../cache/tanstak-query.plugin/entities/useAuthOperations";
+import { httpAuthPlugin } from "../http/axios.plugin/entities/httpAuthPlugin";
 
 export const useUserAuthentication = () =>
   useAuthOperations().authentication({
     useEmployeesStore,
-    searchUser: userAuth.searchUser,
+    findUserByEmailOrUsername: httpAuthPlugin().findUserByEmailOrUsername,
     useSession,
   });
 
@@ -14,7 +16,7 @@ export const useLogin = (fieldForm: string) =>
   useAuthOperations().login(fieldForm, {
     useUIStore,
     signIn,
-    handleLogin: userAuth.handleLogin,
+    handleLogin: httpAuthPlugin().handleLogin,
   });
 
 export const useLoginWithProvider = () =>
@@ -27,11 +29,11 @@ export const useRegisterUser = () =>
   useAuthOperations().registerUser({
     useUIStore,
     signIn,
-    registerUser:userAuth.registerUser
+    registerUser: httpAuthPlugin().registerUser,
   });
 
 export const useLogout = () =>
   useAuthOperations().logout({
     signOut,
-    useSession
+    useSession,
   });

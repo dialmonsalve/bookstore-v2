@@ -1,19 +1,13 @@
-import {
-  AlertSlice,
-  BookActions,
-  BookState,
-  FormActions,
-  FormState,
-  ModalSlice,
-  PaginatorSlice,
-} from "@/stores/interfaces.store";
-import { FoundBooks, IBook, ICategory, TypeRole } from "@/types";
 import { NextRouter } from "next/router";
+
+import { IBook, ICategory } from "@/types";
+import { FoundBooks } from "@/plugins/interfaces/googleBooks";
+import { BookStore, UIStore, FormStore } from ".";
 
 export interface GetBooks {
   useBooksStore: BookStore;
   useUIStore: UIStore;
-  getBooks: (page: number) => Promise<Data | null>;
+  getBooks: (page: number) => Promise<DataBooks | null>;
 }
 
 export interface GetBookByISBN {
@@ -62,22 +56,7 @@ export interface CreateCategory {
     username?: string
   ) => Promise<ICategory | null>;
 }
-interface Data {
+export interface DataBooks {
   books: IBook[] | null;
   totalBooks: number;
-}
-
-interface BookStore {
-  <T>(selector: (state: BookState & BookActions) => T): T;
-}
-export interface UIStore {
-  <T>(selector: (state: AlertSlice & ModalSlice & PaginatorSlice) => T): T;
-}
-interface FormStore {
-  <T>(selector: (state: FormState<any> & FormActions) => T): T;
-}
-
-interface Admin {
-  adminRole: TypeRole[] | undefined;
-  userAdmin: string | undefined;
 }

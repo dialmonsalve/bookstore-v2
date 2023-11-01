@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { Layout } from "@/components/layouts/app";
 import { Alert, Button, Paginator, Spinner, Table } from "@/components/ui";
-import {  useGetBooks } from "@/plugins/dependencies/bookDependency";
+import { useGetBooks } from "@/plugins/dependencies/bookDependency";
 
 const titles = [
   "imagen",

@@ -1,13 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useEmployeesStore } from "@/stores";
-
-import { GetEmployeeById } from "../../interfaces/tanstak-query.employees";
+import { GetEmployeeById } from "@/plugins/interfaces";
 
 export const useQueryGetEmployeeById = (actionEmployee: GetEmployeeById) => {
-  const setEmployee = useEmployeesStore((state) => state.setEmployee);
+  const { employeeId, getEmployeeById, useEmployeesStore } = actionEmployee;
 
-  const { employeeId, getEmployeeById } = actionEmployee;
+  const setEmployee = useEmployeesStore((state) => state.setEmployee);
 
   if (!employeeId) return;
 

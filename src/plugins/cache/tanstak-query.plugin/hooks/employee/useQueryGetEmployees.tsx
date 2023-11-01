@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { GetEmployees } from "../../interfaces/tanstak-query.employees";
+import { GetEmployees } from "@/plugins/interfaces";
 
 export function useQueryGetEmployees(ActionEmployees: GetEmployees) {
   const { getEmployees, useEmployeesStore, useUIStore } = ActionEmployees;

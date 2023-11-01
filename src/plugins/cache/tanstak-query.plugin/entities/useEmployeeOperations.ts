@@ -11,11 +11,11 @@ import {
   CreateEmployee,
   DeleteEmployee,
   UpdateEmployee,
-} from "../interfaces/tanstak-query.employees";
+} from "@/plugins/interfaces";
 
 export const useEmployeeOperations = () => {
-  function queryGetAll(ActionEmployees: GetEmployees) {
-    const queryEmployees = useQueryGetEmployees(ActionEmployees);
+  function queryGetAll(actionEmployees: GetEmployees) {
+    const queryEmployees = useQueryGetEmployees(actionEmployees);
 
     return {
       getAll: queryEmployees.data?.employees,
@@ -25,8 +25,8 @@ export const useEmployeeOperations = () => {
     };
   }
 
-  function queryGetById({ employeeId, getEmployeeById }: GetEmployeeById) {
-    const getEmployee = useQueryGetEmployeeById({ employeeId, getEmployeeById });
+  function queryGetById(actionEmployees: GetEmployeeById) {
+    const getEmployee = useQueryGetEmployeeById(actionEmployees);
 
     return {
       getById: getEmployee?.data,

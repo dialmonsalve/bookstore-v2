@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { GetCategoriesBook } from "../../interfaces/tanstak-query.books";
+import { GetCategoriesBook } from "@/plugins/interfaces";
 
 export function useQueryGetCategoriesBook({
   useBooksStore,

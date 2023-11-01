@@ -6,7 +6,7 @@ import { Layout } from "@/components/layouts/app";
 import { Alert, Spinner } from "@/components/ui";
 
 function CreateEmployeePage() {
-  const employee  = useCreateEmployee();
+  const employee = useCreateEmployee();
 
   return (
     <Layout title="Usuarios">

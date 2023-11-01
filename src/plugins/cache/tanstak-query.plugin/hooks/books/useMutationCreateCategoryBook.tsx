@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { CreateCategory } from "../../interfaces/tanstak-query.books";
+import { CreateCategory } from "@/plugins/interfaces";
 
 export function useMutationCreateCategoryBook({
   useUIStore,

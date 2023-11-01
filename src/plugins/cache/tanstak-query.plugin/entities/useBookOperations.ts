@@ -14,7 +14,7 @@ import {
   GetBooks,
   GetCategoriesBook,
   SearchBook,
-} from "../interfaces/tanstak-query.books";
+} from "@/plugins/interfaces";
 
 export const useBookOperations = () => {
   function queryGetAllBooks(ActionBooks: GetBooks) {
@@ -28,8 +28,8 @@ export const useBookOperations = () => {
     };
   }
 
-  function queryGetBookById(bookActions: GetBookByISBN) {
-    const getBookByISBN = useMutationGetBookByISBN(bookActions);
+  function queryGetBookById(actionBook: GetBookByISBN) {
+    const getBookByISBN = useMutationGetBookByISBN(actionBook);
 
     return {
       getByISBN: getBookByISBN?.mutate,
@@ -46,14 +46,8 @@ export const useBookOperations = () => {
     };
   }
 
-  function mutationCreateCategoryBook({
-    useUIStore,
-    createCategory,
-  }: CreateCategory) {
-    const createCategoryBook = useMutationCreateCategoryBook({
-      useUIStore,
-      createCategory,
-    });
+  function mutationCreateCategoryBook(actionBook: CreateCategory) {
+    const createCategoryBook = useMutationCreateCategoryBook(actionBook);
 
     return {
       createCategory: createCategoryBook.mutate,

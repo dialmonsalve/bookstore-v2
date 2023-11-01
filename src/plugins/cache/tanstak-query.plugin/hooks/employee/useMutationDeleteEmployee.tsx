@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DeleteEmployee } from "../../interfaces/tanstak-query.employees";
+
+import { DeleteEmployee } from "@/plugins/interfaces";
 
 export function useMutationDeleteEmployee({
   useUIStore,

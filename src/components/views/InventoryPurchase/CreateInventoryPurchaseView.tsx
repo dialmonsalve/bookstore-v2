@@ -50,7 +50,7 @@ export const CreateInventoryPurchaseView = () => {
       observations,
       items: [...newItems],
     };
-    createPurchaseOrder.mutate({
+    createPurchaseOrder.create({
       purchaseOrder: newPurchaseOrder,
       username: session?.username,
     });

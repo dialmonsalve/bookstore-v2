@@ -1,7 +1,8 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 import { IClient, IEmployee } from "@/types";
-import { CreateEmployee } from "../../interfaces/tanstak-query.employees";
+import { CreateEmployee } from "@/plugins/interfaces";
+
 
 export function useMutationCreateEmployee(employee: CreateEmployee) {
   const {

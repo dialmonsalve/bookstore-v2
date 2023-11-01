@@ -11,9 +11,9 @@ import {
 import { useForm } from "../useForm";
 import { useRouter } from "next/router";
 
-import { useCreatePurchaseOrder } from "../transactions";
 import { FormOptions } from "@/stores/interfaces.store";
 import { useGetBookByISBN } from "@/plugins/dependencies/bookDependency";
+import { useCreatePurchaseOrder } from "@/plugins/dependencies/purchaseOrderDependency";
 
 interface ItemsOrder {
   item: number;

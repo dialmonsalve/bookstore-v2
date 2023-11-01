@@ -1,8 +1,10 @@
 import { useFormStore, useUIStore, useBooksStore } from "@/stores";
 import { useBookOperations } from "../cache/tanstak-query.plugin/entities/useBookOperations";
 
-import { apiBook } from "@/api";
 import { useRouter } from "next/router";
+import { httpBookPlugin } from "../http/axios.plugin/entities/httpBookPlugin";
+import { httpBookCategoryPlugin } from "../http/axios.plugin/entities/httpBookCategoryPlugin";
+import { httpGoogleBooksPlugin } from "../http/axios.plugin/entities/httpGoogleBooksPlugin";
 
 export const useCreateBook = () =>
   useBookOperations().mutationCreateBook({
@@ -10,14 +12,14 @@ export const useCreateBook = () =>
     useFormStore,
     useBooksStore,
     useRouter,
-    createBook: apiBook.createBook,
+    createBook: httpBookPlugin().create,
   });
 
 export const useGetBooks = () =>
   useBookOperations().queryGetAllBooks({
     useUIStore,
     useBooksStore,
-    getBooks: apiBook.getBooks,
+    getBooks: httpBookPlugin().get,
   });
 
 // mutationCreateCategoryBook,
@@ -26,24 +28,24 @@ export const useGetBookByISBN = () =>
   useBookOperations().queryGetBookById({
     useUIStore,
     useBooksStore,
-    getBookByISBN: apiBook.getBookByISBN,
+    getBookByISBN: httpBookPlugin().getByISBN,
   });
 
 export const useGetSearchBooks = () =>
   useBookOperations().mutationSearchBook({
     useBooksStore,
     useUIStore,
-    getSearchBooks: apiBook.getSearchBooks,
+    getSearchBooks: httpGoogleBooksPlugin(),
   });
 
 export const useGetCategories = () =>
   useBookOperations().queryGetCategoriesBook({
     useBooksStore,
-    getCategories: apiBook.getCategories,
+    getCategories: httpBookCategoryPlugin().get,
   });
 
 export const useCreateCategory = () =>
   useBookOperations().mutationCreateCategoryBook({
     useUIStore,
-    createCategory: apiBook.createCategory,
+    createCategory: httpBookCategoryPlugin().create,
   });

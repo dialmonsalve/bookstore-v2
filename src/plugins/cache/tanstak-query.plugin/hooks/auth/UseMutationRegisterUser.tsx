@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { RegisterUser } from "../../interfaces/tanstak-query.auth";
+import { RegisterUser } from "../../../../interfaces/auth";
 import { IClient } from "@/types";
 
 export function UseMutationRegisterUser(actionRegister: RegisterUser) {

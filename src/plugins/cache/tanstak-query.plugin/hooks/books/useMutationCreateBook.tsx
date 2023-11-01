@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { CreateBook } from "../../interfaces/tanstak-query.books";
 import { IBook } from "@/types";
+import { CreateBook } from "@/plugins/interfaces";
 
 export function useMutationCreateBook(actionBook: CreateBook) {
   const { useRouter, useFormStore, useUIStore, useBooksStore, createBook } =

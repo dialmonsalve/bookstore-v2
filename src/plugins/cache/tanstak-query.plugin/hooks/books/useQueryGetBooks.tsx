@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { GetBooks } from "../../interfaces/tanstak-query.books";
+import { GetBooks } from "@/plugins/interfaces";
 
 export function useQueryGetBooks(bookActions: GetBooks) {
   const { useBooksStore, useUIStore, getBooks } = bookActions;

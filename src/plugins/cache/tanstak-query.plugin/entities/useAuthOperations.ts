@@ -11,7 +11,7 @@ import {
   LoginWithProvider,
   Logout,
   RegisterUser,
-} from "../interfaces/tanstak-query.auth";
+} from "@/plugins/interfaces";
 
 export const useAuthOperations = () => {
   function registerUser(actionRegister: RegisterUser) {

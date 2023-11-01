@@ -6,8 +6,8 @@ import { Layout } from "@/components/layouts/app";
 import { Alert, Spinner } from "@/components/ui";
 import { UpdateEmployeeView } from "@/components/views/user/UpdateEmployeeView";
 
-import { getEmployeeById } from "@/api/employee";
 import { IEmployee } from "@/types";
+import { httpEmployeePlugin } from "@/plugins/http/axios.plugin/entities/httpEmployeePlugin";
 
 interface Props {
   employee?: IEmployee;
@@ -30,7 +30,7 @@ function UpdateEmployeePage({ employeeId }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { employeeId } = params as { employeeId: string };
 
-  const employee = await getEmployeeById(employeeId);
+  const employee = await httpEmployeePlugin().getById(employeeId);
 
   return {
     props: {

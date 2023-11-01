@@ -1,29 +1,31 @@
-import { useEmployeesStore, useFormStore, useUIStore } from "@/stores";
-import { useEmployeeOperations } from "../cache/tanstak-query.plugin/entities/useEmployeeOperations";
-
-import { apiEmployee, userAuth } from "@/api";
 import { useRouter } from "next/router";
+
+import { useEmployeesStore, useFormStore, useUIStore } from "@/stores";
+
+import { useEmployeeOperations } from "../cache/tanstak-query.plugin/entities/useEmployeeOperations";
+import { httpEmployeePlugin } from '../http/axios.plugin/entities/httpEmployeePlugin';
+import { httpAuthPlugin } from '../http/axios.plugin/entities/httpAuthPlugin';
 
 export const useCreateEmployee = () =>
   useEmployeeOperations().mutationCreate({
     useUIStore,
     useEmployeesStore,
     useFormStore,
-    registerUser: userAuth.registerUser,
+    registerUser: httpAuthPlugin().registerUser,
     useRouter,
   });
 
 export const useDeleteEmployee = () =>
   useEmployeeOperations().mutationDelete({
     useUIStore,
-    deleteEmployee: apiEmployee.deleteEmployee,
+    deleteEmployee: httpEmployeePlugin().remove,
   });
 
 export const useUpdateEmployee = () =>
   useEmployeeOperations().mutationUpdate({
     useUIStore,
     useFormStore,
-    updateEmployee: apiEmployee.updateEmployee,
+    updateEmployee: httpEmployeePlugin().update,
     useRouter,
   });
 
@@ -31,11 +33,12 @@ export const useGetAllEmployees = () =>
   useEmployeeOperations().queryGetAll({
     useEmployeesStore,
     useUIStore,
-    getEmployees: apiEmployee.getEmployees,
+    getEmployees: httpEmployeePlugin().get,
   });
 
 export const useGetEmployeeById = (employeeId: string) =>
   useEmployeeOperations().queryGetById({
     employeeId,
-    getEmployeeById: apiEmployee.getEmployeeById,
+    getEmployeeById: httpEmployeePlugin().getById,
+    useEmployeesStore
   });

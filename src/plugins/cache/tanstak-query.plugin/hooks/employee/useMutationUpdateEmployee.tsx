@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { UpdateEmployee } from "@/plugins/interfaces";
 import { IEmployee } from "@/types";
-import { UpdateEmployee } from "../../interfaces/tanstak-query.employees";
 
 interface MutationUpdateEmployee {
   _id: string;

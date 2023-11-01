@@ -1,24 +1,17 @@
-import {
-  AlertSlice,
-  EmployeeActions,
-  EmployeeState,
-  FormActions,
-  FormState,
-  ModalSlice,
-  PaginatorSlice,
-} from "@/stores/interfaces.store";
+import { EmployeesStore, UIStore, FormStore, Admin } from ".";
 import { IClient, IEmployee, TypeRole } from "@/types";
 import { NextRouter } from "next/router";
 
 export interface GetEmployees {
   useEmployeesStore: EmployeesStore;
   useUIStore: UIStore;
-  getEmployees: (page: number) => Promise<Data | null>;
+  getEmployees: (page: number) => Promise<DataEmployee | null>;
 }
 
 export interface GetEmployeeById {
   employeeId?: string;
   getEmployeeById: (id: string) => Promise<IEmployee | null>;
+  useEmployeesStore: EmployeesStore;
 }
 
 export interface CreateEmployee {
@@ -44,22 +37,7 @@ export interface UpdateEmployee {
   useUIStore: UIStore;
   useFormStore: FormStore;
 }
-interface Data {
+interface DataEmployee {
   employees: IEmployee[] | null;
   totalEmployees: number;
-}
-
-interface EmployeesStore {
-  <T>(selector: (state: EmployeeState & EmployeeActions) => T): T;
-}
-export interface UIStore {
-  <T>(selector: (state: AlertSlice & ModalSlice & PaginatorSlice) => T): T;
-}
-interface FormStore {
-  <T>(selector: (state: FormState<any> & FormActions) => T): T;
-}
-
-interface Admin {
-  adminRole: TypeRole[] | undefined;
-  userAdmin: string | undefined;
 }

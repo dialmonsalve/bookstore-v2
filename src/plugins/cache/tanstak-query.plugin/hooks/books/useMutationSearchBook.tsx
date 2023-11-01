@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { SearchBook } from "../../interfaces/tanstak-query.books";
+import { SearchBook } from "@/plugins/interfaces";
 
 export function useMutationSearchBook(actionBook: SearchBook) {
   const { useUIStore, useBooksStore, getSearchBooks } = actionBook;
